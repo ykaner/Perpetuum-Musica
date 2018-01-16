@@ -13,7 +13,10 @@ namespace PerpetuumMusica
     /// </summary>
     public partial class App : Application
     {
-
+        public App()
+        {
+            int x = 1;
+        }
     }
 
     

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpetuumMusica"
         xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
+        xmlns:con="clr-namespace:PerpetuumMusica.View.Converters"
         xmlns:vm="clr-namespace:PerpetuumMusica.ViewModel"
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -14,28 +15,58 @@
     
     <!--resources-->
     <Window.Resources>
-        
-
         <!--colors-->
         <SolidColorBrush x:Key="header_color">#FF111111</SolidColorBrush>
         <SolidColorBrush x:Key="toolbar_color">#FF1D1D1D</SolidColorBrush>
         <SolidColorBrush x:Key="Player_color">#FF343434</SolidColorBrush>
         <SolidColorBrush x:Key="Menu_color">#FF1D1D1D</SolidColorBrush>
         <SolidColorBrush x:Key="view_color">black</SolidColorBrush>
-
-
-
+        <!-- converters-->
+        <con:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </Window.Resources>
     
+    <!-- keyboard shortcuts-->
+    <Window.InputBindings>
+        <KeyBinding Key="Space" 
+                    Command="{Binding Path=TogglePlayCommand}"/>
+    </Window.InputBindings>
+
     <DockPanel>
-        
         <!--header-->
         <Grid DockPanel.Dock="Top" Height="55" Background="{StaticResource header_color}">
             <StackPanel Margin="10, 0, 0, 0" Orientation="Horizontal">
                 <!--<cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/back_icon.png" Content="Settings"/>
                 <cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/unback_icon.png" Content="Settings"/>-->
                 <!--search bar-->
-                <TextBox x:Name="SearchField" Text="{Binding Model.IsPlaying, UpdateSourceTrigger=PropertyChanged}" Width="170" Height="30"/>
+                <cc:IconButton ImageSource="/View/Sources/back_icon.png" ToolTip="Back" Style="{StaticResource NormalIconButtonStyle}"/>
+                <cc:IconButton ImageSource="/View/Sources/unback_icon.png" ToolTip="Forward" Style="{StaticResource NormalIconButtonStyle}"/>
+                
+                <!-- search bar-->
+                <Grid Margin="11">
+                    <Border BorderThickness="0" Background="White" CornerRadius="18" Width="200"
+                            Padding="17, 0">
+                        <Grid>
+                            <TextBlock Foreground="Gray" 
+                                   Margin="2,0"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Visibility="{Binding ElementName=SearchBox, Path=Text, Converter={StaticResource StringToVisibilityConverter}}"
+                                   Text="Search"/>
+                            <TextBox x:Name="SearchBox" 
+                                     Background="Transparent" 
+                                     BorderThickness="0"
+                                     VerticalAlignment="Center"
+                                     FontSize="16">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" 
+                                                Command="{Binding Path=SearchCommand}" 
+                                                CommandParameter="{Binding Path=Text}"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                        </Grid>
+                    </Border> 
+                </Grid>
+                <!-- /search bar-->
             </StackPanel>
         </Grid>
         <!--tool bar-->
@@ -48,27 +79,91 @@
             </Grid.ColumnDefinitions>
             
             <!--add button-->
-            <Button Style="{DynamicResource pmButton}"
+
+            <cc:pmButton x:Name="AddButton"
                     Margin="15, 12" 
-                    BorderThickness="0"
                     FontSize="20"
-                    FontWeight="Bold">
-                ADD
-            </Button>
-            
-            <!--tools buttons-->
+                    FontWeight="Bold"
+                    Command="{Binding Path=OpenAddMenuCommand}"
+                    Content="ADD"/>
+            <Popup IsOpen="{Binding Path=AddMenuIsOpen, UpdateSourceTrigger=PropertyChanged}"
+                   StaysOpen="False"
+                   Placement="Bottom"
+                   AllowsTransparency="True"
+                   PlacementTarget="{Binding ElementName=AddButton}"
+                   PopupAnimation="Slide">
+                <Border Background="{StaticResource popup_menu_color}"
+                        SnapsToDevicePixels="True"
+                        CornerRadius="2"
+                        Margin="0, 0, 8, 8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="4" RenderingBias="Performance"/>
+                    </Border.Effect>
+                    <Grid Margin="0, 5">
+                        <Menu Background="Transparent" 
+                              BorderThickness="0"
+                              FontSize="{StaticResource large_font_size}"
+                              Foreground="{StaticResource foreground_color}"
+                              ItemsSource="{Binding Path=AddMenu}">
+                            <!--<MenuItem Header="Playlist">
+                                <MenuItem.Icon>
+                                    <cc:Icon ImageSource="/View/Sources/playlist_icon.png"
+                                             Size="22"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="New Playlist"/>
+                                <MenuItem Header="Import Playlist">
+                                    <MenuItem Header="From YouTube"/>
+                                </MenuItem>
+                                </MenuItem>
+                            <MenuItem Header="Track">
+                                <MenuItem.Icon>
+                                    <cc:Icon ImageSource="/View/Sources/track_icon.png"
+                                             Size="22"/>
+                                </MenuItem.Icon>
+                            </MenuItem>-->
+                        </Menu>
+                    </Grid>
+                </Border>
+            </Popup>
+
+                <!--tools buttons-->
             <Border Grid.Column="1" Padding="10, 5">
                 <DockPanel>
-                    <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
+                    <Menu
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        Style="{StaticResource ToolbarMenu}"
+                        ItemContainerStyle="{StaticResource ToolbarItem}"
+                        DockPanel.Dock="Right"
+                        ItemsSource="{Binding Path=Toolbar}">
+                        <!--<MenuItem Header="More Options">
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="/View/Sources/menu_icon.png" ToolTip="More Options"/>
+                            </MenuItem.Icon>
+                            <MenuItem Header="Option1"/>
+                            <MenuItem Header="Option2"/>
+                        </MenuItem>
+                        <MenuItem Header="info">
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="/View/Sources/info_icon.png" ToolTip="info" Margin="20, 0, 0, 0"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Settings">
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
+                            </MenuItem.Icon>
+                        </MenuItem>-->
+
+                    </Menu>
+                    <!--<cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/info_icon.png" ToolTip="info" Margin="20, 0, 0, 0"/>
-                    
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/menu_icon.png" ToolTip="More Options"/>
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/delete_icon.png" ToolTip="delete Track/Playlist"/>
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/view_icon.png" ToolTip="view"/>
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/add_icon.png" ToolTip="Add playlist item" Margin="20, 0, 0, 0"/>
 
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_down_icon.png" ToolTip="Sort Up"/>
-                    <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_up_icon.png" ToolTip="Sort Down"/>
+                    <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_up_icon.png" ToolTip="Sort Down"/>-->
 
                     <Grid/> <!--rest of the empty space-->
                 </DockPanel>
@@ -84,7 +179,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--Play Button-->
-            <cc:IconButton x:Name="TogglePlayButton" Style="{StaticResource playButton}" ImageSource="{Binding Path=ToggleButtonIcon, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=TogglePlayCommand}"/>
+            <cc:IconButton x:Name="TogglePlayButton" Style="{StaticResource playButton}" 
+                           ImageSource="{Binding Path=ToggleButtonIcon, UpdateSourceTrigger=PropertyChanged}"  
+                           Command="{Binding Path=TogglePlayCommand}"/>
             <!--/Play Button-->
             <Grid Grid.Column="1" Margin="10, 10, 15, 10">
                 <Grid.RowDefinitions>
@@ -97,29 +194,32 @@
                     Musicals /Movies / Disney / Aladding / One jump ahead
                     </TextBlock>
                 </Grid>
-                <Grid Grid.Row="1" Background="Black">
-                    <!--progressing Banner-->
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.4*"/>
-                        <ColumnDefinition Width="0"/>
-                        <ColumnDefinition Width="0.6*"/>
-                    </Grid.ColumnDefinitions>
-                    <Rectangle Fill="{DynamicResource main_color}"/>
-                    <Rectangle Grid.Column="1" Opacity="0.5" Fill="{DynamicResource main_color}"/>
-                </Grid>
+                <cc:pmSlider Style="{StaticResource SeekSlider}" x:Name="slider" Grid.Row="1" 
+                        Maximum="100" 
+                        IsMoveToPointEnabled="True"
+                        Value="{Binding Path=TrackSliderLocation}"/>
                 <DockPanel Grid.Row="2">
-                    <Grid >
-                        
-                    </Grid>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" DockPanel.Dock="Left">
                         <!--<cc:IconButton DockPanel.Dock="Right" Source="/View/Sources/previous_icon.png" Content="Settings"/>
                         <cc:IconButton Source="/View/Sources/next_icon.png" Content="Settings"/>
                         <cc:IconButton DockPanel.Dock="Right" Source="/View/Sources/settings_icon.png" Content="Settings"/>-->
-                        <cc:IconButton ImageSource="/View/Sources/previous_icon.png"/>
-                        <cc:IconButton ImageSource="/View/Sources/next_icon.png"/>
-                        <cc:IconButton ImageSource="/View/Sources/volume_icon.png"/>
-                        <!--audio slider-->
-
+                        <cc:IconButton ImageSource="/View/Sources/previous_icon.png" Style="{StaticResource NormalIconButtonStyle}"/>
+                        <cc:IconButton ImageSource="/View/Sources/next_icon.png" Style="{StaticResource NormalIconButtonStyle}"/>
+                        <cc:IconButton ImageSource="{Binding Path=VolumeIcon, UpdateSourceTrigger=PropertyChanged}"
+                                       Command="{Binding Path=ToggleMuteCommand}"
+                                       Style="{StaticResource NormalIconButtonStyle}"/>
+                        <!--volume slider-->
+                        <cc:pmSlider Style="{StaticResource VolumeSlider}" 
+                                     VerticalAlignment="Center" 
+                                     Width="170" Maximum="100" 
+                                     Value="{Binding Path=Volume}"
+                                     IsMoveToPointEnabled="True"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right">
+                        <TextBlock Text="{Binding Path=TimeStamp}" 
+                                   Margin="0, 8"
+                                   TextAlignment="Right"
+                                   FontSize="18"/>
                     </StackPanel>
                 </DockPanel>
                 
@@ -130,21 +230,57 @@
         <!--main Area-->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" MinWidth="150" MaxWidth="250"/>
+                <ColumnDefinition Width="200" MinWidth="50" MaxWidth="250"/>
                 <ColumnDefinition Width="3"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
             <!--Menu-->
             <StackPanel Background="{StaticResource Menu_color}">
-                <TextBlock Foreground="White">Menu</TextBlock>
+                <ListBox Margin="10" 
+                         Background="Transparent" 
+                         BorderThickness="0"
+                         ItemContainerStyle="{StaticResource MainMenuStyle}"
+                         ItemsSource="{Binding Path=MainMenu}"/>
+
+                <TreeView Background="Transparent">
+                    <TreeViewItem Header="My Playlists" IsExpanded="True">
+                        <TreeViewItem Header="Opera"/>
+                        <TreeViewItem Header="Musical">
+                            <TreeViewItem Header="Disney"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Rock"/>
+                        <TreeViewItem Header="Jazz"/>
+                    </TreeViewItem>
+                </TreeView>
+
+
             </StackPanel>
 
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="{StaticResource view_color}"/>
             <!--view area-->
-            <Grid Grid.Column="2" Background="Black">
-                <TextBlock Foreground="White">list view</TextBlock>
-            </Grid>
+            <StackPanel Margin="15" Grid.Column="2" Background="Black">
+                
+                <Grid Name="PlaylistHeader" Height="170">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/View/Sources/SampleImages/SamplePlaylistImage.png"/>
+                    <StackPanel Margin="15" Grid.Column="1">
+                        <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
+                        <TextBlock FontSize="42" Text="Disney"/>
+                        <TextBlock FontSize="15" FontWeight="Bold">By Various Artists</TextBlock>
+                        <StackPanel Margin="2, 15" Orientation="Horizontal">
+                            <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
+                                         Content="{Binding Path=ToggleButtonText}"
+                                         Command="{Binding Path=TogglePlayCommand}"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
         </Grid>
 
     </DockPanel>

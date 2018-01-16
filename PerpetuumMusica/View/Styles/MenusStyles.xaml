@@ -1,0 +1,220 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PerpetuumMusica.View.Styles"
+                    xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:media="clr-namespace:System.Windows.Media">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Styles/Colors.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="Menu">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="MenuItem" TargetType="MenuItem">
+        <Border x:Name="Border"
+                BorderThickness="0"
+                Padding="10, 5">
+            <!-- TODO: Check why Border is not stretch to the end-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <!-- 0 Icon/ CheckBox-->
+                    <ColumnDefinition 
+                                Width="Auto"
+                                SharedSizeGroup="Icon" />
+                    <!-- 1 Header-->
+                    <ColumnDefinition Width="*" />
+                    <!-- 2 Hotkey hint-->
+                    <ColumnDefinition 
+                                Width="Auto"
+                                SharedSizeGroup="Shortcut" />
+                    <!-- 3 Arrow -->
+                    <ColumnDefinition Width="13" />
+                </Grid.ColumnDefinitions>
+                <!-- Icon on 0-->
+                <ContentPresenter 
+                                x:Name="Icon"
+                                Margin="6,0,6,0"
+                                VerticalAlignment="Center"
+                                ContentSource="Icon" />
+                <!-- CheckBox on 0 (Collapsed by defaul)-->
+                <Border x:Name="Check"
+                              Width="13"
+                              Height="13"
+                              Visibility="Collapsed"
+                              Margin="6,0,6,0"
+                              BorderThickness="1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="{DynamicResource BorderLightColor}"
+                              Offset="0.0" />
+                                    <GradientStop Color="{DynamicResource BorderDarkColor}"
+                              Offset="1.0" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+
+                    </Border.BorderBrush>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="{DynamicResource ControlLightColor}" />
+                                    <GradientStop Color="{DynamicResource ControlMediumColor}"
+                              Offset="1.0" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Path x:Name="CheckMark"
+                                  Width="7"
+                                  Height="7"
+                                  Visibility="Hidden"
+                                  SnapsToDevicePixels="False"
+                                  StrokeThickness="2"
+                                  Data="M 0 0 L 7 7 M 0 7 L 7 0">
+                        <Path.Stroke>
+                            <SolidColorBrush Color="{DynamicResource GlyphColor}" />
+                        </Path.Stroke>
+                    </Path>
+                </Border>
+                <!-- Header on 1-->
+                <ContentPresenter 
+                                x:Name="HeaderHost"
+                                Grid.Column="1"
+                                ContentSource="Header"
+                                RecognizesAccessKey="True"/>
+                <!-- hotkey hint on 2-->
+                <TextBlock x:Name="InputGestureText"
+                                Grid.Column="2"
+                                Text="{TemplateBinding InputGestureText}"
+                                Margin="5,2,0,2"
+                                DockPanel.Dock="Right" />
+                <!-- arrow on 3-->
+                <Path 
+                      x:Name="Arrow"
+                      Visibility="Collapsed"
+                      Grid.Column="3"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Center"
+                      Data="M 0 0 L 0 10 L 7 5 Z"
+                      Fill="{StaticResource foreground_color}"/>
+                <Popup x:Name="Popup"
+                                 Placement="Left"
+                                 IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                 AllowsTransparency="True"
+                                 Focusable="False"
+                                 PopupAnimation="Slide">
+                    <Border Background="{StaticResource popup_menu_color}"
+                            BorderThickness="1"
+                        SnapsToDevicePixels="True"
+                        CornerRadius="2"
+                        Margin="8, 8, 8, 8">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="1" ShadowDepth="0" RenderingBias="Performance"/>
+                        </Border.Effect>
+                        <Grid Margin="0, 5">
+                            <StackPanel IsItemsHost="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Grid>
+                    </Border>
+                </Popup>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" TargetName="Border" Value="Gray"/>
+            </Trigger>
+            <Trigger Property="Role" Value="TopLevelHeader">
+                <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="MenuItem">
+        <Setter Property="Template" Value="{StaticResource MenuItem}"/>
+        <Setter Property="Icon" Value="a"/>
+        <Setter Property="Header" Value="{Binding Name}"/>
+        <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
+    </Style>
+
+    <ControlTemplate TargetType="MenuItem" x:Key="TopLevelToolbarItem">
+        <Grid>
+            <ContentPresenter 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ContentSource="Icon"/>
+            <Popup x:Name="Popup"
+                    Placement="Left"
+                    IsOpen="{TemplateBinding IsSubmenuOpen}"
+                    AllowsTransparency="True"
+                    Focusable="False"
+                    PopupAnimation="Slide">
+                <Border Background="{StaticResource popup_menu_color}"
+                        BorderThickness="1"
+                        SnapsToDevicePixels="True"
+                        CornerRadius="2"
+                        Margin="8, 8, 8, 8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="1" ShadowDepth="0" RenderingBias="Performance"/>
+                    </Border.Effect>
+                    <Grid Margin="0, 5">
+                        <StackPanel IsItemsHost="True"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Grid>
+                </Border>
+            </Popup>
+        </Grid>
+    </ControlTemplate>
+    
+    <Style TargetType="Menu" x:Key="ToolbarMenu"/>
+    
+    <Style TargetType="MenuItem" x:Key="ToolbarItem">
+        <Setter Property="Icon">
+            <Setter.Value>
+                <cc:IconButton ImageSource="{Binding Icon}" ToolTip="{Binding Name}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <!--<Setter Property="Template" Value="{StaticResource TopLevelToolbarItem}"/>-->
+        <Style.Triggers>
+            <!-- Top item if exists things inside-->
+            <Trigger Property="Role" Value="TopLevelHeader">
+                <Setter Property="Template"
+                                Value="{StaticResource TopLevelToolbarItem}" />
+                <Setter Property="Grid.IsSharedSizeScope"
+                                Value="true" />
+            </Trigger>
+            <!-- top item if things do not exist inside-->
+            <Trigger Property="Role" Value="TopLevelItem">
+                <Setter Property="Template"
+                                Value="{StaticResource TopLevelToolbarItem}" />
+            </Trigger>
+            <!-- submenu if something is inside-->
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter Property="Template"
+                                Value="{StaticResource MenuItem}" />
+            </Trigger>
+            <!-- submenu if things aren't inside-->
+            <Trigger Property="Role" Value="SubmenuItem">
+                <Setter Property="Template"
+                                Value="{StaticResource MenuItem}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

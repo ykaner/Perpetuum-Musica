@@ -41,44 +41,27 @@ namespace PerpetuumMusica.View.CustomControls
     /// Step 2)
     /// Go ahead and use your control in the XAML file.
     ///
-    ///     <MyNamespace:IconButton/>
+    ///     <MyNamespace:RoundCornerButton/>
     ///
     /// </summary>
-    public class IconButton : pmButton
+    public class pmButton : Button
     {
-        static IconButton()
+        static pmButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(pmButton), new FrameworkPropertyMetadata(typeof(pmButton)));
         }
 
 
 
-        public ImageSource ImageSource
+        public CornerRadius CornerRadius
         {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
+            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(IconButton));
-
-        public Brush Color
-        {
-            get { return (Brush)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Brush), typeof(IconButton), new UIPropertyMetadata(new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))));
-
-
-
-
-    
-
-
+        // Using a DependencyProperty as the backing store for CornerRadius.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(pmButton));
 
 
     }

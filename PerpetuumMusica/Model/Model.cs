@@ -8,9 +8,16 @@ using System.Windows;
 
 namespace PerpetuumMusica.Model
 {
-    public class Model : INotifyPropertyChanged
+    public class Model
     {
-        private bool isPlaying = false;
+        private bool isPlaying = true;
+        private double location = 0;
+
+        public Model()
+        {
+            Volume = 70;
+            IsPlaying = false;
+        }
 
         public bool IsPlaying
         {
@@ -21,30 +28,38 @@ namespace PerpetuumMusica.Model
             set
             {
                 isPlaying = value;
-                OnPropertyChanged("IsPlaying");
             }
         }
-
+        public double LocationPercentage
+        {
+            get
+            {
+                return location;
+            }
+            set
+            {
+                location = value;
+            }
+        }
+        private int unmutedVolume;
+        public int Volume { get; set; }
 
         public void TogglePlay()
         {
             IsPlaying = !IsPlaying;
         }
 
-        #region INotifyPropertyChanged Memberse
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
+        internal void ToggleMute()
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
+            if (Volume > 0)
             {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+                unmutedVolume = Volume;
+                Volume = 0;
+            }
+            else
+            {
+                Volume = unmutedVolume;
             }
         }
-
-        #endregion
     }
 }

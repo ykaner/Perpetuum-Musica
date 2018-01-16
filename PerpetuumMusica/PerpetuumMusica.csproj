@@ -57,12 +57,44 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Model.cs" />
+    <Compile Include="ViewModel\Commands\OpenAddMenuCommand.cs" />
+    <Compile Include="ViewModel\Commands\SearchCommand.cs" />
+    <Compile Include="ViewModel\Commands\ToggleMuteCommand.cs" />
     <Compile Include="ViewModel\Commands\TogglePlayCommand.cs" />
+    <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
+    <Compile Include="View\CustomControls\pmButton.cs" />
+    <Compile Include="View\CustomControls\pmSlider.cs" />
+    <Compile Include="View\CustomControls\SelectableTextBlock.cs" />
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Styles\ButtonsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\ListsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\MenusStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\SlidersStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\TextBlockStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\CustomControls\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -82,6 +114,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Styles\TreeViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -116,13 +152,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="View\Sources\playlist_icon.png" />
+    <Resource Include="View\Sources\track_icon.png" />
+    <Resource Include="View\Sources\Volume_Icons\volume_icon.png" />
+    <Resource Include="View\Sources\Volume_Icons\volume_low_icon.png" />
+    <Resource Include="View\Sources\Volume_Icons\volume_mute_icon.png" />
+    <Resource Include="View\Sources\SampleImages\SamplePlaylistImage.PNG" />
     <Resource Include="View\Sources\sort_down_icon.png" />
     <Resource Include="View\Sources\add_icon.png" />
     <Resource Include="View\Sources\delete_icon.png" />
     <Resource Include="View\Sources\menu_icon.png" />
     <Resource Include="View\Sources\sort_up_icon.png" />
     <Resource Include="View\Sources\view_icon.png" />
-    <Resource Include="View\Sources\volume_icon.png" />
     <Resource Include="View\Sources\unback_icon.png" />
     <Resource Include="View\Sources\next_icon.png" />
     <Resource Include="View\Sources\previous_icon.png" />
