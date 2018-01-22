@@ -179,7 +179,7 @@ namespace PerpetuumMusica.ViewModel
         }
         public string TimeStamp
         {
-            get { return "1"; }
+            get { return Model.Player.GetProgressTime(); }
         }
         public bool AddMenuIsOpen { get; set; }
 
@@ -221,6 +221,7 @@ namespace PerpetuumMusica.ViewModel
 
                 //TrackSliderLocation = Model.Player.LocationPercentage;
                 OnPropertyChanged("TrackSliderLocation");
+                OnPropertyChanged("TimeStamp");
             }
         }
         public void Search(String query)
