@@ -46,6 +46,18 @@ namespace Player
             base.Close();
         }
 
+        public double LocationPercentage
+        {
+            get
+            {
+                return GetProgressPercent();
+            }
+            set
+            {
+                SetTime(value);
+            }
+        }
+
         public String GetProgressTime()
         {
             String res = this.Position.ToString(@"mm\:ss") + " / ";

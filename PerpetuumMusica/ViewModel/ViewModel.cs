@@ -61,7 +61,6 @@ namespace PerpetuumMusica.ViewModel
             };
 
             //for tests:
-            TrackSliderLocation = 10;
 
         }
 
@@ -154,14 +153,18 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
+        //this two are for changing the location manually
+        private double nextLocation;
+        private bool changeLocation = false;
+
         public double TrackSliderLocation {
             get
             {
-                return Model.LocationPercentage;
+                return Model.Player.LocationPercentage;
             }
             set
             {
-                Model.LocationPercentage = value;
+                Model.Player.LocationPercentage = value;
                 OnPropertyChanged("TimeStamp");
             }
         }
@@ -176,7 +179,7 @@ namespace PerpetuumMusica.ViewModel
         }
         public string TimeStamp
         {
-            get { return (int)model.LocationPercentage + " / 100"; }
+            get { return "1"; }
         }
         public bool AddMenuIsOpen { get; set; }
 
@@ -210,7 +213,13 @@ namespace PerpetuumMusica.ViewModel
         {
             if (Model.IsPlaying)
             {
-                TrackSliderLocation += 0.05;
+                //if (changeLocation)
+                //{
+                //    Model.Player.LocationPercentage = nextLocation;
+                //    changeLocation = false;
+                //}
+
+                //TrackSliderLocation = Model.Player.LocationPercentage;
                 OnPropertyChanged("TrackSliderLocation");
             }
         }

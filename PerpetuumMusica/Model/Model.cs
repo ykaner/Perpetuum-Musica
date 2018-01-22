@@ -5,18 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Player;
 
 namespace PerpetuumMusica.Model
 {
     public class Model
     {
+        public AudioPlayer Player = new AudioPlayer();
+
         private bool isPlaying = true;
         private double location = 0;
+        private string sampleSongUri = @"C:\Users\Shachar\Music\Soundtrack\Aladdin - Soundtrack Special Edition [DC Downloads]\03 - One Jump Ahead.mp3";
 
         public Model()
         {
             Volume = 70;
             IsPlaying = false;
+            Player.SetUri(sampleSongUri);
         }
 
         public bool IsPlaying
@@ -46,6 +51,11 @@ namespace PerpetuumMusica.Model
 
         public void TogglePlay()
         {
+            if (IsPlaying)
+                Player.Pause();
+            else
+                Player.Play();
+
             IsPlaying = !IsPlaying;
         }
 

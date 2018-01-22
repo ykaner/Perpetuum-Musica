@@ -178,6 +178,11 @@
     <Resource Include="View\Sources\play_icon.png" />
     <Resource Include="View\Sources\pause_icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Audio Player\Audio Player.csproj">
+      <Project>{9485415c-5117-40f6-a97e-e927c839edcf}</Project>
+      <Name>Audio Player</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
