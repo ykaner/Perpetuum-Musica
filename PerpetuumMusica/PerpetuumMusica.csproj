@@ -71,6 +71,10 @@
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\MediaResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Styles\ButtonsStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

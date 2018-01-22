@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="/View/Styles/ButtonsStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/MenusStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/TreeViewStyles.xaml"/>
+                <ResourceDictionary Source="/View/MediaResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

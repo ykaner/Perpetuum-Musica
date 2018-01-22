@@ -10,9 +10,10 @@
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050" 
-        Background="Black"
-        Icon="C:\Users\Shachar\source\repos\PerpetuumMusica\PerpetuumMusica\View\Sources\logo.png">
-    
+        Background="Black">
+    <!---->
+
+
     <!--resources-->
     <Window.Resources>
         <!--colors-->
@@ -38,8 +39,8 @@
                 <!--<cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/back_icon.png" Content="Settings"/>
                 <cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/unback_icon.png" Content="Settings"/>-->
                 <!--search bar-->
-                <cc:IconButton ImageSource="/View/Sources/back_icon.png" ToolTip="Back" Style="{StaticResource NormalIconButtonStyle}"/>
-                <cc:IconButton ImageSource="/View/Sources/unback_icon.png" ToolTip="Forward" Style="{StaticResource NormalIconButtonStyle}"/>
+                <cc:IconButton ImageSource="{StaticResource backIcon}" ToolTip="Back" Style="{StaticResource NormalIconButtonStyle}"/>
+                <cc:IconButton ImageSource="{StaticResource unbackIcon}" ToolTip="Forward" Style="{StaticResource NormalIconButtonStyle}"/>
                 
                 <!-- search bar-->
                 <Grid Margin="11">
@@ -104,8 +105,8 @@
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
-                              ItemsSource="{Binding Path=AddMenu}">
-                            <!--<MenuItem Header="Playlist">
+                              >
+                            <MenuItem Header="Playlist">
                                 <MenuItem.Icon>
                                     <cc:Icon ImageSource="/View/Sources/playlist_icon.png"
                                              Size="22"/>
@@ -120,7 +121,7 @@
                                     <cc:Icon ImageSource="/View/Sources/track_icon.png"
                                              Size="22"/>
                                 </MenuItem.Icon>
-                            </MenuItem>-->
+                            </MenuItem>
                         </Menu>
                     </Grid>
                 </Border>
@@ -134,25 +135,24 @@
                         Background="Transparent"
                         Style="{StaticResource ToolbarMenu}"
                         ItemContainerStyle="{StaticResource ToolbarItem}"
-                        DockPanel.Dock="Right"
-                        ItemsSource="{Binding Path=Toolbar}">
-                        <!--<MenuItem Header="More Options">
+                        DockPanel.Dock="Right">
+                        <MenuItem Header="More Options">
                             <MenuItem.Icon>
-                                <cc:IconButton ImageSource="/View/Sources/menu_icon.png" ToolTip="More Options"/>
+                                <cc:IconButton ImageSource="{StaticResource menuIcon}" ToolTip="More Options"/>
                             </MenuItem.Icon>
                             <MenuItem Header="Option1"/>
                             <MenuItem Header="Option2"/>
                         </MenuItem>
                         <MenuItem Header="info">
                             <MenuItem.Icon>
-                                <cc:IconButton ImageSource="/View/Sources/info_icon.png" ToolTip="info" Margin="20, 0, 0, 0"/>
+                                <cc:IconButton ImageSource="{StaticResource infoIcon}" ToolTip="info" Margin="20, 0, 0, 0"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="Settings">
                             <MenuItem.Icon>
-                                <cc:IconButton ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
+                                <cc:IconButton ImageSource="{StaticResource settingsIcon}" ToolTip="Settings"/>
                             </MenuItem.Icon>
-                        </MenuItem>-->
+                        </MenuItem>
 
                     </Menu>
                     <!--<cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
@@ -163,7 +163,8 @@
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/add_icon.png" ToolTip="Add playlist item" Margin="20, 0, 0, 0"/>
 
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_down_icon.png" ToolTip="Sort Up"/>
-                    <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_up_icon.png" ToolTip="Sort Down"/>-->
+                    <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/sort_up_icon
+                    " ToolTip="Sort Down"/>-->
 
                     <Grid/> <!--rest of the empty space-->
                 </DockPanel>
@@ -200,11 +201,8 @@
                         Value="{Binding Path=TrackSliderLocation}"/>
                 <DockPanel Grid.Row="2">
                     <StackPanel Grid.Row="2" Orientation="Horizontal" DockPanel.Dock="Left">
-                        <!--<cc:IconButton DockPanel.Dock="Right" Source="/View/Sources/previous_icon.png" Content="Settings"/>
-                        <cc:IconButton Source="/View/Sources/next_icon.png" Content="Settings"/>
-                        <cc:IconButton DockPanel.Dock="Right" Source="/View/Sources/settings_icon.png" Content="Settings"/>-->
-                        <cc:IconButton ImageSource="/View/Sources/previous_icon.png" Style="{StaticResource NormalIconButtonStyle}"/>
-                        <cc:IconButton ImageSource="/View/Sources/next_icon.png" Style="{StaticResource NormalIconButtonStyle}"/>
+                        <cc:IconButton ImageSource="{StaticResource previousIcon}" Style="{StaticResource NormalIconButtonStyle}"/>
+                        <cc:IconButton ImageSource="{StaticResource nextIcon}" Style="{StaticResource NormalIconButtonStyle}"/>
                         <cc:IconButton ImageSource="{Binding Path=VolumeIcon, UpdateSourceTrigger=PropertyChanged}"
                                        Command="{Binding Path=ToggleMuteCommand}"
                                        Style="{StaticResource NormalIconButtonStyle}"/>
@@ -266,7 +264,7 @@
                         <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="/View/Sources/SampleImages/SamplePlaylistImage.png"/>
+                    <Image Source="{StaticResource sample}"/>
                     <StackPanel Margin="15" Grid.Column="1">
                         <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
                         <TextBlock FontSize="42" Text="Disney"/>

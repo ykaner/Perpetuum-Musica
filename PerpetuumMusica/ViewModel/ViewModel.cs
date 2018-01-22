@@ -65,21 +65,22 @@ namespace PerpetuumMusica.ViewModel
 
         }
 
-        static private string sourceUri = "C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View\\Sources\\";
-        static private ImageSource Image(string name) { return new BitmapImage(new System.Uri(sourceUri + name)); }
+        //static private string sourceUri = @"C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View\\Sources\\";
+        //C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View
+        static private ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
 
 
         ////////////////////////
         /// private fields
         ////////////////////////
         //Images
-        private ImageSource pauseIcon = Image("pause_icon.png");
-        private ImageSource playIcon = Image("play_icon.png");
-        private ImageSource volumeIcon = Image("Volume_Icons/volume_icon.png");
-        private ImageSource volumeMuteIcon = Image("Volume_Icons/volume_mute_icon.png");
-        private ImageSource volumeLowIcon = Image("Volume_Icons/volume_low_icon.png");
-        private ImageSource trackIcon = Image("track_icon.png");
-        private ImageSource playlist = Image("playlist_icon.png");
+        private ImageSource pauseIcon = Image("pauseIcon"); 
+        private ImageSource playIcon = Image("playIcon");
+        private ImageSource volumeIcon = Image("volumeIcon");
+        private ImageSource volumeMuteIcon = Image("volumeMuteIcon");
+        private ImageSource volumeLowIcon = Image("volumeLowIcon");
+        private ImageSource trackIcon = Image("trackIcon");
+        private ImageSource playlist = Image("playlistIcon");
 
         #region INotifyPropertyChanged Memberse
 

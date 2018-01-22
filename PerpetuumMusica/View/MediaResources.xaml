@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PerpetuumMusica.View">
+    
+    <BitmapImage x:Key="sample" UriSource="/View/Sources/SampleImages/SamplePlaylistImage.png"/>
+    <BitmapImage x:Key="backIcon" UriSource="/View/Sources/back_icon.png"/>
+    <BitmapImage x:Key="addIcon" UriSource="/View/Sources/add_icon.png"/>
+    <BitmapImage x:Key="deleteIcon" UriSource="/View/Sources/delete_icon.png"/>
+    <BitmapImage x:Key="infoIcon" UriSource="/View/Sources/info_icon.png"/>
+    <BitmapImage x:Key="logo" UriSource="/View/Sources/logo.png"/>
+    <BitmapImage x:Key="menuIcon" UriSource="/View/Sources/menu_icon.png"/>
+    <BitmapImage x:Key="nextIcon" UriSource="/View/Sources/next_icon.png"/>
+    <BitmapImage x:Key="pauseIcon" UriSource="/View/Sources/pause_icon.png"/>
+    <BitmapImage x:Key="playIcon" UriSource="/View/Sources/play_icon.png"/>
+    <BitmapImage x:Key="playlistIcon" UriSource="/View/Sources/playlist_icon.png"/>
+    <BitmapImage x:Key="previousIcon" UriSource="/View/Sources/previous_icon.png"/>
+    <BitmapImage x:Key="settingsIcon" UriSource="/View/Sources/settings_icon.png"/>
+    <BitmapImage x:Key="sortDownIcon" UriSource="/View/Sources/sort_down_icon.png"/>
+    <BitmapImage x:Key="sortUpIcon" UriSource="/View/Sources/sort_up_icon.png"/>
+    <BitmapImage x:Key="trackIcon" UriSource="/View/Sources/track_icon.png"/>
+    <BitmapImage x:Key="unbackIcon" UriSource="/View/Sources/unback_icon.png"/>
+    <BitmapImage x:Key="viewIcon" UriSource="/View/Sources/view_icon.png"/>
+    
+    <!-- volume logos-->
+    <BitmapImage x:Key="volumeIcon" UriSource="/View/Sources/Volume_Icons/volume_icon.png"/>
+    <BitmapImage x:Key="volumeLowIcon" UriSource="/View/Sources/Volume_Icons/volume_low_icon.png"/>
+    <BitmapImage x:Key="volumeMuteIcon" UriSource="/View/Sources/Volume_Icons/volume_mute_icon.png"/>
+
+
+
+
+
+
+</ResourceDictionary>
