@@ -89,6 +89,7 @@ namespace Player
 
         public bool SetTime(double percents)
         {
+            percents /= 100;
             if(percents > 1 || percents < 0)
             {
                 return false;
