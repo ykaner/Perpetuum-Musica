@@ -28,10 +28,10 @@ namespace Player
         {
             InitializeComponent();
 
-            audioPlayer.SetUri("C:/Users/Shachar/Music/Opera/Die fledermaus/01 - ouverture - die fledermaus.mp3");
+            audioPlayer.SetUri("C:/Users/ykane/Downloads/Pirates of the Caribean piano.mp3");
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(0.1);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timerTick;
             timer.Start();
 
@@ -66,6 +66,10 @@ namespace Player
             audioPlayer.Stop();
         }
 
+        public void btnJump_Click(object sender, RoutedEventArgs e)
+        {
+            audioPlayer.SetTime(0.3);
+        }
 
 
 

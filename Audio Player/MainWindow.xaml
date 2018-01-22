@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <StackPanel Margin="10">
-        <ProgressBar Name="progBar" Minimum="0" Maximum="100" Value="75" />
+        <ProgressBar Name="progBar" Minimum="0" Maximum="100" Value="0" />
         <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5" />
         <WrapPanel HorizontalAlignment="Center">
             <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
             <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
             <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
+            <Button Name="jump" Click="btnJump_Click">Jump</Button>
         </WrapPanel>
         <Button Click="youtube_play">youtube play</Button>
         <WebBrowser Visibility="Hidden" Name="wbSample"></WebBrowser>

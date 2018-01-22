@@ -56,5 +56,29 @@ namespace Player
             return this.Position.TotalMilliseconds / this.NaturalDuration.TimeSpan.TotalMilliseconds * 100;
         }
 
+        public bool SetTime(TimeSpan time)
+        {
+            if (this.NaturalDuration.TimeSpan < time)
+                return false;
+            else
+            {
+                this.Position = time;
+                return true;
+            }
+        }
+
+        public bool SetTime(double percents)
+        {
+            if(percents > 1 || percents < 0)
+            {
+                return false;
+            }
+            else
+            {
+                this.Position = new TimeSpan((long)(this.NaturalDuration.TimeSpan.Ticks * percents));
+                return true;
+            }
+        }
+
     }
 }
