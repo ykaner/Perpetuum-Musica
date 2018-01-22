@@ -48,11 +48,31 @@ namespace Player
 
         public String GetProgressTime()
         {
-            return this.Position.ToString(@"mm\:ss") + " / " + this.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+            String res = this.Position.ToString(@"mm\:ss") + " / ";
+            if (!this.NaturalDuration.HasTimeSpan)
+            {
+                return "";
+            }
+            if (this.NaturalDuration.TimeSpan.Hours != 0)
+            {
+                res += this.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss");
+            }
+            else if(this.NaturalDuration.TimeSpan.Minutes != 0){
+                res += this.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+            }
+            else
+            {
+                res += this.NaturalDuration.TimeSpan.ToString(@"ss");
+            }
+            return res;
         }
 
         public double GetProgressPercent()
         {
+            if (!this.NaturalDuration.HasTimeSpan)
+            {
+                return 0;
+            }
             return this.Position.TotalMilliseconds / this.NaturalDuration.TimeSpan.TotalMilliseconds * 100;
         }
 

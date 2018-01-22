@@ -28,7 +28,7 @@ namespace Player
         {
             InitializeComponent();
 
-            audioPlayer.SetUri("C:/Users/ykane/Downloads/Pirates of the Caribean piano.mp3");
+            audioPlayer.SetUri("http://s71.podbean.com/pb/2aba70e5c3fff66c5ec21b96971cfd95/5a664d03/data3/fs60/688336/uploads/EP159_Algorithmic_Trading_Fixed.mp3");
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
