@@ -58,17 +58,17 @@ namespace Player
             }
         }
 
-        public new double Volume
-        {
-            get
-            {
-                return Volume * 100;
-            }
-            set
-            {
-                this.Volume = value / 100;
-            }
-        }
+        //public new double Volume
+        //{
+        //    get
+        //    {
+        //        return Volume * 100;
+        //    }
+        //    set
+        //    {
+        //        this.Volume = value / 100;
+        //    }
+        //}
 
         public String GetProgressTime()
         {

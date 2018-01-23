@@ -12,6 +12,13 @@ namespace PerpetuumMusica.Model
     public class Model
     {
         public AudioPlayer Player = new AudioPlayer();
+        public List<Playable> MainList = new List<Playable>()
+        {
+            new Playable("The little mermaid: Original Broadway Cast Recording", new TimeSpan(1, 46, 0), 14, "Alan Menken"),
+            new Playable("Frozen (Original Motion Picture Soundtrack)", new TimeSpan(2, 9, 0), 21, "Kristen Anderson, Robert Lopez"),
+            new Playable("Aladdin Musical", new TimeSpan(1, 23, 0), 21, "Alan Menken")
+
+        };
 
         private bool isPlaying = true;
         private double location = 0;
@@ -46,8 +53,17 @@ namespace PerpetuumMusica.Model
                 location = value;
             }
         }
-        private int unmutedVolume;
-        public int Volume { get; set; }
+        private double unmutedVolume;
+        public double Volume
+        {
+            get { return Player.Volume; }
+            set
+            {
+                Player.Volume = value;
+            }
+        }
+
+
 
         public void TogglePlay()
         {

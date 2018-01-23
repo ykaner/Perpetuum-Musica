@@ -60,7 +60,8 @@ namespace PerpetuumMusica.ViewModel
                 new MenuItem("Settings", Image("settings_icon.png"), null, null)
             };
 
-            //for tests:
+            //Init volume
+            Volume = 80;
 
         }
 
@@ -153,10 +154,10 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
-        //this two are for changing the location manually
-        private double nextLocation;
-        private bool changeLocation = false;
-
+        public List<Playable> Playlist
+        {
+            get { return Model.MainList; }
+        }
         public double TrackSliderLocation {
             get
             {
@@ -168,12 +169,12 @@ namespace PerpetuumMusica.ViewModel
                 OnPropertyChanged("TimeStamp");
             }
         }
-        public int Volume
+        public double Volume
         {
-            get { return Model.Volume; }
+            get { return Model.Volume * 100; }
             set
             {
-                Model.Volume = value;
+                Model.Volume = value / 100;
                 OnPropertyChanged("VolumeIcon");
             }
         }
@@ -213,13 +214,6 @@ namespace PerpetuumMusica.ViewModel
         {
             if (Model.IsPlaying)
             {
-                //if (changeLocation)
-                //{
-                //    Model.Player.LocationPercentage = nextLocation;
-                //    changeLocation = false;
-                //}
-
-                //TrackSliderLocation = Model.Player.LocationPercentage;
                 OnPropertyChanged("TrackSliderLocation");
                 OnPropertyChanged("TimeStamp");
             }

@@ -192,7 +192,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="0, 5, 10, 10">
                     <TextBlock FontWeight="Bold" FontSize="16">
-                    Musicals /Movies / Disney / Aladding / One jump ahead
+                    Musicals /Movies / Disney / Aladdin / One jump ahead
                     </TextBlock>
                 </Grid>
                 <cc:pmSlider Style="{StaticResource SeekSlider}" x:Name="slider" Grid.Row="1" 
@@ -241,7 +241,7 @@
                          ItemContainerStyle="{StaticResource MainMenuStyle}"
                          ItemsSource="{Binding Path=MainMenu}"/>
 
-                <TreeView Background="Transparent">
+                <TreeView Background="Transparent" BorderThickness="0">
                     <TreeViewItem Header="My Playlists" IsExpanded="True">
                         <TreeViewItem Header="Opera"/>
                         <TreeViewItem Header="Musical">
@@ -277,7 +277,21 @@
 
                     </StackPanel>
                 </Grid>
-
+                
+                <!-- playlist-->
+                <!--<ListView
+                    Background="Transparent"
+                    ItemsSource="{Binding Path=Playlist}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="#" Width="50"/>
+                            <GridViewColumn Header="TITLE" Width="Auto" DisplayMemberBinding="{Binding Title}"/>
+                            <GridViewColumn Header="TIME" Width="100" DisplayMemberBinding="{Binding Time}"/>
+                            <GridViewColumn Header="TIMES HEARD" Width="100" DisplayMemberBinding="{Binding TimesHeard}"/>
+                            <GridViewColumn Header="COMPOSER" Width="150" DisplayMemberBinding="{Binding Composer}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>-->
             </StackPanel>
         </Grid>
 

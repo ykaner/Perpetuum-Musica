@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\Playable.cs" />
     <Compile Include="ViewModel\Commands\OpenAddMenuCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchCommand.cs" />
     <Compile Include="ViewModel\Commands\ToggleMuteCommand.cs" />
