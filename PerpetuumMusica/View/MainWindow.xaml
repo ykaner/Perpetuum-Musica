@@ -9,6 +9,7 @@
         xmlns:vm="clr-namespace:PerpetuumMusica.ViewModel"
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:multiSelectionTree="clr-namespace:MultiSelectionTreeView;assembly=MultiSelectionTreeView"
         Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050" 
         Background="{StaticResource background_color}">
     <!---->
@@ -299,10 +300,12 @@
                         </ListView>
 
                     </Grid>
-                    <TreeView Background="Transparent"
+                    <multiSelectionTree:MultipleSelectionTreeView 
+                                Background="Transparent"
+                                SelectionMode="KeyboardModifiersMode"                                  
                               ItemsSource="{Binding Path=Playlist}"
                               ItemContainerStyle="{StaticResource PlaylistViewItem}">
-                        <TreeView.ItemTemplate>
+                        <multiSelectionTree:MultipleSelectionTreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="x:Type self:MenuItem" ItemsSource="{Binding List}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -325,9 +328,9 @@
                                     <cc:SelectableTextBlock Grid.Column="4" Text="{Binding Composer}"/>
                                 </Grid>
                             </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
+                        </multiSelectionTree:MultipleSelectionTreeView.ItemTemplate>
 
-                    </TreeView>
+                    </multiSelectionTree:MultipleSelectionTreeView>
                     <!--<DataGrid ItemsSource="{Binding Path=Playlist}"
                               AutoGenerateColumns="False">
                         <DataGrid.Columns>

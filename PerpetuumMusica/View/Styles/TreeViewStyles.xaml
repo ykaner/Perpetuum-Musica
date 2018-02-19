@@ -54,7 +54,54 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+    <Style x:Key="Expander_big"
+           TargetType="ToggleButton">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                 Storyboard.TargetName="Collapsed">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                            Value="{x:Static Visibility.Hidden}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                 Storyboard.TargetName="Expanded">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                            Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Path x:Name="Collapsed"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Fill="{StaticResource foreground_color}"
+                                Margin="1,1,1,1"
+                                Data="M 5 0 L 15 5 L 5 10 Z">
+                        </Path>
+                        <Path x:Name="Expanded"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Fill="{StaticResource foreground_color}"
+                                Margin="1,1,1,1"
+                                Data="M 0 5 L 5 15 L 10 5 Z"
+                                Visibility="Hidden">
+                        </Path>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <Style TargetType="TreeViewItem">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -154,7 +201,7 @@
                                       ClickMode="Press"
                                       IsChecked="{Binding IsExpanded, 
                                             RelativeSource={RelativeSource TemplatedParent}}"
-                                      Style="{StaticResource Expander}"/>
+                                      Style="{StaticResource Expander_big}"/>
                         <cc:SelectableBorder 
                                 IsSelected="{TemplateBinding IsSelected}"
                                 CornerRadius="2"
