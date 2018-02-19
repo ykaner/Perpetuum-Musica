@@ -306,7 +306,7 @@
                               ItemsSource="{Binding Path=Playlist}"
                               ItemContainerStyle="{StaticResource PlaylistViewItem}">
                         <multiSelectionTree:MultipleSelectionTreeView.ItemTemplate>
-                            <HierarchicalDataTemplate DataType="x:Type self:MenuItem" ItemsSource="{Binding List}">
+                            <HierarchicalDataTemplate DataType="x:Type self:MenuItem" ItemsSource="{Binding Content.List}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50"/>
@@ -316,16 +316,16 @@
                                         <ColumnDefinition Width="170"/>
                                     </Grid.ColumnDefinitions>
                                     <Border Grid.Column="0" Padding="2, 0">
-                                        <cc:SelectableTextBlock Text="{Binding ListIndex}" HorizontalAlignment="Center"/>
+                                        <cc:SelectableTextBlock Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsPlaying}"/>
                                     </Border>
                                     <Border Grid.Column="1" Padding="4, 0">
-                                        <cc:SelectableTextBlock Text="{Binding Title}"/>
+                                        <cc:SelectableTextBlock Text="{Binding Content.Title}" IsSelected="{Binding IsPlaying}"/>
                                     </Border>
                                     <Border Grid.Column="2" Padding="4, 0">
-                                        <cc:SelectableTextBlock Text="{Binding Time}"/>
+                                        <cc:SelectableTextBlock Text="{Binding Content.Time}" IsSelected="{Binding IsPlaying}"/>
                                     </Border>
-                                    <cc:SelectableTextBlock Grid.Column="3" Text="{Binding TimesHeard}"/>
-                                    <cc:SelectableTextBlock Grid.Column="4" Text="{Binding Composer}"/>
+                                    <cc:SelectableTextBlock Grid.Column="3" Text="{Binding Content.TimesHeard}" IsSelected="{Binding IsPlaying}"/>
+                                    <cc:SelectableTextBlock Grid.Column="4" Text="{Binding Content.Composer}" IsSelected="{Binding IsPlaying}"/>
                                 </Grid>
                             </HierarchicalDataTemplate>
                         </multiSelectionTree:MultipleSelectionTreeView.ItemTemplate>

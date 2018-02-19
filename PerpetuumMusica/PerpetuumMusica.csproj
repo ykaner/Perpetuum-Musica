@@ -61,7 +61,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Playable.cs" />
-    <Compile Include="Model\Playlist.cs" />
+    <Compile Include="Model\PlaylistItem.cs" />
     <Compile Include="ViewModel\Commands\OpenAddMenuCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchCommand.cs" />
     <Compile Include="ViewModel\Commands\ToggleMuteCommand.cs" />

@@ -8,16 +8,16 @@ namespace PerpetuumMusica.Model
 {
     public class Playable
     {
-        public int ListIndex { get; set; }
+        //public int ListIndex { get; set; }
         public string Title { get; set; }
         public TimeSpan Time { get; set; }
         public int TimesHeard { get; set; }
         public string Composer { get; set; }
-        public List<Playable> List { get; set; }
+        public List<PlaylistItem> List { get; set; }
 
-        public Playable(int listIndex, string title, TimeSpan time, int timesHeard, string composer, List<Playable> list)
+        public Playable(string title, TimeSpan time, int timesHeard, string composer, List<PlaylistItem> list)
         {
-            ListIndex = listIndex;
+            //ListIndex = listIndex;
             Title = title;
             Time = time;
             TimesHeard = timesHeard;

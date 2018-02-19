@@ -154,7 +154,7 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
-        public List<Playable> Playlist
+        public List<PlaylistItem> Playlist
         {
             get { return Model.MainList; }
         }

@@ -20,7 +20,7 @@
         <Setter Property="Foreground" Value="Red"/>
     </Style>
     
-    <Style TargetType="cc:SelectableTextBlock" BasedOn="{StaticResource TextBlockStyle}">
+    <Style TargetType="cc:SelectableTextBlock" BasedOn="{StaticResource TextBlockStyle}" x:Key="BoldSelected">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource main_color}"/>
@@ -28,7 +28,13 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
+    <Style TargetType="cc:SelectableTextBlock" BasedOn="{StaticResource TextBlockStyle}" >
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource main_color}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <!--<Style TargetType="Border" x:Key="Highlightable">
         <Setter Property="Background" Value="Transparent"/>
         <Style.Triggers>

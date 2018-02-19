@@ -12,25 +12,28 @@ namespace PerpetuumMusica.Model
     public class Model
     {
         public AudioPlayer Player = new AudioPlayer();
-        public List<Playable> MainList = new List<Playable>()
+        public List<PlaylistItem> MainList = new List<PlaylistItem>()
         {
-            new Playable(1, "The little mermaid: Original Broadway Cast Recording", new TimeSpan(1, 46, 0), 14, "Alan Menken", null),
-            new Playable(2, "Frozen (Original Motion Picture Soundtrack)", new TimeSpan(2, 9, 0), 21, "Kristen Anderson, Robert Lopez", null),
-            new Playable(3, "Aladdin Musical", new TimeSpan(1, 23, 0), 21, "Alan Menken", new List<Playable>()
+            new PlaylistItem(1, new Playable("The little mermaid: Original Broadway Cast Recording", new TimeSpan(1, 46, 0), 14, "Alan Menken", null)),
+            new PlaylistItem(2, new Playable("Frozen (Original Motion Picture Soundtrack)", new TimeSpan(2, 9, 0), 21, "Kristen Anderson, Robert Lopez", null)),
+            new PlaylistItem(3, new Playable("Aladdin Musical", new TimeSpan(1, 23, 0), 21, "Alan Menken", new List<PlaylistItem>()
             {
-                new Playable(1, "One Jump ahead", new TimeSpan(1, 23, 0), 21, "Alan Menken", null)
-            })
+                new PlaylistItem(1, new Playable("One Jump ahead", new TimeSpan(1, 23, 0), 21, "Alan Menken", null) )
+            }))
         };
 
         private bool isPlaying = true;
         private double location = 0;
-        private string sampleSongUri = @"C:\Users\Shachar\Music\Soundtrack\Aladdin - Soundtrack Special Edition [DC Downloads]\03 - One Jump Ahead.mp3";
+        private string sampleSongUri = @"C:\Users\ranha\Documents\GitHub\Perpetuum-Musica\ExampleAudioFiles\One Jump Ahead Lyrics.mp3";
 
         public Model()
         {
             Volume = 70;
             IsPlaying = false;
             Player.SetUri(sampleSongUri);
+
+            //for testing
+            MainList[0].IsPlaying = true;
         }
 
         public bool IsPlaying
