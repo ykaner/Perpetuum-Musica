@@ -235,7 +235,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="{x:Type cc:NestedListView}"
+    <Style x:Key="{x:Type ListView}"
        TargetType="ListView">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
           Value="Hidden" />
@@ -260,11 +260,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type cc:NestedListViewItem}"
-       TargetType="cc:NestedListViewItem">
+    <Style x:Key="{x:Type ListViewItem}"
+       TargetType="ListViewItem">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="cc:NestedListViewItem">
+                <ControlTemplate TargetType="ListViewItem">
                     <Border x:Name="Border"
                             Padding="0"
                             SnapsToDevicePixels="true"
@@ -291,25 +291,25 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
-                            <Grid.RowDefinitions>
+                            <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                            </Grid.ColumnDefinitions>-->
                             
-                            <Rectangle Grid.Column="1" Fill="White" x:Name="highlightRect" Opacity="0" RadiusX="2" RadiusY="2"/>
-                            <Rectangle Grid.Column="1" Fill="White" x:Name="SelectedRect" Opacity="0" RadiusX="2" RadiusY="2"/>
+                            <Rectangle Fill="White" x:Name="highlightRect" Opacity="0" RadiusX="2" RadiusY="2"/>
+                            <Rectangle Fill="White" x:Name="SelectedRect" Opacity="0" RadiusX="2" RadiusY="2"/>
 
-                            <ToggleButton Name="Expander"
+                            <!--<ToggleButton Name="Expander"
                                           ClickMode="Press"
                                           IsChecked="{Binding IsExpanded}"
                                           Style="{StaticResource NestedListViewExpander}">
-                            </ToggleButton>
+                            </ToggleButton>-->
 
-                            <Grid Grid.Column="1" Margin="2,7">
+                            <Grid Margin="2,7">
                                 <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                             

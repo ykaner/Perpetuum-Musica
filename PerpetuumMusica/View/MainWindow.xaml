@@ -260,7 +260,6 @@
 
             <ScrollViewer Grid.Column="2" >
                 <StackPanel Margin="15" Grid.Column="2" Background="Transparent">
-
                     <Grid Name="PlaylistHeader" Height="170">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
@@ -281,24 +280,53 @@
                     </Grid>
 
                     <!-- playlist-->
-                    <cc:NestedListView
-                    Background="Transparent"
-                    ItemsSource="{Binding Path=Playlist}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ListIndex}"/>
-                                <GridViewColumn Header="TITLE" Width="250" DisplayMemberBinding="{Binding Title}"/>
-                                <GridViewColumn Header="TIME" Width="100" DisplayMemberBinding="{Binding Time}"/>
-                                <GridViewColumn Header="TIMES HEARD" Width="100" DisplayMemberBinding="{Binding TimesHeard}"/>
-                                <GridViewColumn Header="COMPOSER" Width="170" DisplayMemberBinding="{Binding Composer}"/>
-                            </GridView>
-                        </ListView.View>
-                    </cc:NestedListView>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ListView Grid.Column="1"
+                    Background="Transparent">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="    #" Width="50" DisplayMemberBinding="{Binding ListIndex}"/>
+                                    <GridViewColumn Header="TITLE" Width="250" DisplayMemberBinding="{Binding Title}"/>
+                                    <GridViewColumn Header="TIME" Width="100" DisplayMemberBinding="{Binding Time}"/>
+                                    <GridViewColumn Header="TIMES HEARD" Width="100" DisplayMemberBinding="{Binding TimesHeard}"/>
+                                    <GridViewColumn Header="COMPOSER" Width="170" DisplayMemberBinding="{Binding Composer}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
-                    <TreeView Background="Transparent">
-                        <TreeViewItem>
-                            <ListViewItem />
-                        </TreeViewItem>
+                    </Grid>
+                    <TreeView Background="Transparent"
+                              ItemsSource="{Binding Path=Playlist}"
+                              ItemContainerStyle="{StaticResource PlaylistViewItem}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="x:Type self:MenuItem" ItemsSource="{Binding List}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="170"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Padding="2, 0">
+                                        <cc:SelectableTextBlock Text="{Binding ListIndex}" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="1" Padding="4, 0">
+                                        <cc:SelectableTextBlock Text="{Binding Title}"/>
+                                    </Border>
+                                    <Border Grid.Column="2" Padding="4, 0">
+                                        <cc:SelectableTextBlock Text="{Binding Time}"/>
+                                    </Border>
+                                    <cc:SelectableTextBlock Grid.Column="3" Text="{Binding TimesHeard}"/>
+                                    <cc:SelectableTextBlock Grid.Column="4" Text="{Binding Composer}"/>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+
                     </TreeView>
                     <!--<DataGrid ItemsSource="{Binding Path=Playlist}"
                               AutoGenerateColumns="False">

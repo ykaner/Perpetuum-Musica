@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Playable.cs" />
+    <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\Commands\OpenAddMenuCommand.cs" />
     <Compile Include="ViewModel\Commands\SearchCommand.cs" />
     <Compile Include="ViewModel\Commands\ToggleMuteCommand.cs" />
@@ -70,11 +71,16 @@
     <Compile Include="View\CustomControls\NestedListViewItem.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
     <Compile Include="View\CustomControls\pmSlider.cs" />
+    <Compile Include="View\CustomControls\SelectableBorder.cs" />
     <Compile Include="View\CustomControls\SelectableTextBlock.cs" />
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MediaResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\BorderStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,6 +200,9 @@
       <Project>{9485415c-5117-40f6-a97e-e927c839edcf}</Project>
       <Name>Audio Player</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

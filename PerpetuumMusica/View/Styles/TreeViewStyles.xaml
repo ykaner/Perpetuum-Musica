@@ -66,27 +66,32 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Rectangle x:Name="fill"
-                                   Fill="Gray"
+                        
+                        <!--<Rectangle x:Name="fill"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
                                    RadiusX="2"
-                                   RadiusY="2"
-                                   Opacity="0">
-                            <!--<Rectangle.Triggers>
+                                   RadiusY="2">
+                            --><!--<Rectangle.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
                                     <Setter Property="Opacity" Value="0.35"/>
                                 </Trigger>
-                            </Rectangle.Triggers>-->
-                        </Rectangle>
+                            </Rectangle.Triggers>--><!--
+                        </Rectangle>-->
                         <ToggleButton x:Name="Expander"
                                       ClickMode="Press"
                                       IsChecked="{Binding IsExpanded, 
                                             RelativeSource={RelativeSource TemplatedParent}}"
                                       Style="{StaticResource Expander}"/>
-                        <ContentPresenter x:Name="PART_Header"
-                                          Grid.Column="1"
+                        <Border  Style="{StaticResource Highlightable}"
+                                Padding="3"
+                                CornerRadius="2"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="1">
+                            <ContentPresenter x:Name="PART_Header"
                                           ContentSource="Header"/>
+                        </Border>
+                        
                         <ItemsPresenter x:Name="ItemsHost"
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -122,5 +127,73 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="TreeViewItem" x:Key="PlaylistViewItem">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeViewItem">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="19"
+                              Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ToggleButton x:Name="Expander"
+                                      ClickMode="Press"
+                                      IsChecked="{Binding IsExpanded, 
+                                            RelativeSource={RelativeSource TemplatedParent}}"
+                                      Style="{StaticResource Expander}"/>
+                        <Border
+                                CornerRadius="2"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="1">
+                            <StackPanel>
+                                <Rectangle Height="1" Fill="{StaticResource lines_color}" Width="Auto"/>
+                                <Border Padding="3, 8">
+                                    <ContentPresenter x:Name="PART_Header"
+                                          ContentSource="Header"/>
+                                </Border>
+
+                            </StackPanel>
+
+                        </Border>
+
+                        <ItemsPresenter x:Name="ItemsHost"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Visibility="Collapsed"/>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ExpansionStates">
+                                <VisualState x:Name="Expanded">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                 Storyboard.TargetName="ItemsHost">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                            Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Collapsed"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="Expander" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TreeView}">
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 </ResourceDictionary>

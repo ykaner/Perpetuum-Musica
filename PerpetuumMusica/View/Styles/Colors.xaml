@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="popup_menu_color">#565656</SolidColorBrush>
     <SolidColorBrush x:Key="lines_color">#222326</SolidColorBrush>
     <SolidColorBrush x:Key="background_color">#131313</SolidColorBrush>
+    <SolidColorBrush x:Key="Highlight_color">#404040</SolidColorBrush>
     
     <!-- fonts-->
     <sys:Double x:Key="font_size">16</sys:Double>

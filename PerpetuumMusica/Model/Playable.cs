@@ -13,14 +13,16 @@ namespace PerpetuumMusica.Model
         public TimeSpan Time { get; set; }
         public int TimesHeard { get; set; }
         public string Composer { get; set; }
+        public List<Playable> List { get; set; }
 
-        public Playable(int listIndex, string title, TimeSpan time, int timesHeard, string composer)
+        public Playable(int listIndex, string title, TimeSpan time, int timesHeard, string composer, List<Playable> list)
         {
             ListIndex = listIndex;
             Title = title;
             Time = time;
             TimesHeard = timesHeard;
             Composer = composer;
+            List = list;
         }
 
     }

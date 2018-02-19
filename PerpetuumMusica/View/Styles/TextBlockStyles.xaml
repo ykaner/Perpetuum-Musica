@@ -28,4 +28,14 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!--<Style TargetType="Border" x:Key="Highlightable">
+        <Setter Property="Background" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="Rectangle.IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource Highlight_color}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>-->
+
 </ResourceDictionary>
