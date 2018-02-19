@@ -16,6 +16,10 @@
     </Style>
     <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
 
+    <Style TargetType="TextBlock" x:Key="ColumnHeaderTextStyle">
+        <Setter Property="Foreground" Value="Red"/>
+    </Style>
+    
     <Style TargetType="cc:SelectableTextBlock" BasedOn="{StaticResource TextBlockStyle}">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">

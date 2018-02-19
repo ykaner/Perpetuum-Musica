@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050" 
-        Background="Black">
+        Background="{StaticResource background_color}">
     <!---->
 
 
@@ -255,44 +255,59 @@
 
             </StackPanel>
 
-            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="{StaticResource view_color}"/>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="Transparent"/>
             <!--view area-->
-            <StackPanel Margin="15" Grid.Column="2" Background="Black">
-                
-                <Grid Name="PlaylistHeader" Height="170">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="{StaticResource sample}"/>
-                    <StackPanel Margin="15" Grid.Column="1">
-                        <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
-                        <TextBlock FontSize="42" Text="Disney"/>
-                        <TextBlock FontSize="15" FontWeight="Bold">By Various Artists</TextBlock>
-                        <StackPanel Margin="2, 15" Orientation="Horizontal">
-                            <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
+
+            <ScrollViewer Grid.Column="2" >
+                <StackPanel Margin="15" Grid.Column="2" Background="Transparent">
+
+                    <Grid Name="PlaylistHeader" Height="170">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{StaticResource sample}"/>
+                        <StackPanel Margin="15" Grid.Column="1">
+                            <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
+                            <TextBlock FontSize="42" Text="Disney"/>
+                            <TextBlock FontSize="15" FontWeight="Bold">By Various Artists</TextBlock>
+                            <StackPanel Margin="2, 15" Orientation="Horizontal">
+                                <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
                                          Content="{Binding Path=ToggleButtonText}"
                                          Command="{Binding Path=TogglePlayCommand}"/>
-                        </StackPanel>
+                            </StackPanel>
 
-                    </StackPanel>
-                </Grid>
-                
-                <!-- playlist-->
-                <!--<ListView
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- playlist-->
+                    <cc:NestedListView
                     Background="Transparent"
                     ItemsSource="{Binding Path=Playlist}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="#" Width="50"/>
-                            <GridViewColumn Header="TITLE" Width="Auto" DisplayMemberBinding="{Binding Title}"/>
-                            <GridViewColumn Header="TIME" Width="100" DisplayMemberBinding="{Binding Time}"/>
-                            <GridViewColumn Header="TIMES HEARD" Width="100" DisplayMemberBinding="{Binding TimesHeard}"/>
-                            <GridViewColumn Header="COMPOSER" Width="150" DisplayMemberBinding="{Binding Composer}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>-->
-            </StackPanel>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ListIndex}"/>
+                                <GridViewColumn Header="TITLE" Width="250" DisplayMemberBinding="{Binding Title}"/>
+                                <GridViewColumn Header="TIME" Width="100" DisplayMemberBinding="{Binding Time}"/>
+                                <GridViewColumn Header="TIMES HEARD" Width="100" DisplayMemberBinding="{Binding TimesHeard}"/>
+                                <GridViewColumn Header="COMPOSER" Width="170" DisplayMemberBinding="{Binding Composer}"/>
+                            </GridView>
+                        </ListView.View>
+                    </cc:NestedListView>
+
+                    <TreeView Background="Transparent">
+                        <TreeViewItem>
+                            <ListViewItem />
+                        </TreeViewItem>
+                    </TreeView>
+                    <!--<DataGrid ItemsSource="{Binding Path=Playlist}"
+                              AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="TITLE"/>
+                        </DataGrid.Columns>
+                    </DataGrid>-->
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
     </DockPanel>

@@ -66,6 +66,8 @@
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
+    <Compile Include="View\CustomControls\NestedListView.cs" />
+    <Compile Include="View\CustomControls\NestedListViewItem.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
     <Compile Include="View\CustomControls\pmSlider.cs" />
     <Compile Include="View\CustomControls\SelectableTextBlock.cs" />
@@ -88,7 +90,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Styles\ListViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Styles\MenusStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\ScrollViewerStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
