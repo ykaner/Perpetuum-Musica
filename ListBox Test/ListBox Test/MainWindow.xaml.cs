@@ -12,9 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PerpetuumMusica.ViewModel;
 
-namespace PerpetuumMusica
+namespace ListBox_Test
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,7 +23,7 @@ namespace PerpetuumMusica
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel.ViewModel(); 
+            DataContext = new ViewModel();
         }
     }
 }
