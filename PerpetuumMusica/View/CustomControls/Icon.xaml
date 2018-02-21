@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Width="{Binding Path=Size}" Height="{Binding Path=Size}">
-        <Rectangle Fill="{StaticResource foreground_color}">
+        <Rectangle Fill="{Binding Path=Foreground}">
             <Rectangle.OpacityMask>
                 <ImageBrush ImageSource="{Binding Path=ImageSource}"/>
             </Rectangle.OpacityMask>
