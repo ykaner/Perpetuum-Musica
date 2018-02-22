@@ -109,7 +109,7 @@
                               >
                             <MenuItem Header="Playlist">
                                 <MenuItem.Icon>
-                                    <cc:Icon ImageSource="/View/Sources/playlist_icon.png"
+                                    <cc:Icon ImageSource="{StaticResource playlistIcon}"
                                              Size="22"/>
                                 </MenuItem.Icon>
                                 <MenuItem Header="New Playlist"/>
@@ -119,7 +119,7 @@
                                 </MenuItem>
                             <MenuItem Header="Track">
                                 <MenuItem.Icon>
-                                    <cc:Icon ImageSource="/View/Sources/track_icon.png"
+                                    <cc:Icon ImageSource="{StaticResource trackIcon}"
                                              Size="22"/>
                                 </MenuItem.Icon>
                             </MenuItem>
@@ -315,9 +315,70 @@
                                         <ColumnDefinition Width="100"/>
                                         <ColumnDefinition Width="170"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" Padding="2, 0">
-                                        <cc:SelectableTextBlock Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsPlaying}"/>
-                                    </Border>
+                                    <ToggleButton IsChecked="{Binding IsPlaying}">
+
+                                        <ToggleButton.Template>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <cc:SelectableTextBlock x:Name="Index" Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsPlaying}"/>
+                                                    <Grid x:Name="mouseOverIcons" Visibility="Hidden">
+                                                        <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                     Visibility="Visible"/>
+                                                        <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
+                                                    </Grid>
+                                                    <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup>
+                                                            <VisualState x:Name="Unchecked"/>
+                                                            <VisualState x:Name="Checked">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="playingIcon">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Visible}" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="Index">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                        <VisualStateGroup>
+                                                            <VisualState x:Name="Normal"/>
+                                                            <VisualState x:Name="MouseOver">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="mouseOverIcons">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Visible}" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="playingIcon">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="Index">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                        
+                                    </ToggleButton>
+                                    <Grid Grid.Column="0">
+
+                                        
+
+                                    </Grid>
+                                    
                                     <Border Grid.Column="1" Padding="4, 0">
                                         <cc:SelectableTextBlock Text="{Binding Content.Title}" IsSelected="{Binding IsPlaying}"/>
                                     </Border>

@@ -20,6 +20,7 @@
     <BitmapImage x:Key="trackIcon" UriSource="/View/Sources/track_icon.png"/>
     <BitmapImage x:Key="unbackIcon" UriSource="/View/Sources/unback_icon.png"/>
     <BitmapImage x:Key="viewIcon" UriSource="/View/Sources/view_icon.png"/>
+    <BitmapImage x:Key="playingIcon" UriSource="/View/Sources/playing_icon.png"/>
     
     <!-- volume logos-->
     <BitmapImage x:Key="volumeIcon" UriSource="/View/Sources/Volume_Icons/volume_icon.png"/>

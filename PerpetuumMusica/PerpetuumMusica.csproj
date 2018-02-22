@@ -176,6 +176,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="View\Sources\playing_icon.png" />
     <Resource Include="View\Sources\playlist_icon.png" />
     <Resource Include="View\Sources\track_icon.png" />
     <Resource Include="View\Sources\Volume_Icons\volume_icon.png" />

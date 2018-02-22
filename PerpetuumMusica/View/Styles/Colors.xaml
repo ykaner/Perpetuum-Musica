@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PerpetuumMusica.View.Styles"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls">
     <!--colors-->
     <SolidColorBrush x:Key="main_color">#F65A25</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_brighter">#f76a3b</SolidColorBrush>
@@ -17,5 +18,9 @@
     <!-- fonts-->
     <sys:Double x:Key="font_size">16</sys:Double>
     <sys:Double x:Key="large_font_size">20</sys:Double>
+
+    <Style TargetType="cc:Icon">
+        <Setter Property="Foreground" Value="{StaticResource foreground_color}"/>
+    </Style> 
     
 </ResourceDictionary>
