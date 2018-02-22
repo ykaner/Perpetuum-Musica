@@ -25,5 +25,10 @@ namespace ListBox_Test
             InitializeComponent();
             DataContext = new ViewModel();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button clicked!");
+        }
     }
 }

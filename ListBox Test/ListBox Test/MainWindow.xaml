@@ -6,20 +6,38 @@
         xmlns:local="clr-namespace:ListBox_Test"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Show!" 
+                    Command="{Binding ShowCommand}" 
+                    CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
+            <Button Content="Delete"
+                    Grid.Column="1"
+                    Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
+
+        </Grid>
     <StackPanel>
         <TextBlock Text="{Binding Name}"/>
-        <ListBox Name="List" ItemsSource="{Binding Items}" SelectionMode="Extended">
+        <ListBox Name="List" 
+                 ItemsSource="{Binding Items}" 
+                 SelectionMode="Extended">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel >
-                        <Button DockPanel.Dock="Left" Content="Show" Command="{Binding ShowCommand}"/>
+                        <Button DockPanel.Dock="Left" Content="Show" Command="{Binding DataContext.ShowCommand, ElementName=List}"  CommandParameter="{Binding}"/>
                         <TextBlock Text="{Binding }"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Show!" Command="{Binding ShowCommand}" CommandParameter="{Binding ElementName=List, Path=SelectedItem}"/>
-        <TextBlock Text="{Binding ElementName=List, Path=SelectedIndex}"/>
+        
 
     </StackPanel>
+        
+    </DockPanel>
 </Window>
