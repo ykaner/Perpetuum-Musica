@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ListBox_Test
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddDialog.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddDialog : Window
     {
-        public MainWindow()
+        public AddDialog()
         {
             InitializeComponent();
-            DataContext = new ViewModel();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Button clicked!");
-        }
-
-
     }
 }

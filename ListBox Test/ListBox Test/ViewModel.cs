@@ -19,39 +19,89 @@ namespace ListBox_Test
         public ObservableCollection<string> Items { get; set; }
         private ICommand _showCommand;
         private ICommand _deleteCommand;
+        private ICommand _showOneCommand;
+        private ICommand _helloWorldCOmmand;
+        private ICommand _addCommand;
         public ICommand ShowCommand => _showCommand ?? (_showCommand = new Command(Show, CanShow));
+        public ICommand ShowOneCommand => _showOneCommand ?? (_showOneCommand = new Command(ShowOne));
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new Command(Delete, CanShow));
+        public ICommand AddCommand => _addCommand ?? (_addCommand = new Command(Insert));
 
-        public void Show(object item)
+        public ICommand HelloWorldCommand => _helloWorldCOmmand ?? (_helloWorldCOmmand = new Command(HelloWorld));
+
+        public int SelectedIndex { get; set; }
+
+        private List<string> objectToList(object param)
         {
-            MessageBox.Show(item.ToString());
+            System.Collections.IList list = (System.Collections.IList)param;
+            var collection = list.Cast<string>();
+            return collection.ToList<string>();
+        }
 
+        public void Show(object param)
+        {
+            var items = objectToList(param);
+
+            string output = "Selected: \n";
+            foreach (string item in items)
+            {
+                output += item + "\n"; 
+            }
+            MessageBox.Show(output);
+        }
+        public void ShowOne(object param)
+        {
+            MessageBox.Show(param.ToString());
         }
         public bool CanShow(object paramater)
         {
             if (paramater == null) return false;
 
-            var itemsList = (paramater as ObservableCollection<object>).Cast<string>().ToList();
+            System.Collections.IList items = (System.Collections.IList)paramater;
+            var collection = items.Cast<string>();
 
-            if (itemsList.Count == 0) return false;
+            if (items.Count == 0) return false;
             else return true;
         }
-        public bool CanDelete(object item)
-        {
-            return item != null;
-        }
         
-        public void Delete(object itemIndex)
+        public void Delete(object param)
         {
-            int i = (int)itemIndex; 
-            Items.RemoveAt(i);
-            OnPropertyChanged("Items");
+            var items = objectToList(param);
+
+            foreach (string item in items)
+            {
+                Items.Remove(item);
+            }
             
+        }
+        public void Insert(object param)
+        {
+            AddDialog dialog = new AddDialog();
+            dialog.ShowDialog();
+            int i = (int)param;
+            if (i == -1)
+            {
+                Items.Add("untitled");
+                SelectedIndex = Items.Count - 1;
+            }
+            else
+            {
+                Items.Insert(i + 1, "untitled");
+                SelectedIndex = i + 1;
+            }
+            OnPropertyChanged("SelectedIndex");
+
+
+        }
+        public void HelloWorld(object param)
+        {
+            MessageBox.Show("Hello World");
         }
 
         public ViewModel()
         {
             Name = "Me Willie";
+            SelectedIndex = -1;
             Items = new ObservableCollection<string> { "Klaymen", "Hoborg", "Klogg", "Willie Trombone" };
         }
 

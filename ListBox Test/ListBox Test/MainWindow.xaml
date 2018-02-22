@@ -5,33 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListBox_Test"
         mc:Ignorable="d"
+        x:Name="window"
         Title="MainWindow" Height="350" Width="525">
     <DockPanel>
+
+
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Show!" 
-                    Command="{Binding ShowCommand}" 
-                    CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
+            <Button Content="Show!" Command="{Binding ShowCommand}" CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
             <Button Content="Delete"
                     Grid.Column="1"
                     Command="{Binding DeleteCommand}"
                     CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
+            <Button Content="Add"
+                    Grid.Column="2"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding ElementName=List, Path=SelectedIndex}"/>
+
 
         </Grid>
     <StackPanel>
         <TextBlock Text="{Binding Name}"/>
-        <ListBox Name="List" 
+            <ListBox Name="List" 
                  ItemsSource="{Binding Items}" 
-                 SelectionMode="Extended">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel >
-                        <Button DockPanel.Dock="Left" Content="Show" Command="{Binding DataContext.ShowCommand, ElementName=List}"  CommandParameter="{Binding}"/>
+                 SelectionMode="Extended"
+                 HorizontalContentAlignment="Stretch"
+                 VerticalContentAlignment="Stretch"
+                 SelectedIndex="{Binding SelectedIndex}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.ShowOneCommand, ElementName=List}" CommandParameter="{Binding }"/>
+                            </Grid.InputBindings>
+                            <!--<Button DockPanel.Dock="Left" Content="Show" Command="{Binding DataContext.ShowOneCommand, ElementName=List}" CommandParameter="{Binding }"/>-->
                         <TextBlock Text="{Binding }"/>
-                    </DockPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
