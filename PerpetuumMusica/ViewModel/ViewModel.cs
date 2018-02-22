@@ -11,6 +11,7 @@ using PerpetuumMusica.Model;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PerpetuumMusica.ViewModel
 {
@@ -22,11 +23,11 @@ namespace PerpetuumMusica.ViewModel
         public ViewModel()
         {
             this.model = new Model.Model();
-            //Set Commands
-            this.TogglePlayCommand = new TogglePlayCommand(this);
-            this.SearchCommand = new SearchCommand(this);
-            this.ToggleMuteCommand = new ToggleMuteCommand(this);
-            this.OpenAddMenuCommand = new OpenAddMenuCommand(this);
+            ////Set Commands
+            //this.TogglePlayCommand = new TogglePlayCommand(this);
+            //this.SearchCommand = new SearchCommand(this);
+            //this.ToggleMuteCommand = new ToggleMuteCommand(this);
+            //this.OpenAddMenuCommand = new OpenAddMenuCommand(this);
 
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();
@@ -113,10 +114,17 @@ namespace PerpetuumMusica.ViewModel
         /// <summary>
         /// Commands
         /// </summary>
-        public TogglePlayCommand TogglePlayCommand { get; set; }
-        public SearchCommand SearchCommand { get; set; }
-        public ToggleMuteCommand ToggleMuteCommand { get; set; }
-        public OpenAddMenuCommand OpenAddMenuCommand { get; set; }
+        private ICommand _TogglePlayCommand;
+        public ICommand TogglePlayCommand => _TogglePlayCommand ?? (_TogglePlayCommand = new Command(TogglePlay));
+        private ICommand _PlayAtCommand;
+        public ICommand PlayAtCommand => _PlayAtCommand ?? (_PlayAtCommand = new Command(PlayAt));
+        private ICommand _SearchCommand;
+        public ICommand SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
+        private ICommand _ToggleMuteCommand;
+        public ICommand ToggleMuteCommand => _ToggleMuteCommand ?? (_ToggleMuteCommand = new Command(ToggleMute));
+        public ICommand OpenAddMenuCommand { get; set; }
+
+
         /// <summary>
         /// Bindees
         /// </summary>
@@ -156,7 +164,7 @@ namespace PerpetuumMusica.ViewModel
 
         public List<PlaylistItem> Playlist
         {
-            get { return Model.MainList; }
+            get { return Model.Playlist; }
         }
         public double TrackSliderLocation {
             get
@@ -196,7 +204,7 @@ namespace PerpetuumMusica.ViewModel
         }
 
         //Methods
-        public void TogglePlay()
+        public void TogglePlay(object param = null)
         {
             Model.TogglePlay();
             OnPropertyChanged("ToggleButtonIcon");
@@ -204,7 +212,13 @@ namespace PerpetuumMusica.ViewModel
 
             UpdateLocation();
         }
-        internal void ToggleMute()
+        public void PlayAt(object param)
+        {
+            MessageBox.Show("PlayAt");
+            int i = (int)param;
+            model.PlayAt(i);
+        }
+        internal void ToggleMute(object param = null)
         {
             Model.ToggleMute();
             OnPropertyChanged("Volume");
@@ -218,8 +232,10 @@ namespace PerpetuumMusica.ViewModel
                 OnPropertyChanged("TimeStamp");
             }
         }
-        public void Search(String query)
+        public void Search(object param)
         {
+            string query = (string)param;
+
             MessageBox.Show("Search Method: " + query);
         }
         public void OpenAddMenu()
