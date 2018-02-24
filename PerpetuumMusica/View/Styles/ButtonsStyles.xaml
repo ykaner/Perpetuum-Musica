@@ -89,6 +89,7 @@
                         <Ellipse x:Name="fillColor" Fill="{StaticResource foreground_color}" Width="40" Height="40" Opacity="0"/>
                         <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Size="30"/>
                     </Grid>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -99,7 +100,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type cc:IconButton}">
                     <Grid>
-                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Size="30"/>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="Opacity" Duration="0" To="0.5"/>
+                                    </Storyboard>
+                                </VisualState>
+                                
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <cc:Icon x:Name="Icon" ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Size="30"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

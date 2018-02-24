@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DemoData.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Playable.cs" />
     <Compile Include="Model\PlaylistItem.cs" />

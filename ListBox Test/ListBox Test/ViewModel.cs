@@ -13,10 +13,9 @@ namespace ListBox_Test
     public class ViewModel : INotifyPropertyChanged
     {
 
-
-        //public ICommand ShowCommand { get; set; }
         public string Name { get; set; }
-        public ObservableCollection<string> Items { get; set; }
+        public ObservableCollection<Item> Items { get; set; }
+
         private ICommand _showCommand;
         private ICommand _deleteCommand;
         private ICommand _showOneCommand;
@@ -26,16 +25,36 @@ namespace ListBox_Test
         public ICommand ShowOneCommand => _showOneCommand ?? (_showOneCommand = new Command(ShowOne));
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new Command(Delete, CanShow));
         public ICommand AddCommand => _addCommand ?? (_addCommand = new Command(Insert));
+        private ICommand _EditCommand;
+        public ICommand EditCommand => _EditCommand ?? (_EditCommand = new Command(Edit, IsOneSelected));
+
 
         public ICommand HelloWorldCommand => _helloWorldCOmmand ?? (_helloWorldCOmmand = new Command(HelloWorld));
 
         public int SelectedIndex { get; set; }
 
-        private List<string> objectToList(object param)
+        private List<Item> objectToList(object param)
         {
+            if (param == null) return null;
+            
+            //else:
             System.Collections.IList list = (System.Collections.IList)param;
-            var collection = list.Cast<string>();
-            return collection.ToList<string>();
+            var collection = list.Cast<Item>();
+            return collection.ToList<Item>();
+        }
+
+        public bool IsOneSelected(object param)
+        {
+            if (param == null) return false;
+
+            var selected = objectToList(param);
+            if (selected.Count == 1) return true;
+            else return false;
+        }
+        public void Edit(object param)
+        {
+            List<Item> selected = objectToList(param);
+            selected[0].Name = "edited";
         }
 
         public void Show(object param)
@@ -43,9 +62,9 @@ namespace ListBox_Test
             var items = objectToList(param);
 
             string output = "Selected: \n";
-            foreach (string item in items)
+            foreach (Item item in items)
             {
-                output += item + "\n"; 
+                output += item.ToString() + "\n"; 
             }
             MessageBox.Show(output);
         }
@@ -58,7 +77,7 @@ namespace ListBox_Test
             if (paramater == null) return false;
 
             System.Collections.IList items = (System.Collections.IList)paramater;
-            var collection = items.Cast<string>();
+            var collection = items.Cast<Item>();
 
             if (items.Count == 0) return false;
             else return true;
@@ -68,7 +87,7 @@ namespace ListBox_Test
         {
             var items = objectToList(param);
 
-            foreach (string item in items)
+            foreach (Item item in items)
             {
                 Items.Remove(item);
             }
@@ -81,12 +100,12 @@ namespace ListBox_Test
             int i = (int)param;
             if (i == -1)
             {
-                Items.Add("untitled");
+                Items.Add(new Item("untitled"));
                 SelectedIndex = Items.Count - 1;
             }
             else
             {
-                Items.Insert(i + 1, "untitled");
+                Items.Insert(i + 1, new Item("untitled"));
                 SelectedIndex = i + 1;
             }
             OnPropertyChanged("SelectedIndex");
@@ -102,7 +121,13 @@ namespace ListBox_Test
         {
             Name = "Me Willie";
             SelectedIndex = -1;
-            Items = new ObservableCollection<string> { "Klaymen", "Hoborg", "Klogg", "Willie Trombone" };
+            Items = new ObservableCollection<Item>
+            {
+                new Item("Klaymen"),
+                new Item("Hoborg"),
+                new Item("Klogg"),
+                new Item("Willie Trombone")
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

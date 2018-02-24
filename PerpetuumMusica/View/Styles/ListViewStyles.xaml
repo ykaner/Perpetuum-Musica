@@ -310,7 +310,11 @@
                             </ToggleButton>-->
 
                             <Grid Margin="2,7">
-                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" >
+                                    <GridViewRowPresenter.InputBindings>
+                                        
+                                    </GridViewRowPresenter.InputBindings>
+                                </GridViewRowPresenter>
                             </Grid>
                             
                             <StackPanel Grid.ColumnSpan="2" Margin="0">

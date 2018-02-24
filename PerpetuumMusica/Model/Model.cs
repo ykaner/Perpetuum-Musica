@@ -1,6 +1,7 @@
 ﻿using Player;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PerpetuumMusica.Model
 {
@@ -8,16 +9,10 @@ namespace PerpetuumMusica.Model
     {
         public AudioPlayer Player = new AudioPlayer();
 
-        public List<PlaylistItem> Playlist = new List<PlaylistItem>()
-        {
-            new PlaylistItem(1, new Playable("The little mermaid: Original Broadway Cast Recording", new TimeSpan(1, 46, 0), 14, "Alan Menken", null)),
-            new PlaylistItem(2, new Playable("Frozen (Original Motion Picture Soundtrack)", new TimeSpan(2, 9, 0), 21, "Kristen Anderson, Robert Lopez", null)),
-            new PlaylistItem(3, new Playable("Aladdin Musical", new TimeSpan(1, 23, 0), 21, "Alan Menken", new List<PlaylistItem>()
-            {
-                new PlaylistItem(1, new Playable("One Jump ahead", new TimeSpan(1, 23, 0), 21, "Alan Menken", null) )
-            }))
-        };
-        private int currentlyPlayingIndex = -1; //-1 note nothing is played;
+        
+        //public int currentlyPlayingIndex = -1; //-1 note nothing is played;
+        private PlaylistItem currentlyPlayingItem { get; set; } 
+
 
         private bool isPlaying = true;
         private double location = 0;
@@ -30,7 +25,7 @@ namespace PerpetuumMusica.Model
             Player.SetUri(sampleSongUri);
 
             //for testing
-            PlayAt(0);
+            currentlyPlayingItem = DemoData.DemoPlaylist[0];
         }
 
         public bool IsPlaying
@@ -76,13 +71,13 @@ namespace PerpetuumMusica.Model
 
             IsPlaying = !IsPlaying;
         }
-        public void PlayAt(int i)
+        public void PlayAt(PlaylistItem target)
         {
-            if (currentlyPlayingIndex != -1)
-                Playlist[currentlyPlayingIndex].IsPlaying = false;
+            if (currentlyPlayingItem != null)
+                currentlyPlayingItem.IsPlaying = false;
 
-            Playlist[i].IsPlaying = true;
-            currentlyPlayingIndex = i;
+            target.IsPlaying = true;
+            currentlyPlayingItem = target;
         }
         internal void ToggleMute()
         {

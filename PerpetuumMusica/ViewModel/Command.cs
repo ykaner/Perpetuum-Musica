@@ -34,6 +34,11 @@ namespace PerpetuumMusica.ViewModel
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+        public void RaiseCanExecuteChanged()
+        {
+            if ( CommandManager.RequerySuggested != null )
+
+        }
 
         public void Execute(object parameter)
         {

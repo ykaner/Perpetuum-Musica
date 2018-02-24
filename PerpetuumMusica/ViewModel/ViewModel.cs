@@ -64,6 +64,10 @@ namespace PerpetuumMusica.ViewModel
             //Init volume
             Volume = 80;
 
+            //fortesting:
+            ShowedItem = DemoData.DemoItem;
+           
+
         }
 
         //static private string sourceUri = @"C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View\\Sources\\";
@@ -122,6 +126,13 @@ namespace PerpetuumMusica.ViewModel
         public ICommand SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
         private ICommand _ToggleMuteCommand;
         public ICommand ToggleMuteCommand => _ToggleMuteCommand ?? (_ToggleMuteCommand = new Command(ToggleMute));
+        private ICommand _OpenItemCommand;
+        public ICommand OpenItemCommand => _OpenItemCommand ?? (_OpenItemCommand = new Command(OpenItem));
+        private ICommand _HistoryBackCommand;
+        public ICommand HistoryBackCommand => _HistoryBackCommand ?? (_HistoryBackCommand = new Command(HistoryBack, CanGoBack));
+        private ICommand _HistoryForewardCommand;
+        public ICommand HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
+
         public ICommand OpenAddMenuCommand { get; set; }
 
 
@@ -162,10 +173,11 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
-        public List<PlaylistItem> Playlist
-        {
-            get { return Model.Playlist; }
-        }
+        public PlaylistItem ShowedItem { get; set; }
+        private Stack<PlaylistItem> ShowedItemHistory = new Stack<PlaylistItem>();
+        private Stack<PlaylistItem> ShowedItemFuture = new Stack<PlaylistItem>(); 
+        
+        //public ObservableCollection<PlaylistItem> ShowedPlaylist { get; set; }
         public double TrackSliderLocation {
             get
             {
@@ -214,9 +226,37 @@ namespace PerpetuumMusica.ViewModel
         }
         public void PlayAt(object param)
         {
-            MessageBox.Show("PlayAt");
-            int i = (int)param;
-            model.PlayAt(i);
+            PlaylistItem target = (PlaylistItem)param;
+            model.PlayAt(target); 
+            OnPropertyChanged("Playlist");
+            OnPropertyChanged("CurrentlyPlayingIndex");
+        }
+        public void OpenItem(object param)
+        {
+            ShowedItem = (PlaylistItem)param;
+            OnPropertyChanged("ShowedItem");
+            OnPropertyChanged("HistoryBackCommand");
+        }
+        //History Methods
+        public bool CanGoBack(object param)
+        {
+            return (ShowedItemHistory.Count != 0);
+        }
+        public bool CanGoForeward(object param)
+        {
+            return (ShowedItemFuture.Count != 0);
+        } 
+        public void HistoryBack(object param)
+        {
+            ShowedItemFuture.Push(ShowedItem);
+            ShowedItem = ShowedItemHistory.Pop();
+            OnPropertyChanged("ShowedItem");
+        }
+        public void HistoryForeward(object param)
+        {
+            ShowedItemHistory.Push(ShowedItem);
+            ShowedItem = ShowedItemFuture.Pop();
+            OnPropertyChanged("ShowedItem");
         }
         internal void ToggleMute(object param = null)
         {

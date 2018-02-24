@@ -58,6 +58,7 @@
       <DependentUpon>AddDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Command.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="AddDialog.xaml">
       <SubType>Designer</SubType>
