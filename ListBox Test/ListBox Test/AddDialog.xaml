@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListBox_Test"
         mc:Ignorable="d"
-        Title="AddDialog" Height="160.651" Width="300">
-    <Grid>
-        
+        Title="Insert New Name" Height="160.651" Width="368.343"
+        ResizeMode="NoResize">
+    <Grid Margin="15" FocusManager.FocusedElement="{Binding ElementName=Box}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="1">Please insert a new name:</Label>
+        <TextBox x:Name="Box" Grid.Column="1" Grid.Row="1" MinWidth="250" Text="{Binding Answer}"/>
+
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button IsDefault="True" Name="btnDialogOk" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+            <Button IsCancel="True" MinWidth="60">_Cancel</Button>
+        </WrapPanel>
     </Grid>
 </Window>

@@ -15,13 +15,14 @@ using System.Windows.Shapes;
 namespace ListBox_Test
 {
     /// <summary>
-    /// Interaction logic for AddDialog.xaml
+    /// Interaction logic for AddDialogWindow.xaml
     /// </summary>
     public partial class AddDialog : Window
     {
-        public AddDialog()
+        public AddDialog(AddDialogViewModel vm)
         {
             InitializeComponent();
+            this.DataContext = vm;
         }
     }
 }

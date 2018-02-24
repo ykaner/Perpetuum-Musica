@@ -76,8 +76,9 @@ namespace ListBox_Test
         }
         public void Insert(object param)
         {
-            AddDialog dialog = new AddDialog();
+            AddDialogViewModel dialog = new AddDialogViewModel();
             dialog.ShowDialog();
+
             int i = (int)param;
             if (i == -1)
             {
