@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:PerpetuumMusica.View.Styles"
                     xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls">
 
-    <Style x:Key="NestedListViewExpander"
+    <!--<Style x:Key="NestedListViewExpander"
            TargetType="ToggleButton">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -48,7 +48,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     
     <Style x:Key="{x:Static GridView.GridViewScrollViewerStyleKey}"
        TargetType="ScrollViewer">
@@ -310,7 +310,11 @@
                             </ToggleButton>-->
 
                             <Grid Margin="2,7">
-                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" >
+                                    <GridViewRowPresenter.InputBindings>
+                                        
+                                    </GridViewRowPresenter.InputBindings>
+                                </GridViewRowPresenter>
                             </Grid>
                             
                             <StackPanel Grid.ColumnSpan="2" Margin="0">

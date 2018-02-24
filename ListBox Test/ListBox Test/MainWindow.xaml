@@ -15,8 +15,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Show!" Command="{Binding ShowCommand}" CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
+            <Button Content="Show!" 
+                    Command="{Binding ShowCommand}" 
+                    CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
             <Button Content="Delete"
                     Grid.Column="1"
                     Command="{Binding DeleteCommand}"
@@ -25,6 +28,10 @@
                     Grid.Column="2"
                     Command="{Binding AddCommand}"
                     CommandParameter="{Binding ElementName=List, Path=SelectedIndex}"/>
+            <Button Content="Edit"
+                    Grid.Column="3"
+                    Command="{Binding EditCommand}"
+                    CommandParameter="{Binding ElementName=List, Path=SelectedItems}"/>
 
 
         </Grid>
@@ -38,19 +45,19 @@
                  SelectedIndex="{Binding SelectedIndex}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid >
-                            <Grid.InputBindings>
+                        <StackPanel Orientation="Horizontal" >
+                            <StackPanel.InputBindings>
                                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.ShowOneCommand, ElementName=List}" CommandParameter="{Binding }"/>
-                            </Grid.InputBindings>
-                            <!--<Button DockPanel.Dock="Left" Content="Show" Command="{Binding DataContext.ShowOneCommand, ElementName=List}" CommandParameter="{Binding }"/>-->
-                        <TextBlock Text="{Binding }"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                            </StackPanel.InputBindings>
+                            <Button DockPanel.Dock="Left" Content="Show" Command="{Binding DataContext.ShowOneCommand, ElementName=List}" CommandParameter="{Binding }"/>
+                            <TextBlock Text="{Binding Name }"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         
 
-    </StackPanel>
+        </StackPanel>
         
     </DockPanel>
 </Window>

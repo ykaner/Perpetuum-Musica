@@ -5,36 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PerpetuumMusica.Model
+namespace ListBox_Test
 {
-    public class PlaylistItem : INotifyPropertyChanged
+    public class Item : INotifyPropertyChanged
     {
-        public int Index { get; set; }
-        private bool _IsPlaying;
-        public bool IsPlaying
+        string _Name;
+        public string Name
         {
             get
             {
-                return _IsPlaying;
+                return _Name;
             }
             set
             {
-                _IsPlaying = value;
-                OnPropertyChanged("IsPlaying");
+                _Name = value;
+                OnPropertyChanged("Name");
             }
         }
-        public Playable Content { get; set; }
 
-        public PlaylistItem(int index, Playable content)
+        public Item(string name)
         {
-            Index = index;
-            Content = content;
-        }
-
-        public PlaylistItem(Playable content)
-        {
-            Content = content;
-            Index = 0;
+            Name = name;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,4 +40,6 @@ namespace PerpetuumMusica.Model
             }
         }
     }
+
+
 }

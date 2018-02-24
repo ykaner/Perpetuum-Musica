@@ -11,6 +11,7 @@ using PerpetuumMusica.Model;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PerpetuumMusica.ViewModel
 {
@@ -22,11 +23,11 @@ namespace PerpetuumMusica.ViewModel
         public ViewModel()
         {
             this.model = new Model.Model();
-            //Set Commands
-            this.TogglePlayCommand = new TogglePlayCommand(this);
-            this.SearchCommand = new SearchCommand(this);
-            this.ToggleMuteCommand = new ToggleMuteCommand(this);
-            this.OpenAddMenuCommand = new OpenAddMenuCommand(this);
+            ////Set Commands
+            //this.TogglePlayCommand = new TogglePlayCommand(this);
+            //this.SearchCommand = new SearchCommand(this);
+            //this.ToggleMuteCommand = new ToggleMuteCommand(this);
+            //this.OpenAddMenuCommand = new OpenAddMenuCommand(this);
 
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();
@@ -62,6 +63,10 @@ namespace PerpetuumMusica.ViewModel
 
             //Init volume
             Volume = 80;
+
+            //fortesting:
+            ShowedItem = DemoData.DemoItem;
+           
 
         }
 
@@ -113,10 +118,24 @@ namespace PerpetuumMusica.ViewModel
         /// <summary>
         /// Commands
         /// </summary>
-        public TogglePlayCommand TogglePlayCommand { get; set; }
-        public SearchCommand SearchCommand { get; set; }
-        public ToggleMuteCommand ToggleMuteCommand { get; set; }
-        public OpenAddMenuCommand OpenAddMenuCommand { get; set; }
+        private ICommand _TogglePlayCommand;
+        public ICommand TogglePlayCommand => _TogglePlayCommand ?? (_TogglePlayCommand = new Command(TogglePlay));
+        private ICommand _PlayAtCommand;
+        public ICommand PlayAtCommand => _PlayAtCommand ?? (_PlayAtCommand = new Command(PlayAt));
+        private ICommand _SearchCommand;
+        public ICommand SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
+        private ICommand _ToggleMuteCommand;
+        public ICommand ToggleMuteCommand => _ToggleMuteCommand ?? (_ToggleMuteCommand = new Command(ToggleMute));
+        private ICommand _OpenItemCommand;
+        public ICommand OpenItemCommand => _OpenItemCommand ?? (_OpenItemCommand = new Command(OpenItem));
+        private ICommand _HistoryBackCommand;
+        public ICommand HistoryBackCommand => _HistoryBackCommand ?? (_HistoryBackCommand = new Command(HistoryBack, CanGoBack));
+        private ICommand _HistoryForewardCommand;
+        public ICommand HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
+
+        public ICommand OpenAddMenuCommand { get; set; }
+
+
         /// <summary>
         /// Bindees
         /// </summary>
@@ -154,10 +173,11 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
-        public List<PlaylistItem> Playlist
-        {
-            get { return Model.MainList; }
-        }
+        public PlaylistItem ShowedItem { get; set; }
+        private Stack<PlaylistItem> ShowedItemHistory = new Stack<PlaylistItem>();
+        private Stack<PlaylistItem> ShowedItemFuture = new Stack<PlaylistItem>(); 
+        
+        //public ObservableCollection<PlaylistItem> ShowedPlaylist { get; set; }
         public double TrackSliderLocation {
             get
             {
@@ -196,7 +216,7 @@ namespace PerpetuumMusica.ViewModel
         }
 
         //Methods
-        public void TogglePlay()
+        public void TogglePlay(object param = null)
         {
             Model.TogglePlay();
             OnPropertyChanged("ToggleButtonIcon");
@@ -204,7 +224,41 @@ namespace PerpetuumMusica.ViewModel
 
             UpdateLocation();
         }
-        internal void ToggleMute()
+        public void PlayAt(object param)
+        {
+            PlaylistItem target = (PlaylistItem)param;
+            model.PlayAt(target); 
+            OnPropertyChanged("Playlist");
+            OnPropertyChanged("CurrentlyPlayingIndex");
+        }
+        public void OpenItem(object param)
+        {
+            ShowedItem = (PlaylistItem)param;
+            OnPropertyChanged("ShowedItem");
+            OnPropertyChanged("HistoryBackCommand");
+        }
+        //History Methods
+        public bool CanGoBack(object param)
+        {
+            return (ShowedItemHistory.Count != 0);
+        }
+        public bool CanGoForeward(object param)
+        {
+            return (ShowedItemFuture.Count != 0);
+        } 
+        public void HistoryBack(object param)
+        {
+            ShowedItemFuture.Push(ShowedItem);
+            ShowedItem = ShowedItemHistory.Pop();
+            OnPropertyChanged("ShowedItem");
+        }
+        public void HistoryForeward(object param)
+        {
+            ShowedItemHistory.Push(ShowedItem);
+            ShowedItem = ShowedItemFuture.Pop();
+            OnPropertyChanged("ShowedItem");
+        }
+        internal void ToggleMute(object param = null)
         {
             Model.ToggleMute();
             OnPropertyChanged("Volume");
@@ -218,8 +272,10 @@ namespace PerpetuumMusica.ViewModel
                 OnPropertyChanged("TimeStamp");
             }
         }
-        public void Search(String query)
+        public void Search(object param)
         {
+            string query = (string)param;
+
             MessageBox.Show("Search Method: " + query);
         }
         public void OpenAddMenu()
