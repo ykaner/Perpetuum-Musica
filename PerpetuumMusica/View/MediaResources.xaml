@@ -2,7 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PerpetuumMusica.View">
     
-    <BitmapImage x:Key="sample" UriSource="/View/Sources/SampleImages/SamplePlaylistImage.png"/>
+    <!-- Demo Data-->
+    <BitmapImage x:Key="disney" UriSource="/View/Sources/SampleImages/Disney.png"/>
+    <BitmapImage x:Key="frozen" UriSource="/View/Sources/SampleImages/FrozenImage.jpg"/>
+    <BitmapImage x:Key="littleMermaid" UriSource="/View/Sources/SampleImages/The Little Mermaid image.jpg"/>
+    <BitmapImage x:Key="aladdin" UriSource="/View/Sources/SampleImages/aladdin soundtrack.jpg"/>
+
+
     <BitmapImage x:Key="backIcon" UriSource="/View/Sources/back_icon.png"/>
     <BitmapImage x:Key="addIcon" UriSource="/View/Sources/add_icon.png"/>
     <BitmapImage x:Key="deleteIcon" UriSource="/View/Sources/delete_icon.png"/>

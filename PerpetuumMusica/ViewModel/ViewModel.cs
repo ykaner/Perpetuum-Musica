@@ -118,22 +118,22 @@ namespace PerpetuumMusica.ViewModel
         /// <summary>
         /// Commands
         /// </summary>
-        private ICommand _TogglePlayCommand;
-        public ICommand TogglePlayCommand => _TogglePlayCommand ?? (_TogglePlayCommand = new Command(TogglePlay));
-        private ICommand _PlayAtCommand;
-        public ICommand PlayAtCommand => _PlayAtCommand ?? (_PlayAtCommand = new Command(PlayAt));
-        private ICommand _SearchCommand;
-        public ICommand SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
-        private ICommand _ToggleMuteCommand;
-        public ICommand ToggleMuteCommand => _ToggleMuteCommand ?? (_ToggleMuteCommand = new Command(ToggleMute));
-        private ICommand _OpenItemCommand;
-        public ICommand OpenItemCommand => _OpenItemCommand ?? (_OpenItemCommand = new Command(OpenItem));
-        private ICommand _HistoryBackCommand;
-        public ICommand HistoryBackCommand => _HistoryBackCommand ?? (_HistoryBackCommand = new Command(HistoryBack, CanGoBack));
-        private ICommand _HistoryForewardCommand;
-        public ICommand HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
+        private Command _TogglePlayCommand;
+        public Command TogglePlayCommand => _TogglePlayCommand ?? (_TogglePlayCommand = new Command(TogglePlay));
+        private Command _PlayAtCommand;
+        public Command PlayAtCommand => _PlayAtCommand ?? (_PlayAtCommand = new Command(PlayAt));
+        private Command _SearchCommand;
+        public Command SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
+        private Command _ToggleMuteCommand;
+        public Command ToggleMuteCommand => _ToggleMuteCommand ?? (_ToggleMuteCommand = new Command(ToggleMute));
+        private Command _OpenItemCommand;
+        public Command OpenItemCommand => _OpenItemCommand ?? (_OpenItemCommand = new Command(OpenItem));
+        private Command _HistoryBackCommand;
+        public Command HistoryBackCommand => _HistoryBackCommand ?? (_HistoryBackCommand = new Command(HistoryBack, CanGoBack));
+        private Command _HistoryForewardCommand;
+        public Command HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
 
-        public ICommand OpenAddMenuCommand { get; set; }
+        public Command OpenAddMenuCommand { get; set; }
 
 
         /// <summary>
@@ -233,9 +233,11 @@ namespace PerpetuumMusica.ViewModel
         }
         public void OpenItem(object param)
         {
+            ShowedItemHistory.Push(ShowedItem);
+            ShowedItemFuture.Clear();
             ShowedItem = (PlaylistItem)param;
             OnPropertyChanged("ShowedItem");
-            ((Command)HistoryBackCommand).RaiseCanExecuteChanged();
+            HistoryBackCommand.RaiseCanExecuteChanged(); 
 
         }
         //History Methods
@@ -249,15 +251,23 @@ namespace PerpetuumMusica.ViewModel
         } 
         public void HistoryBack(object param)
         {
+            if (!CanGoBack(param)) return;
+
             ShowedItemFuture.Push(ShowedItem);
             ShowedItem = ShowedItemHistory.Pop();
             OnPropertyChanged("ShowedItem");
+            HistoryBackCommand.RaiseCanExecuteChanged();
+            HistoryForewardCommand.RaiseCanExecuteChanged();
         }
         public void HistoryForeward(object param)
         {
+            if (!CanGoForeward(param)) return;
+
             ShowedItemHistory.Push(ShowedItem);
             ShowedItem = ShowedItemFuture.Pop();
             OnPropertyChanged("ShowedItem");
+            HistoryBackCommand.RaiseCanExecuteChanged();
+            HistoryForewardCommand.RaiseCanExecuteChanged();
         }
         internal void ToggleMute(object param = null)
         {

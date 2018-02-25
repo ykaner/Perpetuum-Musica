@@ -69,9 +69,8 @@
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
-    <Compile Include="View\CustomControls\NestedListView.cs" />
-    <Compile Include="View\CustomControls\NestedListViewItem.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
+    <Compile Include="View\CustomControls\pmListViewItem.cs" />
     <Compile Include="View\CustomControls\pmSlider.cs" />
     <Compile Include="View\CustomControls\SelectableBorder.cs" />
     <Compile Include="View\CustomControls\SelectableTextBlock.cs" />
@@ -175,13 +174,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="View\Sources\SampleImages\aladdin soundtrack.jpg" />
+    <Resource Include="View\Sources\SampleImages\FrozenImage.jpg" />
+    <Resource Include="View\Sources\SampleImages\The Little Mermaid image.jpg" />
     <Resource Include="View\Sources\playing_icon.png" />
     <Resource Include="View\Sources\playlist_icon.png" />
     <Resource Include="View\Sources\track_icon.png" />
     <Resource Include="View\Sources\Volume_Icons\volume_icon.png" />
     <Resource Include="View\Sources\Volume_Icons\volume_low_icon.png" />
     <Resource Include="View\Sources\Volume_Icons\volume_mute_icon.png" />
-    <Resource Include="View\Sources\SampleImages\SamplePlaylistImage.PNG" />
+    <Resource Include="View\Sources\SampleImages\Disney.PNG" />
     <Resource Include="View\Sources\sort_down_icon.png" />
     <Resource Include="View\Sources\add_icon.png" />
     <Resource Include="View\Sources\delete_icon.png" />
@@ -204,8 +206,6 @@
       <Name>Audio Player</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

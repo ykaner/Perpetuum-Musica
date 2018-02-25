@@ -274,15 +274,19 @@
                             <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{StaticResource sample}"/>
+                        <Image Source="{StaticResource disney}" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <StackPanel Margin="15" Grid.Column="1">
                             <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
                             <TextBlock FontSize="42" Text="{Binding Path=ShowedItem.Content.Title}"/>
-                            <TextBlock FontSize="15" FontWeight="Bold">By Various Artists</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="15" FontWeight="Bold" Text="By "/>
+                                <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding Path=ShowedItem.Content.Composer}"/>
+                            </StackPanel>
+                            
                             <StackPanel Margin="2, 15" Orientation="Horizontal">
                                 <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
                                          Content="{Binding Path=ToggleButtonText}"
-                                         Command="{Binding Path=TogglePlayCommand}"/>
+                                         Command="{Binding Path=TogglePlay}"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -293,24 +297,7 @@
                     <ListView Grid.Column="1"
                                   ItemsSource="{Binding Path=ShowedItem.Content.List}"
                                   Background="Transparent">
-                        <ListView.Resources>
-                            <Style TargetType="ListViewItem" >
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewItem">
-                                            <GridViewRowPresenter>
-                                                <GridViewRowPresenter.InputBindings>
-                                                    <MouseBinding Gesture="LeftDoubleClick" 
-                                                                  Command="{Binding DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType={x:Type Window} }}"
-                                                                  CommandParameter="{Binding }"/>
-
-                                                </GridViewRowPresenter.InputBindings>
-                                            </GridViewRowPresenter>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.Resources>
+                        
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="#" Width="50">
@@ -417,6 +404,13 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <cc:SelectableTextBlock Text="{Binding Content.Composer}" IsSelected="{Binding IsPlaying}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Background="Black" Content="Open" Command="{Binding DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding }"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

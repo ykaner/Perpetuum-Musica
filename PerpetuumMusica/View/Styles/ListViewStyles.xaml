@@ -252,7 +252,7 @@
                             BorderThickness="1">
                         <ScrollViewer Style="{DynamicResource
                         {x:Static GridView.GridViewScrollViewerStyleKey}}">
-                            <ItemsPresenter />
+                            <ItemsPresenter  />
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>

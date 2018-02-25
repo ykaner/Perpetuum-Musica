@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace PerpetuumMusica.ViewModel
 {
-    class Command : ICommand
+    public class Command : ICommand
     {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
