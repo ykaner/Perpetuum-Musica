@@ -235,7 +235,8 @@ namespace PerpetuumMusica.ViewModel
         {
             ShowedItem = (PlaylistItem)param;
             OnPropertyChanged("ShowedItem");
-            OnPropertyChanged("HistoryBackCommand");
+            ((Command)HistoryBackCommand).RaiseCanExecuteChanged();
+
         }
         //History Methods
         public bool CanGoBack(object param)

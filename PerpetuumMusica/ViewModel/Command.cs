@@ -11,6 +11,7 @@ namespace PerpetuumMusica.ViewModel
     {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
+        private EventHandler _canExecuteChanged;
         public Command(Action<object> _execute, Func<object, bool> _canExecute)
         {
             execute = _execute;
@@ -31,13 +32,13 @@ namespace PerpetuumMusica.ViewModel
         }
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add { _canExecuteChanged += value; }
+            remove { _canExecuteChanged -= value; }
         }
         public void RaiseCanExecuteChanged()
         {
-            if ( CommandManager.RequerySuggested != null )
-
+            if (_canExecuteChanged != null)
+                _canExecuteChanged(this, EventArgs.Empty);
         }
 
         public void Execute(object parameter)

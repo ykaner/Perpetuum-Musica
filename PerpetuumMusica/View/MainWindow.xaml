@@ -9,7 +9,6 @@
         xmlns:vm="clr-namespace:PerpetuumMusica.ViewModel"
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:multiSelectionTree="clr-namespace:MultiSelectionTreeView;assembly=MultiSelectionTreeView"
         Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050" 
         Background="{StaticResource background_color}">
     <!---->
