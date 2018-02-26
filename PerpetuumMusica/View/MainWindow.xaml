@@ -80,22 +80,46 @@
         </Grid>
         <!--tool bar-->
         <Grid DockPanel.Dock="Top" Height="62" 
-              Background="{StaticResource toolbar_color}"
-              >
+              Background="{StaticResource toolbar_color}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="170"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
             <!--add button-->
+            <Menu HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <MenuItem ItemsSource="{Binding Path=AddMenu}">
+                    <MenuItem.Header>
+                        <cc:pmButton HorizontalAlignment="Stretch"
+                                    x:Name="AddButton"
+                                    
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Command="{Binding Path=OpenAddMenuCommand}"
+                                    Content="ADD"/>
+                    </MenuItem.Header>
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Background" Value="Black"/>
+                            <Setter Property="ItemsSource" Value="{Binding Path=SubItems}"/>
+                            <Setter Property="Icon">
+                                <Setter.Value>
+                                    <cc:Icon Size="10" ImageSource="{Binding Path=Icon}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                    
+                </MenuItem>
+            </Menu>
 
-            <cc:pmButton x:Name="AddButton"
+            <!--<cc:pmButton x:Name="AddButton"
                     Margin="15, 12" 
                     FontSize="20"
                     FontWeight="Bold"
                     Command="{Binding Path=OpenAddMenuCommand}"
-                    Content="ADD"/>
-            <Popup IsOpen="{Binding Path=AddMenuIsOpen, UpdateSourceTrigger=PropertyChanged}"
+                    Content="ADD"/>-->
+            <!--<Popup IsOpen="{Binding Path=AddMenuIsOpen, UpdateSourceTrigger=PropertyChanged}"
                    StaysOpen="False"
                    Placement="Bottom"
                    AllowsTransparency="True"
@@ -109,7 +133,7 @@
                         <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="4" RenderingBias="Performance"/>
                     </Border.Effect>
                     <Grid Margin="0, 5">
-                        <!--<Menu Background="Transparent" 
+                        --><!--<Menu Background="Transparent" 
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
@@ -130,14 +154,14 @@
                                              Size="22"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                        </Menu>-->
+                        </Menu>--><!--
                         <Menu Background="Transparent"
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
                               ItemsSource="{Binding Path=AddMenu}">
-                            <Menu.ItemTemplate>
-                                <DataTemplate>
+                            --><!--<Menu.ItemTemplate>
+                                --><!--<DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="25" />
@@ -146,12 +170,12 @@
                                         <cc:Icon Size="25" ImageSource="{Binding Path=Icon}"/>
                                         <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
                                     </Grid>
-                                </DataTemplate>
-                            </Menu.ItemTemplate>
+                                </DataTemplate>--><!--
+                            </Menu.ItemTemplate>--><!--
                         </Menu>
                     </Grid>
                 </Border>
-            </Popup>
+            </Popup>-->
 
                 <!--tools buttons-->
             <Border Grid.Column="1" Padding="10, 5">
@@ -159,8 +183,8 @@
                     <Menu
                         VerticalAlignment="Center"
                         Background="Transparent"
-                        Style="{StaticResource ToolbarMenu}"
-                        ItemContainerStyle="{StaticResource ToolbarItem}"
+                        
+                        
                         DockPanel.Dock="Right">
                         <MenuItem Header="More Options">
                             <MenuItem.Icon>

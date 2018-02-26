@@ -42,12 +42,11 @@ namespace PerpetuumMusica.ViewModel
             AddMenu = new List<MenuItem>()
             {
                 new MenuItem("Track", Image("playlistIcon"), null, null, "1"),
-                new MenuItem("Playlist",Image("trackIcon"), null, new List<MenuItem>()
-                {
-                    new MenuItem("Import"),
-                    new MenuItem("Create")
-                }, "2")
-
+                    new MenuItem("Playlist",Image("trackIcon"), null, new List<MenuItem>()
+                    {
+                        new MenuItem("Import"),
+                        new MenuItem("Create")
+                    })
             };
             Toolbar = new List<MenuItem>()
             {

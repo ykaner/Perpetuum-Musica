@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="/View/Styles/ListsStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/SlidersStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ButtonsStyles.xaml"/>
-                <ResourceDictionary Source="/View/Styles/MenusStyles.xaml"/>
+                <!--<ResourceDictionary Source="/View/Styles/MenusStyles.xaml"/>-->
                 <ResourceDictionary Source="/View/Styles/ListViewStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/TreeViewStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ScrollViewerStyles.xaml"/>
