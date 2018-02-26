@@ -68,6 +68,7 @@
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="View\CustomControls\Attached.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
     <Compile Include="View\CustomControls\pmListViewItem.cs" />
