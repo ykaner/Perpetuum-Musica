@@ -21,6 +21,6 @@ namespace PerpetuumMusica.Model
             }))
         };
 
-        static public PlaylistItem DemoItem = new PlaylistItem(new Playable("Disney", new BitmapImage(new Uri(@"C:\Users\ranha\Pictures\aladdin soundtrack.png")), new TimeSpan(4, 38, 00), 13, "Various Artists", DemoPlaylist));
+        static public PlaylistItem DemoItem = new PlaylistItem(new Playable("Disney", null, new TimeSpan(4, 38, 00), 13, "Various Artists", DemoPlaylist));
     }
 }

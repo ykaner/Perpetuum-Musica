@@ -64,7 +64,6 @@
     <Compile Include="Model\Playable.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
     <Compile Include="ViewModel\Command.cs" />
-    <Compile Include="ViewModel\Commands\OpenAddMenuCommand.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
@@ -207,6 +206,8 @@
       <Name>Audio Player</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\Commands\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

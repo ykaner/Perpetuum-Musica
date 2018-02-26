@@ -109,7 +109,7 @@
                         <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="4" RenderingBias="Performance"/>
                     </Border.Effect>
                     <Grid Margin="0, 5">
-                        <Menu Background="Transparent" 
+                        <!--<Menu Background="Transparent" 
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
@@ -130,6 +130,24 @@
                                              Size="22"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                        </Menu>-->
+                        <Menu Background="Transparent"
+                              BorderThickness="0"
+                              FontSize="{StaticResource large_font_size}"
+                              Foreground="{StaticResource foreground_color}"
+                              ItemsSource="{Binding Path=AddMenu}">
+                            <Menu.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25" />
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <cc:Icon Size="25" ImageSource="{Binding Path=Icon}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </Menu.ItemTemplate>
                         </Menu>
                     </Grid>
                 </Border>

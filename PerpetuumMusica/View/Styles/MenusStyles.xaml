@@ -148,7 +148,7 @@
 
     <Style TargetType="MenuItem">
         <Setter Property="Template" Value="{StaticResource MenuItem}"/>
-        <Setter Property="Icon" Value="a"/>
+        <!--<Setter Property="Icon" Value="a"/>-->
         <Setter Property="Header" Value="{Binding Name}"/>
         <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
     </Style>

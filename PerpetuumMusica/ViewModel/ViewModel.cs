@@ -1,4 +1,4 @@
-﻿using PerpetuumMusica.ViewModel.Commands;
+﻿//using PerpetuumMusica.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +23,6 @@ namespace PerpetuumMusica.ViewModel
         public ViewModel()
         {
             this.model = new Model.Model();
-            ////Set Commands
-            //this.TogglePlayCommand = new TogglePlayCommand(this);
-            //this.SearchCommand = new SearchCommand(this);
-            //this.ToggleMuteCommand = new ToggleMuteCommand(this);
-            //this.OpenAddMenuCommand = new OpenAddMenuCommand(this);
 
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();
@@ -46,8 +41,8 @@ namespace PerpetuumMusica.ViewModel
             //--
             AddMenu = new List<MenuItem>()
             {
-                new MenuItem("Track", Image("track_icon.png"), null, null, "1"),
-                new MenuItem("Playlist",Image("playlist_icon.png"), null, new List<MenuItem>()
+                new MenuItem("Track", Image("playlistIcon"), null, null, "1"),
+                new MenuItem("Playlist",Image("trackIcon"), null, new List<MenuItem>()
                 {
                     new MenuItem("Import"),
                     new MenuItem("Create")
@@ -70,8 +65,6 @@ namespace PerpetuumMusica.ViewModel
 
         }
 
-        //static private string sourceUri = @"C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View\\Sources\\";
-        //C:\\Users\\Shachar\\source\\repos\\PerpetuumMusica\\PerpetuumMusica\\View
         static private ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
 
 
@@ -132,8 +125,8 @@ namespace PerpetuumMusica.ViewModel
         public Command HistoryBackCommand => _HistoryBackCommand ?? (_HistoryBackCommand = new Command(HistoryBack, CanGoBack));
         private Command _HistoryForewardCommand;
         public Command HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
-
-        public Command OpenAddMenuCommand { get; set; }
+        private Command _OpenAddMenu;
+        public Command OpenAddMenuCommand => _OpenAddMenu ?? (_OpenAddMenu = new Command(OpenAddMenu));
 
 
         /// <summary>
@@ -289,7 +282,7 @@ namespace PerpetuumMusica.ViewModel
 
             MessageBox.Show("Search Method: " + query);
         }
-        public void OpenAddMenu()
+        public void OpenAddMenu(object param)
         {
             AddMenuIsOpen = true;
             OnPropertyChanged("AddMenuIsOpen");
