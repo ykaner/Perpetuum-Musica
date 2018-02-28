@@ -26,8 +26,6 @@ namespace PerpetuumMusica.View.CustomControls
             this.DataContext = this;
         }
 
-
-
         public Brush Color
         {
             get { return (Brush)GetValue(MyColorProperty); }

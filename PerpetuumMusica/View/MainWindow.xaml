@@ -22,6 +22,8 @@
         <SolidColorBrush x:Key="Player_color">#FF343434</SolidColorBrush>
         <SolidColorBrush x:Key="Menu_color">#FF1D1D1D</SolidColorBrush>
         <SolidColorBrush x:Key="view_color">black</SolidColorBrush>
+
+        <Style TargetType="cc:Icon" BasedOn="{StaticResource IconStyle}"/>
         <!-- converters-->
         <con:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </Window.Resources>
@@ -38,6 +40,17 @@
         <!--header-->
         <Grid DockPanel.Dock="Top" Height="55" Background="{StaticResource header_color}">
             <StackPanel Margin="10, 0, 0, 0" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <!--<Style TargetType="cc:Icon">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <TextBlock Foreground="White">H</TextBlock>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>-->
+                </StackPanel.Resources>
                 <!--<cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/back_icon.png" Content="Settings"/>
                 <cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/unback_icon.png" Content="Settings"/>-->
                 <!--search bar-->
@@ -73,10 +86,11 @@
                                 </TextBox.InputBindings>
                             </TextBox>
                         </Grid>
-                    </Border> 
+                    </Border>
                 </Grid>
                 <!-- /search bar-->
             </StackPanel>
+
         </Grid>
         <!--tool bar-->
         <Grid DockPanel.Dock="Top" Height="62" 
@@ -87,16 +101,18 @@
             </Grid.ColumnDefinitions>
             
             <!--add button-->
-            <Menu HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <MenuItem ItemsSource="{Binding Path=AddMenu}">
+            <!--<Menu HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+                <MenuItem ItemsSource="{Binding Path=AddMenu}" Width="170" Height="50">
                     <MenuItem.Header>
-                        <cc:pmButton HorizontalAlignment="Stretch"
+                        <Border Padding="0" >
+                            <cc:pmButton HorizontalAlignment="Stretch" 
                                     x:Name="AddButton"
-                                    
+                                    IsEnabled="True"
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Command="{Binding Path=OpenAddMenuCommand}"
                                     Content="ADD"/>
+                        </Border>
                     </MenuItem.Header>
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="{x:Type MenuItem}">
@@ -111,15 +127,15 @@
                     </MenuItem.ItemContainerStyle>
                     
                 </MenuItem>
-            </Menu>
+            </Menu>-->
 
-            <!--<cc:pmButton x:Name="AddButton"
+            <cc:pmButton x:Name="AddButton"
                     Margin="15, 12" 
                     FontSize="20"
                     FontWeight="Bold"
                     Command="{Binding Path=OpenAddMenuCommand}"
-                    Content="ADD"/>-->
-            <!--<Popup IsOpen="{Binding Path=AddMenuIsOpen, UpdateSourceTrigger=PropertyChanged}"
+                    Content="ADD"/>
+            <Popup IsOpen="{Binding Path=AddMenuIsOpen, UpdateSourceTrigger=PropertyChanged}"
                    StaysOpen="False"
                    Placement="Bottom"
                    AllowsTransparency="True"
@@ -133,7 +149,7 @@
                         <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="4" RenderingBias="Performance"/>
                     </Border.Effect>
                     <Grid Margin="0, 5">
-                        --><!--<Menu Background="Transparent" 
+                        <!--<Menu Background="Transparent" 
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
@@ -154,28 +170,38 @@
                                              Size="22"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                        </Menu>--><!--
+                        </Menu>-->
                         <Menu Background="Transparent"
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
                               ItemsSource="{Binding Path=AddMenu}">
-                            --><!--<Menu.ItemTemplate>
-                                --><!--<DataTemplate>
+                            <!--<Menu.ItemTemplate>
+                                <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="25" />
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <cc:Icon Size="25" ImageSource="{Binding Path=Icon}"/>
+                                        <cc:Icon Size="25" ImageSource="{StaticResource addIcon}"/>
                                         <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
                                     </Grid>
-                                </DataTemplate>--><!--
-                            </Menu.ItemTemplate>--><!--
+                                </DataTemplate>
+                            </Menu.ItemTemplate>-->
+                            <Menu.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Header" Value="{Binding Path=Name}"/>
+                                    <Setter Property="Icon">
+                                        <Setter.Value>
+                                            <cc:Icon Height="10" Width="10" ImageSource="{Binding Path=Icon}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Menu.ItemContainerStyle>
                         </Menu>
                     </Grid>
                 </Border>
-            </Popup>-->
+            </Popup>
 
                 <!--tools buttons-->
             <Border Grid.Column="1" Padding="10, 5">
@@ -231,7 +257,7 @@
             </Grid.ColumnDefinitions>
             <!--Play Button-->
             <cc:IconButton x:Name="TogglePlayButton" Style="{StaticResource playButton}" 
-                           ImageSource="{Binding Path=ToggleButtonIcon, UpdateSourceTrigger=PropertyChanged}"  
+                           ImageSource="{Binding Path=ToggleButtonIcon}"  
                            Command="{Binding Path=TogglePlayCommand}"/>
             <!--/Play Button-->
             <Grid Grid.Column="1" Margin="10, 10, 15, 10">
@@ -409,13 +435,13 @@
                                                                 <Grid x:Name="mouseNotOverIcons" Visibility="Visible">
                                                                     <cc:SelectableTextBlock x:Name="Index" Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsPlaying}"
                                                                                             Visibility="Visible"/>
-                                                                    <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                    <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                              Visibility="Hidden"/>
                                                                 </Grid>
                                                                 <Grid x:Name="mouseOverIcons" Visibility="Hidden">
-                                                                    <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                    <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                              Visibility="Visible"/>
-                                                                    <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                    <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                              Visibility="Hidden"/>
                                                                 </Grid>
 

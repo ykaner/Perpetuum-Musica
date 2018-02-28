@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PerpetuumMusica.View.Styles"
+                    xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls">
+    <!--Icon style-->
+    <Style TargetType="cc:Icon" x:Key="IconStyle">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Foreground" Value="{StaticResource foreground_color}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type cc:Icon}">
+                    <Border Background="{TemplateBinding Background}">
+                        <Rectangle Fill="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImageSource}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

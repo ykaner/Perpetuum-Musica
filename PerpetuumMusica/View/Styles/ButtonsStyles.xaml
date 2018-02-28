@@ -6,7 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/MediaResources.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <!--tooltip-->
     <Style TargetType="ToolTip">
         <Setter Property="Background" Value="Black"/>
@@ -65,6 +65,9 @@
     </Style>
     <Style TargetType="cc:pmButton" BasedOn="{StaticResource pmButton}"/>
 
+
+
+    <!--Icon Button-->
     <Style TargetType="{x:Type cc:IconButton}">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -87,13 +90,14 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Ellipse x:Name="fillColor" Fill="{StaticResource foreground_color}" Width="40" Height="40" Opacity="0"/>
-                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Size="30"/>
+                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" />
                     </Grid>
                     
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type cc:IconButton}" x:Key="NormalIconButtonStyle">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -111,7 +115,7 @@
                                 
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <cc:Icon x:Name="Icon" ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Size="30"/>
+                        <cc:Icon x:Name="Icon" ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -127,7 +131,7 @@
                 <ControlTemplate TargetType="cc:IconButton">
                     <Grid Margin="5">
                         <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" Fill="{TemplateBinding Background}"/>
-                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Size="60"/>
+                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Height="60" Width="60"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -141,11 +145,11 @@
                     <Grid>
                         <ContentPresenter x:Name="Index" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Grid x:Name="mouseOverIcons" Visibility="Hidden">
-                            <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                            <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                      Visibility="Visible"/>
-                            <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
+                            <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
                         </Grid>
-                        <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Size="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
+                        <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
                         
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup>

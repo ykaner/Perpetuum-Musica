@@ -68,6 +68,7 @@
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="View\CustomControls\Attached.cs" />
+    <Compile Include="View\CustomControls\Icon.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
     <Compile Include="View\CustomControls\pmListViewItem.cs" />
@@ -90,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\IconStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,10 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\CustomControls\Icon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,9 +129,6 @@
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="View\CustomControls\Icon.xaml.cs">
-      <DependentUpon>Icon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
