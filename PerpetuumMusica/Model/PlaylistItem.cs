@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,10 @@ namespace PerpetuumMusica.Model
     public class PlaylistItem : INotifyPropertyChanged
     {
         public int Index { get; set; }
+        public Playable Content { get; set; }
+        public ObservableCollection<PlaylistItem> List { get; set; }
+        public List<PlaylistItem> Path { get; set; }
+
         private bool _IsPlaying;
         public bool IsPlaying
         {
@@ -23,12 +28,19 @@ namespace PerpetuumMusica.Model
                 OnPropertyChanged("IsPlaying");
             }
         }
-        public Playable Content { get; set; }
 
-        public PlaylistItem(int index, Playable content)
+        public PlaylistItem(int index, Playable content, ObservableCollection<PlaylistItem> list = null)
         {
             Index = index;
             Content = content;
+            List = list;
+            Path = new List<PlaylistItem>();
+        }
+
+        public void SetParent(PlaylistItem parent)
+        {
+            Path = new List<PlaylistItem>(parent.Path);
+            Path.Add(parent);
         }
 
         public PlaylistItem(Playable content)
@@ -47,6 +59,11 @@ namespace PerpetuumMusica.Model
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public override string ToString()
+        {
+            return Content.Title;
         }
     }
 }

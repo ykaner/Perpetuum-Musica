@@ -87,20 +87,25 @@
                 </Grid>
                 <!-- /search bar-->
 
-                <Menu>
+                <!--Testing area-->
+                <Button Content="Hello" Style="{StaticResource PathItemStyle}" Padding="5" Command="{Binding OpenItemCommand}"/>
+                <!--<Menu>
                     <MenuItem Header="open me">
-                        <MenuItem Header="add">
-                            <MenuItem.Icon>
-                                <cc:Icon ImageSource="{StaticResource addIcon}" Height="18" Width="18" Foreground="Black"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="delete" >
-                            <MenuItem.Icon>
-                                <cc:Icon ImageSource="{StaticResource deleteIcon}" Height="18" Width="18" Foreground="Black"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Icon">
+                                    <Setter.Value>
+                                        h
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                        <MenuItem Header="add"/>
+                        <MenuItem Header="delete"/>
+
                     </MenuItem>
-                </Menu>
+
+                </Menu>-->
             </StackPanel>
 
         </Grid>
@@ -344,9 +349,37 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding Path=ShowedItem.Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <StackPanel Margin="15" Grid.Column="1">
-                            <TextBlock FontSize="14" FontWeight="Bold">Musicals / Movies /</TextBlock>
-                            <TextBlock FontSize="42" Text="{Binding Path=ShowedItem.Content.Title}"/>
+                        <StackPanel Margin="12" Grid.Column="1">
+                            <!--<TextBlock Text="Path" FontSize="16" FontWeight="DemiBold"/>-->
+                            <ListBox ItemsSource="{Binding Path=ShowedItem.Path}" 
+                                     Background="Transparent" 
+                                     BorderThickness="0"
+                                     Height="24">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Style="{StaticResource PathItemStyle}" Padding="5, 1"
+                                                                Command="{Binding Path=DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding }">
+                                                            <TextBlock Text="{Binding }" FontSize="15" FontWeight="DemiBold"/>
+                                                        </Button>
+                                                        <TextBlock Text=" / " FontSize="15" FontWeight="DemiBold"/>
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
+                            <TextBlock FontSize="42" Text="{Binding Path=ShowedItem.Content.Title}" />
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontSize="15" FontWeight="Bold" Text="By "/>
                                 <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding Path=ShowedItem.Content.Composer}"/>
@@ -364,7 +397,7 @@
                     <TextBlock Text="{Binding CurrentlyPlayingIndex}"/>
                     <!-- playlist-->
                     <ListView Grid.Column="1"
-                                  ItemsSource="{Binding Path=ShowedItem.Content.List}"
+                                  ItemsSource="{Binding Path=ShowedItem.List}"
                                   Background="Transparent">
                         <ListView.Resources>
                             <Style x:Key="{x:Type ListViewItem}"

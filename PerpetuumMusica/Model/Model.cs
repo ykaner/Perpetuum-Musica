@@ -25,7 +25,7 @@ namespace PerpetuumMusica.Model
             Player.SetUri(sampleSongUri);
 
             //for testing
-            currentlyPlayingItem = DemoData.DemoPlaylist[0];
+            currentlyPlayingItem = DemoData.disneyPlaylist[0];
         }
 
         public bool IsPlaying

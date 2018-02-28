@@ -5,6 +5,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/MediaResources.xaml"/>
+        <ResourceDictionary Source="/View/Styles/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--tooltip-->
@@ -195,6 +196,34 @@
                     </Grid>
                 </ControlTemplate>
 
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="PathItemStyle">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="Border" Background="Transparent" Padding="{TemplateBinding Padding}"
+                                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal"/>
+                                <VisualState Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="#404040" Duration="0:0:0"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

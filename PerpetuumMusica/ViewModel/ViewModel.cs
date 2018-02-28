@@ -63,12 +63,13 @@ namespace PerpetuumMusica.ViewModel
             Volume = 80;
 
             //fortesting:
-            ShowedItem = DemoData.DemoItem;
-           
+            ShowedItem = DemoData.Disney;
+            DemoData.SetParents(DemoData.musicals);
+
 
         }
 
-        static private ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
+        static public ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
 
 
         ////////////////////////
@@ -82,6 +83,8 @@ namespace PerpetuumMusica.ViewModel
         private ImageSource volumeLowIcon = Image("volumeLowIcon");
         private ImageSource trackIcon = Image("trackIcon");
         private ImageSource playlist = Image("playlistIcon");
+
+        //private ImageSource disney = Image("disney");
 
         #region INotifyPropertyChanged Memberse
 
