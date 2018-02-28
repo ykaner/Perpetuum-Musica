@@ -51,9 +51,6 @@
                         </Setter>
                     </Style>-->
                 </StackPanel.Resources>
-                <!--<cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/back_icon.png" Content="Settings"/>
-                <cc:IconButton Style="{StaticResource IconButtonStyle}" DockPanel.Dock="Right" Source="/View/Sources/unback_icon.png" Content="Settings"/>-->
-                <!--search bar-->
                 <cc:IconButton ImageSource="{StaticResource backIcon}" 
                                ToolTip="Back" 
                                Command="{Binding HistoryBackCommand}"
@@ -89,6 +86,21 @@
                     </Border>
                 </Grid>
                 <!-- /search bar-->
+
+                <Menu>
+                    <MenuItem Header="open me">
+                        <MenuItem Header="add">
+                            <MenuItem.Icon>
+                                <cc:Icon ImageSource="{StaticResource addIcon}" Height="18" Width="18" Foreground="Black"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="delete" >
+                            <MenuItem.Icon>
+                                <cc:Icon ImageSource="{StaticResource deleteIcon}" Height="18" Width="18" Foreground="Black"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
             </StackPanel>
 
         </Grid>
@@ -101,33 +113,20 @@
             </Grid.ColumnDefinitions>
             
             <!--add button-->
-            <!--<Menu HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
-                <MenuItem ItemsSource="{Binding Path=AddMenu}" Width="170" Height="50">
-                    <MenuItem.Header>
-                        <Border Padding="0" >
-                            <cc:pmButton HorizontalAlignment="Stretch" 
-                                    x:Name="AddButton"
-                                    IsEnabled="True"
-                                    FontSize="20"
-                                    FontWeight="Bold"
-                                    Command="{Binding Path=OpenAddMenuCommand}"
-                                    Content="ADD"/>
-                        </Border>
-                    </MenuItem.Header>
-                    <MenuItem.ItemContainerStyle>
+            <!--<MenuItem ItemsSource="{Binding Path=AddMenu}" Header="Add" Foreground="White">
+                <MenuItem.ItemContainerStyle>
                         <Style TargetType="{x:Type MenuItem}">
                             <Setter Property="Background" Value="Black"/>
                             <Setter Property="ItemsSource" Value="{Binding Path=SubItems}"/>
                             <Setter Property="Icon">
                                 <Setter.Value>
-                                    <cc:Icon Size="10" ImageSource="{Binding Path=Icon}"/>
+                                    <cc:Icon Height="10" Width="10" ImageSource="{Binding Path=Icon}"/>
                                 </Setter.Value>
                             </Setter>
                         </Style>
                     </MenuItem.ItemContainerStyle>
                     
-                </MenuItem>
-            </Menu>-->
+                </MenuItem>-->
 
             <cc:pmButton x:Name="AddButton"
                     Margin="15, 12" 
@@ -152,8 +151,7 @@
                         <!--<Menu Background="Transparent" 
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
-                              Foreground="{StaticResource foreground_color}"
-                              >
+                              Foreground="{StaticResource foreground_color}">
                             <MenuItem Header="Playlist">
                                 <MenuItem.Icon>
                                     <cc:Icon ImageSource="{StaticResource playlistIcon}"
@@ -191,6 +189,7 @@
                             <Menu.ItemContainerStyle>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Header" Value="{Binding Path=Name}"/>
+                                    <Setter Property="ItemsSource" Value="{Binding Path=SubItems}"/>
                                     <Setter Property="Icon">
                                         <Setter.Value>
                                             <cc:Icon Height="10" Width="10" ImageSource="{Binding Path=Icon}"/>

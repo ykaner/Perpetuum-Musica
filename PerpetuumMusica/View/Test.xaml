@@ -7,12 +7,11 @@
         xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
         mc:Ignorable="d"    
         Title="Test" Height="300" Width="300">
-    <Grid Background="Gray">
-        <ListBox Background="Transparent">
-            <ListBoxItem>Klaymen</ListBoxItem>
-            <ListBoxItem>Hoborg</ListBoxItem>
-            <ListBoxItem>Klogg</ListBoxItem>
-            
-        </ListBox>
+    <Grid >
+        <MenuItem>
+            <MenuItem.Header>
+                <Button>hello</Button>
+            </MenuItem.Header>
+        </MenuItem>
     </Grid>
 </Window>

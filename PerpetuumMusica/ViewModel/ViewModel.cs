@@ -44,7 +44,11 @@ namespace PerpetuumMusica.ViewModel
                 new MenuItem("Track", playIcon, null, null, "1"),
                 new MenuItem("Playlist",Image("trackIcon"), null, new List<MenuItem>()
                 {
-                    new MenuItem("Import"),
+                    new MenuItem("Import", null, null, new List<MenuItem>()
+                    {
+                        new MenuItem("Youtube"),
+                        new MenuItem("Local files")
+                    }),
                     new MenuItem("Create")
                 })
             };
