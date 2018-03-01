@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 
 namespace PerpetuumMusica.Model
 {
+    public enum PlayableType { Track, Playlist}
+
     public class Playable
     {
         //public int ListIndex { get; set; }
@@ -18,6 +20,7 @@ namespace PerpetuumMusica.Model
         public int TimesHeard { get; set; }
         public string Composer { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
+
 
         public Playable(string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
         {
@@ -35,6 +38,11 @@ namespace PerpetuumMusica.Model
             Time = new TimeSpan(0);
             TimesHeard = 0;
             Composer = "Various Artist";
+        }
+
+        public virtual PlayableType GetType()
+        {
+            return PlayableType.Playlist; //as for now - the default is playlist
         }
 
     }

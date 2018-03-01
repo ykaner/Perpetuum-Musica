@@ -16,5 +16,10 @@ namespace PerpetuumMusica.Model
             FileUri = fileUri;
         }
 
+        public override PlayableType GetType()
+        {
+            return PlayableType.Track;
+        }
+
     }
 }

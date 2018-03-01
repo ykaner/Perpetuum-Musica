@@ -89,31 +89,40 @@ namespace PerpetuumMusica.Model
         public void TogglePlayItem(PlaylistItem target)
         {
             //if we toggle to currently played item, we need to pause it
-            if (target.IsPlaying == true)
+            if (target.IsOn == true)
             {
-                target.IsPlaying = false;
-                TogglePlay(); //to pause
+                target.IsPlaying = !target.IsPlaying;
+                TogglePlay();
                 return;
             }
 
-            //if we have another item that is currently playing, we need to "unplay" it
+            //if we have another item that is currently "on"(colored), we need to shut if off
             if (currentlyPlayingItem != null)
             {
-                currentlyPlayingItem.IsPlaying = false;
                 currentlyPlayingItem.IsOn = false;
-                TogglePlay();
+                if (currentlyPlayingItem.IsPlaying)
+                {
+                    currentlyPlayingItem.IsPlaying = false;
+                    TogglePlay();
+                }
+
             }
 
             //Play current Item
             target.IsPlaying = true;
             target.IsOn = true;
             currentlyPlayingItem = target;
-            
-            TogglePlay(); //to play
+            PlayItem(target);
         }
         private void PlayItem(PlaylistItem item)
         {
-            MessageBox.Show("play item " + item.Content.Title);
+            //MessageBox.Show("play item " + item.Content.Title);
+            if (item.Content.GetType() == PlayableType.Track)
+            {
+                Track track = (Track)(item.Content);
+                Player.SetUri(track.FileUri);
+            }
+            TogglePlay();
         }
 
 
