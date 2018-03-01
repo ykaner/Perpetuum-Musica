@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.IO;
 
 namespace PerpetuumMusica.ViewModel
 {
@@ -62,9 +63,10 @@ namespace PerpetuumMusica.ViewModel
             //Init volume
             Volume = 80;
 
-            //fortesting:
+            //for testing:
             ShowedItem = DemoData.Disney;
             DemoData.SetParents(DemoData.musicals);
+
 
 
         }
@@ -119,8 +121,8 @@ namespace PerpetuumMusica.ViewModel
         /// </summary>
         private Command _TogglePlayCommand;
         public Command TogglePlayCommand => _TogglePlayCommand ?? (_TogglePlayCommand = new Command(TogglePlay));
-        private Command _PlayAtCommand;
-        public Command PlayAtCommand => _PlayAtCommand ?? (_PlayAtCommand = new Command(PlayAt));
+        private Command _TogglePlayItemCommand;
+        public Command TogglePlayItemCommand => _TogglePlayItemCommand ?? (_TogglePlayItemCommand = new Command(TogglePlayItem));
         private Command _SearchCommand;
         public Command SearchCommand => _SearchCommand ?? (_SearchCommand = new Command(Search));
         private Command _ToggleMuteCommand;
@@ -153,7 +155,7 @@ namespace PerpetuumMusica.ViewModel
         {
             get
             {
-                if (Model.IsPlaying)
+                if (ShowedItem.IsPlaying)
                     return "Pause";
                 else
                     return "Play";
@@ -223,12 +225,14 @@ namespace PerpetuumMusica.ViewModel
 
             UpdateLocation();
         }
-        public void PlayAt(object param)
+        public void TogglePlayItem(object param)
         {
             PlaylistItem target = (PlaylistItem)param;
-            model.PlayAt(target); 
+            model.TogglePlayItem(target); 
             OnPropertyChanged("Playlist");
             OnPropertyChanged("CurrentlyPlayingIndex");
+            OnPropertyChanged("IsPlaying");
+            OnPropertyChanged("ToggleButtonIcon");
         }
         public void OpenItem(object param)
         {

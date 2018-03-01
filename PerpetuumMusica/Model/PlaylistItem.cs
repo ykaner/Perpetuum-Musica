@@ -28,6 +28,20 @@ namespace PerpetuumMusica.Model
                 OnPropertyChanged("IsPlaying");
             }
         }
+        private bool _IsOn;  //Detemind whether "play" will play this by default.
+        public bool IsOn
+        {
+            get
+            {
+                return _IsOn;
+            }
+            set
+            {
+                _IsOn = value;
+                OnPropertyChanged("IsOn");
+            }
+        }
+
 
         public PlaylistItem(int index, Playable content, ObservableCollection<PlaylistItem> list = null)
         {

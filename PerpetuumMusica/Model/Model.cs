@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PerpetuumMusica.Model
 {
@@ -16,16 +17,16 @@ namespace PerpetuumMusica.Model
 
         private bool isPlaying = true;
         private double location = 0;
-        private string sampleSongUri = @"C:\Users\ranha\Documents\GitHub\Perpetuum-Musica\ExampleAudioFiles\One Jump Ahead Lyrics.mp3";
 
         public Model()
         {
             Volume = 70;
             IsPlaying = false;
-            Player.SetUri(sampleSongUri);
+            Player.SetUri(DemoData.sampleUri);
 
             //for testing
-            currentlyPlayingItem = DemoData.disneyPlaylist[0];
+            //currentlyPlayingItem = DemoData.disneyPlaylist[0];
+            //currentlyPlayingItem.IsPlaying = true;
         }
 
         public bool IsPlaying
@@ -65,20 +66,57 @@ namespace PerpetuumMusica.Model
         public void TogglePlay()
         {
             if (IsPlaying)
+            {
                 Player.Pause();
+                currentlyPlayingItem.IsPlaying = false;
+            }
             else
+            {
+                if (currentlyPlayingItem == null)
+                {
+                    MessageBox.Show("Play \"showed\" Item");
+                    return;
+                }
+                else
+                    currentlyPlayingItem.IsPlaying = true;
+
                 Player.Play();
+            }
+
 
             IsPlaying = !IsPlaying;
         }
-        public void PlayAt(PlaylistItem target)
+        public void TogglePlayItem(PlaylistItem target)
         {
-            if (currentlyPlayingItem != null)
-                currentlyPlayingItem.IsPlaying = false;
+            //if we toggle to currently played item, we need to pause it
+            if (target.IsPlaying == true)
+            {
+                target.IsPlaying = false;
+                TogglePlay(); //to pause
+                return;
+            }
 
+            //if we have another item that is currently playing, we need to "unplay" it
+            if (currentlyPlayingItem != null)
+            {
+                currentlyPlayingItem.IsPlaying = false;
+                currentlyPlayingItem.IsOn = false;
+                TogglePlay();
+            }
+
+            //Play current Item
             target.IsPlaying = true;
+            target.IsOn = true;
             currentlyPlayingItem = target;
+            
+            TogglePlay(); //to play
         }
+        private void PlayItem(PlaylistItem item)
+        {
+            MessageBox.Show("play item " + item.Content.Title);
+        }
+
+
         internal void ToggleMute()
         {
             if (Volume > 0)

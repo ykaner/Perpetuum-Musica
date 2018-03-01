@@ -11,8 +11,18 @@ using PerpetuumMusica.ViewModel;
 
 namespace PerpetuumMusica.Model
 {
-    public class DemoData
+    static public class DemoData
     {
+        static private string directory = @"C:\Users\ranha\Documents\GitHub\Perpetuum-Musica\ExampleAudioFiles\";
+        static private string one_jump_ahead = "One Jump Ahead Lyrics.mp3";
+        
+        static public string sampleUri
+        {
+            get { return directory + one_jump_ahead; }
+        }
+
+        static private string uri(string name) { return directory + name; }
+
         static private ImageSource Image(string name) { return ViewModel.ViewModel.Image(name); }
 
         static public ObservableCollection<PlaylistItem> disneyPlaylist = new ObservableCollection<PlaylistItem>()
@@ -21,7 +31,7 @@ namespace PerpetuumMusica.Model
             new PlaylistItem(2, new Playable("Frozen (Original Motion Picture Soundtrack)", Image("frozen"),  new TimeSpan(2, 9, 0), 21, "Kristen Anderson, Robert Lopez")),
             new PlaylistItem(3, new Playable("Aladdin Musical", Image("aladdin"), new TimeSpan(1, 23, 0), 21, "Alan Menken"), new ObservableCollection<PlaylistItem>()
             {
-                new PlaylistItem(1, new Playable("One Jump ahead", Image("aladdin"),  new TimeSpan(1, 23, 0), 21, "Alan Menken") )
+                new PlaylistItem(1, new Track("One Jump ahead", uri("One Jump Ahead Lyrics.mp3"), Image("aladdin"),  new TimeSpan(1, 23, 0), 21, "Alan Menken") )
             })
         };
 

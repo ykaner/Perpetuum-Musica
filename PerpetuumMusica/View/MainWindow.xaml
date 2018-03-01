@@ -88,7 +88,7 @@
                 <!-- /search bar-->
 
                 <!--Testing area-->
-                <Button Content="Hello" Style="{StaticResource PathItemStyle}" Padding="5" Command="{Binding OpenItemCommand}"/>
+                
                 <!--<Menu>
                     <MenuItem Header="open me">
                         <MenuItem.ItemContainerStyle>
@@ -458,14 +458,14 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Grid>
-                                                <ToggleButton IsChecked="{Binding IsPlaying}"
-                                                            Command="{Binding DataContext.PlayAtCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                <ToggleButton IsChecked="{Binding IsPlaying, Mode=OneWay}"
+                                                            Command="{Binding DataContext.TogglePlayItemCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                                                             CommandParameter="{Binding }">
                                                     <ToggleButton.Template>
                                                         <ControlTemplate>
                                                             <Grid>
                                                                 <Grid x:Name="mouseNotOverIcons" Visibility="Visible">
-                                                                    <cc:SelectableTextBlock x:Name="Index" Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsPlaying}"
+                                                                    <cc:SelectableTextBlock x:Name="Index" Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsOn}"
                                                                                             Visibility="Visible"/>
                                                                     <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                              Visibility="Hidden"/>
@@ -536,28 +536,28 @@
                                 <GridViewColumn Header="TITLE" Width="250">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <cc:SelectableTextBlock Text="{Binding Content.Title}" IsSelected="{Binding IsPlaying}"/>
+                                            <cc:SelectableTextBlock Text="{Binding Content.Title}" IsSelected="{Binding IsOn}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="TIME" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <cc:SelectableTextBlock Text="{Binding Content.Time}" IsSelected="{Binding IsPlaying}"/>
+                                            <cc:SelectableTextBlock Text="{Binding Content.Time}" IsSelected="{Binding IsOn}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="TIMES HEARD" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <cc:SelectableTextBlock Text="{Binding Content.TimesHeard}" IsSelected="{Binding IsPlaying}"/>
+                                            <cc:SelectableTextBlock Text="{Binding Content.TimesHeard}" IsSelected="{Binding IsOn}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="COMPOSER" Width="170" DisplayMemberBinding="{Binding Content.Composer}">
+                                <GridViewColumn Header="COMPOSER" Width="170">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <cc:SelectableTextBlock Text="{Binding Content.Composer}" IsSelected="{Binding IsPlaying}"/>
+                                            <cc:SelectableTextBlock Text="{Binding Content.Composer}" IsSelected="{Binding IsOn}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

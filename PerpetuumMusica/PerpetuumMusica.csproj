@@ -63,6 +63,7 @@
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Playable.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
+    <Compile Include="Model\Track.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
