@@ -14,7 +14,15 @@ namespace PerpetuumMusica.Model
         public Playable Content { get; set; }
         public ObservableCollection<PlaylistItem> List { get; set; }
         public List<PlaylistItem> Path { get; set; }
-
+        public PlaylistItem Parent
+        {
+            get
+            {
+                if (Path.Count == 0) return null;
+                else
+                    return Path[Path.Count - 1];
+            }
+        }
         private bool _IsPlaying;
         public bool IsPlaying
         {
@@ -24,7 +32,15 @@ namespace PerpetuumMusica.Model
             }
             set
             {
+                //recursive set of IsPlaying property
+                if (_IsPlaying == value) return;
+
                 _IsPlaying = value;
+
+                if (Parent != null)
+                {
+                    Parent.IsPlaying = value;
+                }
                 OnPropertyChanged("IsPlaying");
             }
         }
@@ -37,8 +53,64 @@ namespace PerpetuumMusica.Model
             }
             set
             {
+                //recursive set of IsOn property
+                if (_IsOn == value) return;
+
                 _IsOn = value;
+                if (value && Parent != null)
+                {
+                    //update CurrentlyPlaying
+                    Parent.Current = this;
+                }
+
+                if (Parent != null)
+                {
+                    Parent.IsOn = value;
+                }
                 OnPropertyChanged("IsOn");
+            }
+        }
+        
+        private int CurrentItemIndex { get; set; } //Index of item that is currently on/playing
+        public PlaylistItem Current
+        {
+            get
+            {
+                return List[CurrentItemIndex];
+            }
+            set
+            {
+                if (value.Parent != this) throw new Exception("Cannot asign item that is not in the same list");
+
+                CurrentItemIndex = value.Index - 1;
+            }
+        }
+        public PlaylistItem Next
+        {
+            get
+            {
+                try
+                {
+                    return Parent.List[Parent.CurrentItemIndex + 1];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+        public PlaylistItem Previous
+        {
+            get
+            {
+                try
+                {
+                    return Parent.List[CurrentItemIndex - 1];
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 
@@ -49,6 +121,7 @@ namespace PerpetuumMusica.Model
             Content = content;
             List = list;
             Path = new List<PlaylistItem>();
+            CurrentItemIndex = 0;
         }
 
         public void SetParent(PlaylistItem parent)

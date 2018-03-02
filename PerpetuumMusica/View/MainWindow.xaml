@@ -387,8 +387,9 @@
                             
                             <StackPanel Margin="2, 15" Orientation="Horizontal">
                                 <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
-                                         Content="{Binding Path=ToggleButtonText}"
-                                         Command="{Binding Path=TogglePlay}"/>
+                                            Content="{Binding Path=ToggleButtonText}"
+                                            Command="{Binding Path=TogglePlayItemCommand}"
+                                            CommandParameter="{Binding Path=ShowedItem}"/>
                             </StackPanel>
 
                         </StackPanel>

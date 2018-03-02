@@ -24,7 +24,7 @@ namespace PerpetuumMusica.ViewModel
         public ViewModel()
         {
             this.model = new Model.Model();
-
+            model.MediaEnded += MediaEnded;
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();
             UpdateTrackSliderLocationTimer.Interval = TimeSpan.FromMilliseconds(5);
@@ -70,6 +70,7 @@ namespace PerpetuumMusica.ViewModel
 
 
         }
+
 
         static public ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
 
@@ -158,7 +159,12 @@ namespace PerpetuumMusica.ViewModel
                 if (ShowedItem.IsPlaying)
                     return "Pause";
                 else
-                    return "Play";
+                {
+                    if (ShowedItem.IsOn)
+                        return "Continue";
+                    else
+                        return "Play";
+                }
             }
         }
         public ImageSource VolumeIcon
@@ -217,6 +223,7 @@ namespace PerpetuumMusica.ViewModel
         }
 
         //Methods
+        //Playing Methods
         public void TogglePlay(object param = null)
         {
             Model.TogglePlay();
@@ -228,18 +235,27 @@ namespace PerpetuumMusica.ViewModel
         public void TogglePlayItem(object param)
         {
             PlaylistItem target = (PlaylistItem)param;
-            model.TogglePlayItem(target); 
-            OnPropertyChanged("Playlist");
-            OnPropertyChanged("CurrentlyPlayingIndex");
-            OnPropertyChanged("IsPlaying");
-            OnPropertyChanged("ToggleButtonIcon");
+            model.TogglePlayItem(target);
+            PlayingItemPropertyChanged();
+            PlayingPropertyChanged();
+            
         }
+        private void MediaEnded(object sender, EventArgs e)
+        {
+            Model.TrackEnded();
+            PlayingPropertyChanged();
+            LocationPropertyChanged();
+            PlayingItemPropertyChanged();
+        }
+
+
         public void OpenItem(object param)
         {
             ShowedItemHistory.Push(ShowedItem);
             ShowedItemFuture.Clear();
             ShowedItem = (PlaylistItem)param;
             OnPropertyChanged("ShowedItem");
+            OnPropertyChanged("ToggleButtonText");
             HistoryBackCommand.RaiseCanExecuteChanged(); 
 
         }
@@ -272,6 +288,7 @@ namespace PerpetuumMusica.ViewModel
             HistoryBackCommand.RaiseCanExecuteChanged();
             HistoryForewardCommand.RaiseCanExecuteChanged();
         }
+
         internal void ToggleMute(object param = null)
         {
             Model.ToggleMute();
@@ -282,8 +299,7 @@ namespace PerpetuumMusica.ViewModel
         {
             if (Model.IsPlaying)
             {
-                OnPropertyChanged("TrackSliderLocation");
-                OnPropertyChanged("TimeStamp");
+                LocationPropertyChanged();
             }
         }
         public void Search(object param)
@@ -296,6 +312,25 @@ namespace PerpetuumMusica.ViewModel
         {
             AddMenuIsOpen = true;
             OnPropertyChanged("AddMenuIsOpen");
+        }
+
+
+        //Update properties
+        private void PlayingPropertyChanged()
+        {
+            OnPropertyChanged("IsPlaying");
+            OnPropertyChanged("ToggleButtonIcon");
+            OnPropertyChanged("ToggleButtonText");
+        }
+        private void LocationPropertyChanged()
+        {
+            OnPropertyChanged("TrackSliderLocation");
+            OnPropertyChanged("TimeStamp");
+        }
+        private void PlayingItemPropertyChanged()
+        {
+            OnPropertyChanged("Playlist");
+            OnPropertyChanged("CurrentlyPlayingIndex");
         }
     }
 }
