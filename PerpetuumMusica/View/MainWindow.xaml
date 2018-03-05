@@ -345,55 +345,230 @@
                 <StackPanel Margin="15" Grid.Column="2" Background="Transparent">
                     <StackPanel.Resources>
                         <DataTemplate DataType="{x:Type m:PlaylistItem}">
-                            <Grid Name="PlaylistHeader" Height="170">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="{Binding Path=Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                <StackPanel Margin="12" Grid.Column="1">
-                                    <ListBox ItemsSource="{Binding Path=Path}" 
+                            <StackPanel>
+                                <Grid Name="PlaylistHeader" Height="170">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Path=Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <StackPanel Margin="12" Grid.Column="1">
+                                        <ListBox ItemsSource="{Binding Path=Path}" 
                                              Background="Transparent" 
                                              BorderThickness="0"
                                              Height="24">
-                                        <ListBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <WrapPanel IsItemsHost="True"/>
-                                            </ItemsPanelTemplate>
-                                        </ListBox.ItemsPanel>
-                                        <ListBox.ItemContainerStyle>
-                                            <Style TargetType="ListBoxItem">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <Button Style="{StaticResource PathItemStyle}" Padding="5, 1"
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel IsItemsHost="True"/>
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Button Style="{StaticResource PathItemStyle}" Padding="5, 1"
                                                                         Command="{Binding Path=DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                                         CommandParameter="{Binding }">
-                                                                    <TextBlock Text="{Binding }" FontSize="15" FontWeight="DemiBold"/>
-                                                                </Button>
-                                                                <TextBlock Text=" / " FontSize="15" FontWeight="DemiBold"/>
-                                                            </StackPanel>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </ListBox.ItemContainerStyle>
-                                    </ListBox>
-                                    <TextBlock FontSize="42" Text="{Binding Path=Content.Title}" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontSize="15" FontWeight="Bold" Text="By "/>
-                                        <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding Path=Content.Composer}"/>
-                                    </StackPanel>
+                                                                        <TextBlock Text="{Binding }" FontSize="15" FontWeight="DemiBold"/>
+                                                                    </Button>
+                                                                    <TextBlock Text=" / " FontSize="15" FontWeight="DemiBold"/>
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+                                        </ListBox>
+                                        <TextBlock FontSize="42" Text="{Binding Path=Content.Title}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontSize="15" FontWeight="Bold" Text="By "/>
+                                            <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding Path=Content.Composer}"/>
+                                        </StackPanel>
 
-                                    <StackPanel Margin="2, 15" Orientation="Horizontal">
-                                        <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
+                                        <StackPanel Margin="2, 15" Orientation="Horizontal">
+                                            <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
                                             Content="{Binding Path=DataContext.ToggleButtonText, RelativeSource={RelativeSource AncestorType=Window}}"
                                             Command="{Binding Path=DataContext.TogglePlayItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                             CommandParameter="{Binding }"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Grid>
+                                </Grid>
+                                <ContentControl Content="{Binding Content}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:Playlist}">
+                            <ListView Grid.Column="1"
+                                ItemsSource="{Binding Path=List}"
+                                Background="Transparent">
+                                <ListView.Resources>
+                                    <Style x:Key="{x:Type ListViewItem}"
+                                   TargetType="ListViewItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border x:Name="Border"
+                                                    Padding="0"
+                                                    SnapsToDevicePixels="true"
+                                                    Background="Transparent"
+                                                    BorderThickness="0">
+                                                        <VisualStateManager.VisualStateGroups>
+                                                            <VisualStateGroup x:Name="CommonStates">
+                                                                <VisualState x:Name="Normal" />
+                                                                <VisualState x:Name="MouseOver">
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation Storyboard.TargetName="highlightRect" Storyboard.TargetProperty="Opacity" Duration="0" To="0.15"/>
+                                                                    </Storyboard>
+                                                                </VisualState>
+                                                                <VisualState x:Name="Disabled" />
+                                                            </VisualStateGroup>
+                                                            <VisualStateGroup x:Name="SelectionStates">
+                                                                <VisualState x:Name="Unselected" />
+                                                                <VisualState x:Name="Selected">
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation Storyboard.TargetName="SelectedRect" Storyboard.TargetProperty="Opacity" Duration="0" To="0.3"/>
+                                                                    </Storyboard>
+                                                                </VisualState>
+                                                                <VisualState x:Name="SelectedUnfocused"/>
+                                                            </VisualStateGroup>
+                                                        </VisualStateManager.VisualStateGroups>
+                                                        <Grid>
+                                                            <Rectangle Fill="White" x:Name="highlightRect" Opacity="0" RadiusX="2" RadiusY="2"/>
+                                                            <Rectangle Fill="White" x:Name="SelectedRect" Opacity="0" RadiusX="2" RadiusY="2"/>
+                                                            <Grid Margin="2,7">
+                                                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" >
+                                                                    <GridViewRowPresenter.InputBindings>
+                                                                        <MouseBinding Gesture="LeftDoubleClick" 
+                                                                              Command="{Binding DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                              CommandParameter="{Binding}"/>
+                                                                    </GridViewRowPresenter.InputBindings>
+                                                                </GridViewRowPresenter>
+                                                            </Grid>
+                                                            <StackPanel Grid.ColumnSpan="2" Margin="0">
+                                                                <Rectangle Fill="{StaticResource lines_color}" Width="Auto" Height="2"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.Resources>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="#" Width="50">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <ToggleButton IsChecked="{Binding IsPlaying, Mode=OneWay}"
+                                                            Command="{Binding DataContext.TogglePlayItemCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                            CommandParameter="{Binding }">
+                                                            <ToggleButton.Template>
+                                                                <ControlTemplate>
+                                                                    <Grid>
+                                                                        <Grid x:Name="mouseNotOverIcons" Visibility="Visible">
+                                                                            <cc:SelectableTextBlock x:Name="Index" Text="{Binding Index}" HorizontalAlignment="Center" IsSelected="{Binding IsOn}"
+                                                                                            Visibility="Visible"/>
+                                                                            <cc:Icon x:Name="playingIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playingIcon}" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                             Visibility="Hidden"/>
+                                                                        </Grid>
+                                                                        <Grid x:Name="mouseOverIcons" Visibility="Hidden">
+                                                                            <cc:Icon x:Name="PlayIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource playIcon}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                             Visibility="Visible"/>
+                                                                            <cc:Icon x:Name="PauseIcon" Foreground="{Binding ElementName=Index, Path=Foreground}" ImageSource="{StaticResource pauseIcon}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                             Visibility="Hidden"/>
+                                                                        </Grid>
+
+                                                                        <VisualStateManager.VisualStateGroups>
+                                                                            <VisualStateGroup>
+                                                                                <VisualState x:Name="Normal"/>
+                                                                                <VisualState x:Name="MouseOver">
+                                                                                    <Storyboard>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="mouseOverIcons">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Visible}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="mouseNotOverIcons">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                    </Storyboard>
+                                                                                </VisualState>
+                                                                            </VisualStateGroup>
+                                                                            <VisualStateGroup>
+                                                                                <VisualState x:Name="Unchecked"/>
+                                                                                <VisualState x:Name="Checked">
+                                                                                    <Storyboard>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="playingIcon">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Visible}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="Index">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="PlayIcon">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Hidden}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                                                    Storyboard.TargetName="PauseIcon">
+                                                                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                                Value="{x:Static Visibility.Visible}" />
+                                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                                    </Storyboard>
+                                                                                </VisualState>
+                                                                            </VisualStateGroup>
+                                                                        </VisualStateManager.VisualStateGroups>
+                                                                    </Grid>
+                                                                </ControlTemplate>
+                                                            </ToggleButton.Template>
+
+                                                        </ToggleButton>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="TITLE" Width="250">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <cc:SelectableTextBlock Text="{Binding Content.Title}" IsSelected="{Binding IsOn}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="TIME" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <cc:SelectableTextBlock Text="{Binding Content.Time}" IsSelected="{Binding IsOn}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="TIMES HEARD" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <cc:SelectableTextBlock Text="{Binding Content.TimesHeard}" IsSelected="{Binding IsOn}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="COMPOSER" Width="170">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <cc:SelectableTextBlock Text="{Binding Content.Composer}" IsSelected="{Binding IsOn}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:Track}">
+                            <TextBlock HorizontalAlignment="Center" Margin="0, 30" Foreground="{StaticResource foreground_darker}">This is a single track. There is no playlist to present</TextBlock>
                         </DataTemplate>
                     </StackPanel.Resources>
 
@@ -451,7 +626,7 @@
 
                     <TextBlock Text="{Binding CurrentlyPlayingIndex}"/>
                     <!-- playlist-->
-                    <ListView Grid.Column="1"
+                    <!--<ListView Grid.Column="1"
                                 ItemsSource="{Binding Path=ShowedItem.Content.List}"
                                 Background="Transparent">
                         <ListView.Resources>
@@ -618,7 +793,7 @@
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
-                    </ListView>
+                    </ListView>-->
                     <!--<multiSelectionTree:MultipleSelectionTreeView 
                                 Background="Transparent"
                                 SelectionMode="KeyboardModifiersMode"                                  

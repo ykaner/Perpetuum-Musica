@@ -46,15 +46,17 @@ namespace PerpetuumMusica.Model
         }));
 
 
-
-        static public void SetParents(PlaylistItem playlist)
+        //Recurssively sets the parents for targetItem succesors
+        static public void SetParents(PlaylistItem targetItem)
         {
-            if (playlist.Content.List == null) return;
+            if (targetItem.Content.GetType() == PlayableType.Track) return;
 
-            foreach(PlaylistItem item in playlist.Content.List)
+            Playlist playlist = (Playlist)targetItem.Content;
+
+            foreach (PlaylistItem item in playlist.List)
             {
-                item.SetParent(playlist);
-                SetParents(item);
+                item.SetParent(targetItem); //set the current item parents
+                SetParents(item); //recurssively set for his children
             }
         }
 

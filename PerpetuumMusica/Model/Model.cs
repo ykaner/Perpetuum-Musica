@@ -110,7 +110,7 @@ namespace PerpetuumMusica.Model
         {
             //currentlyPlayingItem = currentlyPlayingItem.Next;
             //Option 1 - play next in current list
-            if (currentlyPlayingItem != null)
+            if (currentlyPlayingItem.Next != null)
             {
                 PlayItem(currentlyPlayingItem.Next);
             }
@@ -152,12 +152,13 @@ namespace PerpetuumMusica.Model
                 }
 
             }
-
             //Play current Item
             item.IsPlaying = true;
             item.IsOn = true;
             currentlyPlayingItem = item;
 
+            //Actuall playing of the item
+            //NOTE - it would make much more sense if we could use polymorphism here. The problem is that we cannot access the Player from Playable.
             if (item.Content.GetType() == PlayableType.Track)
             {
                 Track track = (Track)(item.Content);
@@ -166,7 +167,7 @@ namespace PerpetuumMusica.Model
             }
             else if (item.Content.GetType() == PlayableType.Playlist)
             {
-                PlayItem(item.Content.List[0]);
+                PlayItem(((Playlist)item.Content).List[0]);
             }
         }
 

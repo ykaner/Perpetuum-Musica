@@ -23,6 +23,15 @@ namespace PerpetuumMusica.Model
                     return Path[Path.Count - 1];
             }
         }
+        public Playlist ParentPlaylist
+        {
+            get
+            {
+                return (Playlist)(Parent.Content);
+            }
+        }
+
+
         private bool _IsPlaying;
         public bool IsPlaying
         {
@@ -54,13 +63,17 @@ namespace PerpetuumMusica.Model
             set
             {
                 //recursive set of IsOn property
+                //stoping condition - if we are already marked correctly
                 if (_IsOn == value) return;
 
+                //mark this
                 _IsOn = value;
+
+                //if we need to update the currently playing item of the parent list
                 if (value && Parent != null)
                 {
                     //update CurrentlyPlaying
-                    Parent.Current = this;
+                    ((Playlist)Parent.Content).Current = this;
                 }
 
                 if (Parent != null)
@@ -70,49 +83,44 @@ namespace PerpetuumMusica.Model
                 OnPropertyChanged("IsOn");
             }
         }
-        
-        private int CurrentItemIndex { get; set; } //Index of item that is currently on/playing
-        public PlaylistItem Current
-        {
-            get
-            {
-                return Content.List[CurrentItemIndex];
-            }
-            set
-            {
-                if (value.Parent != this) throw new Exception("Cannot asign item that is not in the same list");
 
-                CurrentItemIndex = value.Index - 1;
-            }
-        }
+        //private int CurrentItemIndex { get; set; } //Index of item that is currently on/playing
+        //public PlaylistItem Current
+        //{
+        //    get
+        //    {
+        //        return Content.List[CurrentItemIndex];
+        //    }
+        //    set
+        //    {
+        //        if (value.Parent != this) throw new Exception("Cannot asign item that is not in the same list");
+
+        //        CurrentItemIndex = value.Index - 1;
+        //    }
+        //}
+
+        //Next after me, in playlist "Parent"
         public PlaylistItem Next
         {
             get
             {
-                try
-                {
-                    return Parent.Content.List[Parent.CurrentItemIndex + 1];
-                }
-                catch
-                {
-                    return null;
-                }
+                return ((Playlist)Parent.Content).Next;
             }
         }
-        public PlaylistItem Previous
-        {
-            get
-            {
-                try
-                {
-                    return Parent.Content.List[CurrentItemIndex - 1];
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
+        //public PlaylistItem Previous
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            return Parent.Content.List[CurrentItemIndex - 1];
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
 
 
         public PlaylistItem(int index, Playable content/*, ObservableCollection<PlaylistItem> list = null*/)
@@ -121,7 +129,6 @@ namespace PerpetuumMusica.Model
             Content = content;
             //List = list;
             Path = new List<PlaylistItem>();
-            CurrentItemIndex = 0;
         }
 
         public void SetParent(PlaylistItem parent)

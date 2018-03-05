@@ -7,7 +7,8 @@
     <SolidColorBrush x:Key="main_color">#F65A25</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_brighter">#f76a3b</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_darker">#F65A25</SolidColorBrush>
-    <SolidColorBrush x:Key="foreground_color">white</SolidColorBrush>
+    <SolidColorBrush x:Key="foreground_color">#f7f7f7</SolidColorBrush>
+    <SolidColorBrush x:Key="foreground_darker">#565656</SolidColorBrush>
     <SolidColorBrush x:Key="popup_menu_color">#565656</SolidColorBrush>
     <SolidColorBrush x:Key="lines_color">#222326</SolidColorBrush>
     <SolidColorBrush x:Key="background_color">#131313</SolidColorBrush>
