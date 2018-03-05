@@ -452,8 +452,8 @@
                     <TextBlock Text="{Binding CurrentlyPlayingIndex}"/>
                     <!-- playlist-->
                     <ListView Grid.Column="1"
-                                  ItemsSource="{Binding Path=ShowedItem.List}"
-                                  Background="Transparent">
+                                ItemsSource="{Binding Path=ShowedItem.Content.List}"
+                                Background="Transparent">
                         <ListView.Resources>
                             <Style x:Key="{x:Type ListViewItem}"
                                    TargetType="ListViewItem">

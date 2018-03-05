@@ -11,7 +11,7 @@ namespace PerpetuumMusica.Model
 {
     public enum PlayableType { Track, Playlist}
 
-    public class Playable
+    public abstract class Playable
     {
         //public int ListIndex { get; set; }
         public string Title { get; set; }
@@ -20,16 +20,17 @@ namespace PerpetuumMusica.Model
         public int TimesHeard { get; set; }
         public string Composer { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
+        public ObservableCollection<PlaylistItem> List { get; set; }
 
 
-        public Playable(string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
+        public Playable(string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list)
         {
             //ListIndex = listIndex;
             Title = title;
             Time = time;
             TimesHeard = timesHeard;
             Composer = composer;
-            //List = list;
+            List = list;
             Image = image;
         }
         public Playable(string title)
@@ -40,10 +41,7 @@ namespace PerpetuumMusica.Model
             Composer = "Various Artist";
         }
 
-        public virtual PlayableType GetType()
-        {
-            return PlayableType.Playlist; //as for now - the default is playlist
-        }
+        public abstract PlayableType GetType();
 
     }
 }

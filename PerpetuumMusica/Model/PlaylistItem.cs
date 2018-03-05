@@ -12,7 +12,7 @@ namespace PerpetuumMusica.Model
     {
         public int Index { get; set; }
         public Playable Content { get; set; }
-        public ObservableCollection<PlaylistItem> List { get; set; }
+        //public ObservableCollection<PlaylistItem> List { get; set; }
         public List<PlaylistItem> Path { get; set; }
         public PlaylistItem Parent
         {
@@ -76,7 +76,7 @@ namespace PerpetuumMusica.Model
         {
             get
             {
-                return List[CurrentItemIndex];
+                return Content.List[CurrentItemIndex];
             }
             set
             {
@@ -91,7 +91,7 @@ namespace PerpetuumMusica.Model
             {
                 try
                 {
-                    return Parent.List[Parent.CurrentItemIndex + 1];
+                    return Parent.Content.List[Parent.CurrentItemIndex + 1];
                 }
                 catch
                 {
@@ -105,7 +105,7 @@ namespace PerpetuumMusica.Model
             {
                 try
                 {
-                    return Parent.List[CurrentItemIndex - 1];
+                    return Parent.Content.List[CurrentItemIndex - 1];
                 }
                 catch
                 {
@@ -115,11 +115,11 @@ namespace PerpetuumMusica.Model
         }
 
 
-        public PlaylistItem(int index, Playable content, ObservableCollection<PlaylistItem> list = null)
+        public PlaylistItem(int index, Playable content/*, ObservableCollection<PlaylistItem> list = null*/)
         {
             Index = index;
             Content = content;
-            List = list;
+            //List = list;
             Path = new List<PlaylistItem>();
             CurrentItemIndex = 0;
         }

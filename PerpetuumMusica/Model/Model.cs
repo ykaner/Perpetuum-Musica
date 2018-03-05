@@ -166,7 +166,7 @@ namespace PerpetuumMusica.Model
             }
             else if (item.Content.GetType() == PlayableType.Playlist)
             {
-                PlayItem(item.List[0]);
+                PlayItem(item.Content.List[0]);
             }
         }
 
