@@ -7,9 +7,11 @@
         xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
         xmlns:con="clr-namespace:PerpetuumMusica.View.Converters"
         xmlns:vm="clr-namespace:PerpetuumMusica.ViewModel"
+        xmlns:m="clr-namespace:PerpetuumMusica.Model"
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050" 
+        Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050"
+        x:Name="Window"
         Background="{StaticResource background_color}">
     <!---->
 
@@ -339,18 +341,70 @@
             <!--view area-->
 
             <ScrollViewer Grid.Column="2" >
+                <!-- Main View Area-->
                 <StackPanel Margin="15" Grid.Column="2" Background="Transparent">
+                    <StackPanel.Resources>
+                        <DataTemplate DataType="{x:Type m:PlaylistItem}">
+                            <Grid Name="PlaylistHeader" Height="170">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Path=Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <StackPanel Margin="12" Grid.Column="1">
+                                    <ListBox ItemsSource="{Binding Path=Path}" 
+                                             Background="Transparent" 
+                                             BorderThickness="0"
+                                             Height="24">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel IsItemsHost="True"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Button Style="{StaticResource PathItemStyle}" Padding="5, 1"
+                                                                        Command="{Binding Path=DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                        CommandParameter="{Binding }">
+                                                                    <TextBlock Text="{Binding }" FontSize="15" FontWeight="DemiBold"/>
+                                                                </Button>
+                                                                <TextBlock Text=" / " FontSize="15" FontWeight="DemiBold"/>
+                                                            </StackPanel>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+                                    <TextBlock FontSize="42" Text="{Binding Path=Content.Title}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontSize="15" FontWeight="Bold" Text="By "/>
+                                        <TextBlock FontSize="15" FontWeight="Bold" Text="{Binding Path=Content.Composer}"/>
+                                    </StackPanel>
 
-                    
+                                    <StackPanel Margin="2, 15" Orientation="Horizontal">
+                                        <cc:pmButton Width="100" Height="30" FontWeight="Bold" FontSize="14" CornerRadius="15"
+                                            Content="{Binding Path=DataContext.ToggleButtonText, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            Command="{Binding Path=DataContext.TogglePlayItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding }"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </StackPanel.Resources>
 
-                    <Grid Name="PlaylistHeader" Height="170">
+                    <ContentControl Content="{Binding Path=ShowedItem}"/>
+                    <!--<Grid Name="PlaylistHeader" Height="170">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="{Binding Path=Height, ElementName=PlaylistHeader}"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding Path=ShowedItem.Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <StackPanel Margin="12" Grid.Column="1">
-                            <!--<TextBlock Text="Path" FontSize="16" FontWeight="DemiBold"/>-->
                             <ListBox ItemsSource="{Binding Path=ShowedItem.Path}" 
                                      Background="Transparent" 
                                      BorderThickness="0"
@@ -393,7 +447,7 @@
                             </StackPanel>
 
                         </StackPanel>
-                    </Grid>
+                    </Grid>-->
 
                     <TextBlock Text="{Binding CurrentlyPlayingIndex}"/>
                     <!-- playlist-->
