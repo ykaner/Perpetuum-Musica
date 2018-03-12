@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,15 @@ namespace Player
     public partial class MainWindow : Window
     {
 
-        private AudioPlayer audioPlayer = new AudioPlayer();
-
+        private AudioPlayer audioPlayer;
+        private YoutubePlayer YTPlayer;
+        
         public MainWindow()
         {
             InitializeComponent();
+
+            audioPlayer = new AudioPlayer();
+            YTPlayer = new YoutubePlayer(wbBrwsr);
 
             audioPlayer.SetUri("http://s71.podbean.com/pb/2aba70e5c3fff66c5ec21b96971cfd95/5a664d03/data3/fs60/688336/uploads/EP159_Algorithmic_Trading_Fixed.mp3");
 
@@ -75,9 +80,17 @@ namespace Player
 
         public void youtube_play(object sender, RoutedEventArgs e)
         {
-            //wbSample.Navigate("C:/Users/ykane/Documents/scripts/youtube.html");
-            wbSample.Navigate("https://www.youtube.com/watch?v=sNhhvQGsMEc&autoplay=1");
-            //wbSample.Navigate("https://www.youtube.com");
+
+            //wbBrwsr.Navigate("C:/Users/ykane/Documents/scripts/youtube.html");
+            wbBrwsr.Navigate("https://www.youtube.com/embed/ASSOQDQvVLU?autoplay=1");
+            //string curDir = Directory.GetCurrentDirectory();
+            //wbBrwsr.Navigate(new Uri(String.Format("file:///{0}/YTPage.html", curDir)));
         }
+
+        public void youtube_pause(object sender, RoutedEventArgs e)
+        {
+            YTPlayer.pause();
+        }
+
     }
 }

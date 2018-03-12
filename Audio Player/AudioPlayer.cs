@@ -71,6 +71,7 @@ namespace Player
         //}
 
         public String GetProgressTime()
+
         {
             String res = this.Position.ToString(@"mm\:ss") + " / ";
             if (!this.NaturalDuration.HasTimeSpan)

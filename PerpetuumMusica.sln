@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerpetuumMusica", "PerpetuumMusica\PerpetuumMusica.csproj", "{41E14C9C-3D3F-4DBA-AF78-8CD4BC77CF5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio Player", "Audio Player\Audio Player.csproj", "{9485415C-5117-40F6-A97E-E927C839EDCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB_connection", "DB_connection\DB_connection.csproj", "{9175C1BD-8BDE-496D-BEFE-8A8210F7CAD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9485415C-5117-40F6-A97E-E927C839EDCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9485415C-5117-40F6-A97E-E927C839EDCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9485415C-5117-40F6-A97E-E927C839EDCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9175C1BD-8BDE-496D-BEFE-8A8210F7CAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9175C1BD-8BDE-496D-BEFE-8A8210F7CAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9175C1BD-8BDE-496D-BEFE-8A8210F7CAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9175C1BD-8BDE-496D-BEFE-8A8210F7CAD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

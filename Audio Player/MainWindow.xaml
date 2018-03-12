@@ -15,7 +15,10 @@
             <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
             <Button Name="jump" Click="btnJump_Click">Jump</Button>
         </WrapPanel>
-        <Button Click="youtube_play">youtube play</Button>
-        <WebBrowser Visibility="Hidden" Name="wbSample"></WebBrowser>
+        <WrapPanel HorizontalAlignment="center">
+            <Button Click="youtube_play">youtube play</Button>
+            <Button Click="youtube_pause">youtube pause</Button>
+        </WrapPanel>
+        <WebBrowser Visibility="Visible"  Name="wbBrwsr"></WebBrowser>
     </StackPanel>
 </Window>
