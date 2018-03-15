@@ -64,8 +64,11 @@ namespace PerpetuumMusica.ViewModel
             Volume = 80;
 
             //for testing:
-            ShowedItem = DemoData.Disney;
-            DemoData.SetParents(DemoData.musicals);
+            //ShowedItem = DemoData.Disney;
+            //DemoData.SetParents(DemoData.musicals);
+
+            DB_connection.DB_conn mycon = new DB_connection.DB_conn();
+            ShowedItem = mycon.RetrievePlaylist(2)[0];
 
 
 

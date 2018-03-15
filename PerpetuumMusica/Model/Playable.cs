@@ -13,6 +13,7 @@ namespace PerpetuumMusica.Model
 
     public abstract class Playable
     {
+        public int ID { get; }
         public string Title { get; set; }
         public ImageSource Image { get; set; }
         public TimeSpan Time { get; set; }
@@ -21,9 +22,10 @@ namespace PerpetuumMusica.Model
         //public ObservableCollection<PlaylistItem> List { get; set; }
 
 
-        public Playable(string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
+        public Playable(int id, string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
         {
             //ListIndex = listIndex;
+            this.ID = id;
             Title = title;
             Time = time;
             TimesHeard = timesHeard;

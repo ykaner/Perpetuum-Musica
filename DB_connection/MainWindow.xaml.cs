@@ -36,7 +36,7 @@ namespace DB_connection
 
         private void btnInsertList_Click(object sender, RoutedEventArgs e)
         {
-            connection.InsertPlaylist(0, 5, new Duration(new TimeSpan(0, 0, 0)), "Modern",
+            connection.InsertPlaylist(2, 3, new Duration(new TimeSpan(0, 0, 0)), "Modern",
                 "satoshi");
         }
     }

@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DB_connection\DB_connection.cs" />
     <Compile Include="Model\DemoData.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Playable.cs" />

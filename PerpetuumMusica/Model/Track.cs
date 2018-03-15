@@ -11,7 +11,8 @@ namespace PerpetuumMusica.Model
     {
         public String FileUri { get; set; }
 
-        public Track(string title, String fileUri, ImageSource image, TimeSpan time, int timesHeard, string composer) : base(title, image, time, timesHeard, composer)
+        public Track(int id, string title, String fileUri, ImageSource image, TimeSpan time, int timesHeard, string composer) :
+            base(id, title, image, time, timesHeard, composer)
         {
             FileUri = fileUri;
         }

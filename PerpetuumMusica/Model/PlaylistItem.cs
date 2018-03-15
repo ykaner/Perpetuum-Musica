@@ -10,9 +10,11 @@ namespace PerpetuumMusica.Model
 {
     public class PlaylistItem : INotifyPropertyChanged
     {
+        public int ID { get; }
         public int Index { get; set; }
         public Playable Content { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
+        public List<int> Path_id { get; set; }
         public List<PlaylistItem> Path { get; set; }
         public PlaylistItem Parent
         {
@@ -123,8 +125,9 @@ namespace PerpetuumMusica.Model
         //}
 
 
-        public PlaylistItem(int index, Playable content/*, ObservableCollection<PlaylistItem> list = null*/)
+        public PlaylistItem(int id, int index, Playable content/*, ObservableCollection<PlaylistItem> list = null*/)
         {
+            this.ID = id;
             Index = index;
             Content = content;
             //List = list;
@@ -133,6 +136,8 @@ namespace PerpetuumMusica.Model
 
         public void SetParent(PlaylistItem parent)
         {
+            Path_id = new List<int>(parent.Path_id);
+            Path_id.Add(parent.ID);
             Path = new List<PlaylistItem>(parent.Path);
             Path.Add(parent);
         }

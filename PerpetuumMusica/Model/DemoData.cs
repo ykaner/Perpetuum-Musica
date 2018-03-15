@@ -8,12 +8,12 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using PerpetuumMusica.ViewModel;
-
+/*
 namespace PerpetuumMusica.Model
 {
     static public class DemoData
     {
-        static private string directory = @"C:\Users\ranha\Documents\GitHub\Perpetuum-Musica\ExampleAudioFiles\";
+        static private string directory = @"C:\Users\ykane\Documents\Perpetuum Musica\ExampleAudioFiles\";
         static private string one_jump_ahead = "One Jump Ahead Lyrics.mp3";
         static private string LetItGo = "Frozen Let It Go.mp3";
         static private string littleMermaid = "The Little Mermaid.mp3";
@@ -62,3 +62,4 @@ namespace PerpetuumMusica.Model
 
     }
 }
+*/

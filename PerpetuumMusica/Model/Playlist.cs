@@ -12,7 +12,8 @@ namespace PerpetuumMusica.Model
     {
         public ObservableCollection<PlaylistItem> List { get; set; }
 
-        public Playlist(string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) : base(title, image, time, timesHeard, composer)
+        public Playlist(int id, string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) :
+            base(id, title, image, time, timesHeard, composer)
         {
             List = list;
         }
