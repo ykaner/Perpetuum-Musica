@@ -72,37 +72,6 @@ namespace DB_connection
             }
         }
 
-        public void InsertPlaylist(Playlist playlist, int parent_id, int index, Duration duration, string name="play list", 
-            string composer="unknown commposer", string image_uri=null)
-        {
-            string query = 
-                String.Format(
-                    @"insert into playable(name, image, duration, composer) values
-                   ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
-                    set @id := last_insert_id();
-                    insert into playlist(playable_list_id) values
-                   (@id);
-                    insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, '{4}', '{5}'); ",
-                   playlist.Title, image_uri, playlist.Time, playlist.Composer, parent_id, index);
-
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch(Exception e)
-                {
-                    int a = 1 + 1;
-                }
-
-                this.CloseConnection();
-            }
-        }
-
-
         private List<PlaylistItem> GetTrack(int parent_id)
         {
             string query = @"select * from playlistitem
@@ -190,7 +159,6 @@ namespace DB_connection
             }
         }
 
-
         public List<PlaylistItem> RetrievePlaylist(int parent_id)
         {
             List<PlaylistItem> tracks = GetTrack(parent_id);
@@ -214,7 +182,7 @@ namespace DB_connection
             return ret;
         }
 
-
+        //What does that do?
         public List<PlaylistItem> Select(int parentID)
         {
             string query = @"select * from playlistitem
@@ -257,6 +225,44 @@ namespace DB_connection
                 return list;
             }
         }
+
+        //NOTE - if you pass "playlist" it already containes the information such as "duration", "name", and "composer" in the "Playable" base class. 
+        //here's how I think the decleration should look like:
+        public void InsertPlaylist(Playlist playlist, int parent_id, int index) { }
+
+        public void InsertPlaylist(Playlist playlist, int parent_id, int index, Duration duration, string name = "play list",
+            string composer = "unknown commposer", string image_uri = null)
+        {
+            string query =
+                String.Format(
+                    @"insert into playable(name, image, duration, composer) values
+                   ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
+                    set @id := last_insert_id();
+                    insert into playlist(playable_list_id) values
+                   (@id);
+                    insert into playlistitem(content_playable, parent_playlistItem, `index`) values
+                   (@id, '{4}', '{5}'); ",
+                   playlist.Title, image_uri, playlist.Time, playlist.Composer, parent_id, index);
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    int a = 1 + 1;
+                }
+
+                this.CloseConnection();
+            }
+        }
+
+        //additional functions:
+
+        public void InsertTrack(Track track, int parent_id, int index) { }
 
 
     }
