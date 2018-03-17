@@ -182,9 +182,26 @@ namespace DB_connection
             return ret;
         }
 
-        //NOTE - if you pass "playlist" it already containes the information such as "duration", "name", and "composer" in the "Playable" base class. 
-        //here's how I think the decleration should look like:
-        public void InsertPlaylist(Playlist playlist, int parent_id, int index)
+
+        ////////////////// inserting //////////////////////////
+
+
+        public void InsertPlaylistItem(PlaylistItem item)
+        {
+            string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
+                   (@id, @parent_id, @index);";
+
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@parent_id", item.Path_id.Last());
+            cmd.Parameters.AddWithValue("@index", item.Index);
+
+            cmd.ExecuteNonQuery();
+
+            item.ID = (int)cmd.LastInsertedId;
+        }
+
+
+        public void InsertPlaylist(Playlist playlist, PlaylistItem pl_item)
         {
             string query =
                 String.Format(
@@ -192,10 +209,8 @@ namespace DB_connection
                    ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
                     set @id := last_insert_id();
                     insert into playlist(playable_list_id) values
-                   (@id);
-                    insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, '{4}', '{5}'); ",
-                   playlist.Title, string.Empty /*image_uri*/, playlist.Time, playlist.Composer, parent_id, index);
+                   (@id);",
+                   playlist.Title, string.Empty /*image_uri*/, playlist.Time, playlist.Composer);
 
             if (this.OpenConnection() == true)
             {
@@ -203,6 +218,11 @@ namespace DB_connection
                 try
                 {
                     cmd.ExecuteNonQuery();
+
+                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    playlist.ID = id;
+
+                    InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
@@ -214,19 +234,16 @@ namespace DB_connection
         }
 
         //additional functions:
-
-        public void InsertTrack(Track track, int parent_id, int index)
+        public void InsertTrack(Track track, PlaylistItem pl_item)
         {
             string query =
-    String.Format(
-        @"insert into playable(name, image, duration, composer) values
-                   ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
-                    set @id := last_insert_id();
-                    insert into playlist(playable_list_id) values
-                   (@id);
-                    insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, '{4}', '{5}'); ",
-       track.Title, string.Empty /*image_uri*/, track.Time, track.Composer, parent_id, index);
+            String.Format(
+                @"insert into playable(name, image, duration, composer) values
+                       ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
+                        set @id := last_insert_id();
+                        insert into playlist(playable_list_id) values
+                       (@id);",
+                track.Title, string.Empty /*image_uri*/, track.Time, track.Composer);
 
             if (this.OpenConnection() == true)
             {
@@ -234,6 +251,11 @@ namespace DB_connection
                 try
                 {
                     cmd.ExecuteNonQuery();
+
+                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    track.ID = id;
+
+                    InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
@@ -243,7 +265,5 @@ namespace DB_connection
                 this.CloseConnection();
             }
         }
-
-
     }
 }

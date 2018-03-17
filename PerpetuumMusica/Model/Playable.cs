@@ -13,7 +13,7 @@ namespace PerpetuumMusica.Model
 
     public abstract class Playable
     {
-        public int ID { get; }
+        public int ID { get; set; }
         public string Title { get; set; }
         public ImageSource Image { get; set; }
         public TimeSpan Time { get; set; }

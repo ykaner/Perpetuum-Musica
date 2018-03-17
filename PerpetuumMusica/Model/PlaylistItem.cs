@@ -10,7 +10,7 @@ namespace PerpetuumMusica.Model
 {
     public class PlaylistItem : INotifyPropertyChanged
     {
-        public int ID { get; }
+        public int ID { get; set; }
         public int Index { get; set; }
         public Playable Content { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
