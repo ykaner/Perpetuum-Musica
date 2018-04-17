@@ -15,8 +15,8 @@ namespace PerpetuumMusica.Model
     {
         public int ID { get; set; }
         public string Title { get; set; }
-        private String _image;
-        public String Image
+        private ImageSource _image;
+        public ImageSource Image
         {
             get { return _image ?? (DefaultImage); }
             set { _image = value; }
@@ -36,7 +36,7 @@ namespace PerpetuumMusica.Model
             TimesHeard = timesHeard;
             Composer = composer;
             //List = list;
-            //Image = image;
+            Image = image;
         }
         public Playable(string title)
         {
@@ -47,7 +47,7 @@ namespace PerpetuumMusica.Model
         }
 
         public abstract PlayableType GetType();
-        public abstract String DefaultImage { get; }
+        public abstract ImageSource DefaultImage { get; }
 
     }
 }

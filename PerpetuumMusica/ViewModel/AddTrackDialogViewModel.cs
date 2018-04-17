@@ -21,10 +21,7 @@ namespace PerpetuumMusica.ViewModel
         public string Title { get; set; }
         public string Composer { get; set; }
         public string ImagePath { get; set; }
-        public ImageSource Image
-        {
-            get { return null; }
-        }
+        private bool defaultImage = true;
 
         private bool IsOk = false;
 
@@ -34,12 +31,17 @@ namespace PerpetuumMusica.ViewModel
         {
             ResetFields();
             dialog = new AddTrackDialog(this);
-                      
 
             dialog.ShowDialog();
             if (IsOk)
-                //TODO - ge the image from the path
-                return new Track(Title, Address, new BitmapImage(new Uri(ImagePath)), Composer); //Here the C'tor should find out the other properties
+            {
+                ImageSource image = null;
+                if (!defaultImage)
+                    image = new BitmapImage(new Uri(ImagePath));
+
+                return new Track(Title, Address, image, Composer); //Here the C'tor should find out the other properties
+            }
+                
             else
                 return null;
         }
@@ -50,6 +52,7 @@ namespace PerpetuumMusica.ViewModel
             Title = ""; OnPropertyChanged("Title");
             Composer = ""; OnPropertyChanged("Composer");
             ImagePath = GetResource.TrackImage(); OnPropertyChanged("ImagePath");
+            defaultImage = true; //we reseted to the default image. 
         }
 
         private Command _CancelCommand;
@@ -66,7 +69,7 @@ namespace PerpetuumMusica.ViewModel
             {
                 ImagePath = openFileDialog.FileName;
                 OnPropertyChanged("ImagePath");
-                System.Windows.MessageBox.Show(ImagePath);
+                defaultImage = false; // we changed it so we get the flag off.
             }
             else
             {

@@ -88,7 +88,7 @@ namespace PerpetuumMusica.Model
 
 
         public override PlayableType GetType() { return PlayableType.Playlist; }
-        public override string DefaultImage => GetResource.PlaylistImage();
+        public override ImageSource DefaultImage => GetResource.Image("defaultPlaylistImage");
 
     }
 }

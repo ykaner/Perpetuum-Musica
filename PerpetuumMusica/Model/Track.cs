@@ -22,7 +22,7 @@ namespace PerpetuumMusica.Model
         {
             Title = title;
             FileUri = fileUri;
-            //Image = image;
+            Image = image;
             Composer = composer;
 
             //TODO - 
@@ -32,7 +32,7 @@ namespace PerpetuumMusica.Model
 
 
         public override PlayableType GetType() { return PlayableType.Track; }
-        public override string DefaultImage => GetResource.TrackImage();
+        public override ImageSource DefaultImage => GetResource.Image("defaultTrackImage");
 
 
         public override string ToString()

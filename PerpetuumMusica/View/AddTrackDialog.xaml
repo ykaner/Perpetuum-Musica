@@ -31,7 +31,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Template="{StaticResource Empty}" Command="{Binding ChangeImageCommand}">
                     <Grid>
-                        <Image Grid.Column="0" Source="{Binding Image}" Margin="10, 5"/>
+                        <Image Grid.Column="0" Source="{Binding ImagePath}" Margin="10, 5"/>
                         <!--Mouse Over content-->
                         <Border Visibility="Visible" Margin="10,5" Cursor="Hand">
                             <Grid>

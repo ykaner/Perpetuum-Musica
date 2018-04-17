@@ -224,7 +224,6 @@ namespace PerpetuumMusica.Model
         #region Playlist editing functions
         public void AddTrack(Track newTrack, Playlist target, int index = -1 /* -1 means add as last item */)
         {
-            MessageBox.Show("adding Track " + newTrack);
             if (index == -1)
             {
                 index = target.List.Count;
