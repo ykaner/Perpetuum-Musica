@@ -23,7 +23,7 @@ namespace PerpetuumMusica.ViewModel
         public string ImagePath { get; set; }
         public ImageSource Image
         {
-            get { return new BitmapImage(new Uri(ImagePath)); }
+            get { return null; }
         }
 
         private bool IsOk = false;

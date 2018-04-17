@@ -182,56 +182,26 @@ namespace DB_connection
             return ret;
         }
 
-        //What does that do?
-        public List<PlaylistItem> Select(int parentID)
+
+        ////////////////// inserting //////////////////////////
+
+
+        public void InsertPlaylistItem(PlaylistItem item)
         {
-            string query = @"select * from playlistitem
-                    join playable on playable.idplayable = playlistitem.content_playable
-                    join playlist on playlist.playable_list_id = playable.idplayable
-                    and parent_playlistItem = @parent_id
-                    order by `index`;";
+            string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
+                   (@id, @parent_id, @index);";
 
-            //Create a list to store the result
-            List<PlaylistItem> list = new List<PlaylistItem>();
-            //list[2] = new List<PlaylistItem>();
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@parent_id", item.Path_id.Last());
+            cmd.Parameters.AddWithValue("@index", item.Index);
 
-            //Open connection
-            if (this.OpenConnection() == true)
-            {
-                //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@parent_id", parentID);
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+            cmd.ExecuteNonQuery();
 
-                //Read the data and store them in the list
-                while (dataReader.Read())
-                {
-                    //list.Add(new PlaylistItem(dataReader["index"], new Playable())
-                    //list[2].Add(dataReader["age"] + "");
-                }
-
-                //close Data Reader
-                dataReader.Close();
-
-                //close Connection
-                this.CloseConnection();
-
-                //return list to be displayed
-                return list;
-            }
-            else
-            {
-                return list;
-            }
+            item.ID = (int)cmd.LastInsertedId;
         }
 
-        //NOTE - if you pass "playlist" it already containes the information such as "duration", "name", and "composer" in the "Playable" base class. 
-        //here's how I think the decleration should look like:
-        public void InsertPlaylist(Playlist playlist, int parent_id, int index) { }
 
-        public void InsertPlaylist(Playlist playlist, int parent_id, int index, Duration duration, string name = "play list",
-            string composer = "unknown commposer", string image_uri = null)
+        public void InsertPlaylist(Playlist playlist, PlaylistItem pl_item)
         {
             string query =
                 String.Format(
@@ -239,10 +209,8 @@ namespace DB_connection
                    ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
                     set @id := last_insert_id();
                     insert into playlist(playable_list_id) values
-                   (@id);
-                    insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, '{4}', '{5}'); ",
-                   playlist.Title, image_uri, playlist.Time, playlist.Composer, parent_id, index);
+                   (@id);",
+                   playlist.Title, string.Empty /*image_uri*/, playlist.Time, playlist.Composer);
 
             if (this.OpenConnection() == true)
             {
@@ -250,6 +218,11 @@ namespace DB_connection
                 try
                 {
                     cmd.ExecuteNonQuery();
+
+                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    playlist.ID = id;
+
+                    InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
@@ -261,9 +234,36 @@ namespace DB_connection
         }
 
         //additional functions:
+        public void InsertTrack(Track track, PlaylistItem pl_item)
+        {
+            string query =
+            String.Format(
+                @"insert into playable(name, image, duration, composer) values
+                       ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
+                        set @id := last_insert_id();
+                        insert into playlist(playable_list_id) values
+                       (@id);",
+                track.Title, string.Empty /*image_uri*/, track.Time, track.Composer);
 
-        public void InsertTrack(Track track, int parent_id, int index) { }
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                try
+                {
+                    cmd.ExecuteNonQuery();
 
+                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    track.ID = id;
 
+                    InsertPlaylistItem(pl_item);
+                }
+                catch (Exception e)
+                {
+                    int a = 1 + 1;
+                }
+
+                this.CloseConnection();
+            }
+        }
     }
 }
