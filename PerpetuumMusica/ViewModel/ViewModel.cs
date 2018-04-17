@@ -13,13 +13,15 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.IO;
+using System.Windows.Controls;
 
 namespace PerpetuumMusica.ViewModel
 {
     public class ViewModel : INotifyPropertyChanged
     {
         private Model.Model model;
-
+        private AddTrackDialogViewModel AddTrackDialog = new AddTrackDialogViewModel();
+        private ConfirmDialogViewModel ConfirmDialog = new ConfirmDialogViewModel();
 
         public ViewModel()
         {
@@ -42,8 +44,8 @@ namespace PerpetuumMusica.ViewModel
             //--
             AddMenu = new List<MenuItem>()
             {
-                new MenuItem("Track", playIcon, null, null, "1"),
-                new MenuItem("Playlist",Image("trackIcon"), null, new List<MenuItem>()
+                new MenuItem("Track", Image("trackIcon"), AddTrackCommand, null),
+                new MenuItem("Playlist",Image("playlistIcon"), null, new List<MenuItem>()
                 {
                     new MenuItem("Import", null, null, new List<MenuItem>()
                     {
@@ -67,15 +69,16 @@ namespace PerpetuumMusica.ViewModel
             //ShowedItem = DemoData.Disney;
             //DemoData.SetParents(DemoData.musicals);
 
-            DB_connection.DB_conn mycon = new DB_connection.DB_conn();
-            ShowedItem = mycon.RetrievePlaylist(2)[0];
+            //DB_connection.DB_conn mycon = new DB_connection.DB_conn();
+            //ShowedItem = mycon.RetrievePlaylist(0)[0];
+            
 
 
 
         }
 
 
-        static public ImageSource Image(string name) { return (ImageSource) Application.Current.Resources[name]; }
+        static public ImageSource Image(string name) { return GetResource.Image(name); }
 
 
         ////////////////////////
@@ -98,12 +101,7 @@ namespace PerpetuumMusica.ViewModel
 
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
@@ -119,6 +117,8 @@ namespace PerpetuumMusica.ViewModel
 
         //Timers
         DispatcherTimer UpdateTrackSliderLocationTimer;
+
+        #region Commands
 
         /// <summary>
         /// Commands
@@ -139,6 +139,12 @@ namespace PerpetuumMusica.ViewModel
         public Command HistoryForewardCommand => _HistoryForewardCommand ?? (_HistoryForewardCommand = new Command(HistoryForeward, CanGoForeward));
         private Command _OpenAddMenu;
         public Command OpenAddMenuCommand => _OpenAddMenu ?? (_OpenAddMenu = new Command(OpenAddMenu));
+        private Command _DeleteItemsCommand;
+        public Command DeleteItemsCommand => _DeleteItemsCommand ?? (_DeleteItemsCommand = new Command(DeleteItems, DeleteItems_CanExecute));
+        private Command _AddTrackCommand;
+        public Command AddTrackCommand => _AddTrackCommand ?? (_AddTrackCommand = new Command(AddTrack));
+
+        #endregion Commands
 
 
         /// <summary>
@@ -183,7 +189,34 @@ namespace PerpetuumMusica.ViewModel
             }
         }
 
-        public PlaylistItem ShowedItem { get; set; }
+        public PlaylistItem ShowedItem
+        {
+            get
+            {
+                return Model.ShowedItem;
+            }
+            set
+            {
+                Model.ShowedItem = value;
+            }
+        }
+        public List<PlaylistItem> SelectedItems
+        {
+            get
+            {
+                try
+                {
+                    return ((Playlist)(ShowedItem.Content)).List.Where(item => item.IsSelected).ToList();
+                }
+                catch (Exception e)
+                {
+                    //if casting failed, this means we are in "Track" view, so there is no list. 
+                    return new List<PlaylistItem>();
+                }
+                
+            }
+        }
+
         private Stack<PlaylistItem> ShowedItemHistory = new Stack<PlaylistItem>();
         private Stack<PlaylistItem> ShowedItemFuture = new Stack<PlaylistItem>(); 
         
@@ -256,7 +289,8 @@ namespace PerpetuumMusica.ViewModel
         {
             ShowedItemHistory.Push(ShowedItem);
             ShowedItemFuture.Clear();
-            ShowedItem = (PlaylistItem)param;
+            Model.Open((PlaylistItem)param);
+            //--
             OnPropertyChanged("ShowedItem");
             OnPropertyChanged("ToggleButtonText");
             HistoryBackCommand.RaiseCanExecuteChanged(); 
@@ -291,7 +325,7 @@ namespace PerpetuumMusica.ViewModel
             HistoryBackCommand.RaiseCanExecuteChanged();
             HistoryForewardCommand.RaiseCanExecuteChanged();
         }
-
+        //Player methods
         internal void ToggleMute(object param = null)
         {
             Model.ToggleMute();
@@ -305,6 +339,7 @@ namespace PerpetuumMusica.ViewModel
                 LocationPropertyChanged();
             }
         }
+        //nevigation methods
         public void Search(object param)
         {
             string query = (string)param;
@@ -316,7 +351,63 @@ namespace PerpetuumMusica.ViewModel
             AddMenuIsOpen = true;
             OnPropertyChanged("AddMenuIsOpen");
         }
+        //edit methods
+        private List<PlaylistItem> objectToList(object param)
+        {
+            if (param == null) return null;
 
+            //else:
+            System.Collections.IList list = (System.Collections.IList)param;
+            var collection = list.Cast<PlaylistItem>();
+            return collection.ToList<PlaylistItem>();
+        }
+        public void DeleteItems(object param)
+        {
+            var targetItems = SelectedItems;
+
+            string message = "Are you sure you want to delete the following items from the playlist \"" + ShowedItem + "\"? \n";
+
+            foreach (PlaylistItem item in targetItems)
+            {
+                message += item + "\n";
+            }
+
+            if (ConfirmDialog.ShowDialog(message))
+                Model.DeleteItems(targetItems, (Playlist)(ShowedItem.Content));
+            OnPropertyChanged("ShowedItem");
+
+            //if (param == null)
+            //{
+            //    MessageBox.Show("Parameter is null");
+            //}
+            //var items = SelectedItems;
+
+            //string output = "Selected: \n";
+
+            //if (items == null || items.Count == 0) output = "no item is selected";
+            //else
+            //{
+            //    foreach (PlaylistItem item in items)
+            //    {
+            //        output += item.ToString() + "\n";
+            //    }
+            //}
+            //MessageBox.Show(output);
+        }
+        public bool DeleteItems_CanExecute(object param)
+        {
+            return SelectedItems.Count > 0;
+        }
+        public void AddTrack(object param)
+        {
+            Track newTrack = AddTrackDialog.ShowDialog();
+            if (newTrack == null) return;
+
+            //MessageBox.Show("Adding new Track: \n " +
+            //    "Title: " + newTrack.Title + "\n");
+
+            Model.AddTrack(newTrack, (Playlist)ShowedItem.Content);
+        }
 
         //Update properties
         private void PlayingPropertyChanged()

@@ -3,52 +3,95 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using DB_connection;
 
 namespace PerpetuumMusica.Model
 {
     public class Model
     {
-        public AudioPlayer Player = new AudioPlayer();
-
-
-        //public int currentlyPlayingIndex = -1; //-1 note nothing is played;
-        private PlaylistItem currentlyPlayingItem { get; set; } 
-
-
-        private bool isPlaying = true;
-        private double location = 0;
-
+        #region ctor
         public Model()
         {
             Volume = 70;
             IsPlaying = false;
-            //Player.SetUri(DemoData.sampleUri);
             Player.MediaEnded += Player_MediaEnded;
-            //for testing
-            //currentlyPlayingItem = DemoData.disneyPlaylist[0];
-            //currentlyPlayingItem.IsPlaying = true;
-        }
+            //set the showed Item
+            //ShowedItem = DataBase.RetrievePlaylist(0)[0];
 
-        private void Player_MediaEnded(object sender, EventArgs e)
+            Load();
+        }
+        #endregion
+
+        #region Members
+        private DB_conn DataBase = new DB_conn();
+        public AudioPlayer Player = new AudioPlayer();
+
+        //public int currentlyPlayingIndex = -1; //-1 note nothing is played;
+        private PlaylistItem currentlyPlayingItem { get; set; }
+        public PlaylistItem ShowedItem { get; internal set; }
+
+        //playing information
+        private bool isPlaying = true;
+        private double location = 0;
+
+        #endregion
+
+        #region Data loading functions
+        private void Load()
         {
-            if (MediaEnded != null)
+            ShowedItem = new PlaylistItem(new Playlist("All Playlists", null, new TimeSpan(), 0, "Various Artists", null));
+            ((Playlist)ShowedItem.Content).List = new ObservableCollection<PlaylistItem>( DataBase.RetrievePlaylist(0));
+
+        }
+        public void Open(PlaylistItem target)
+        {
+            ShowedItem = target;
+            try //if it's a playlist, load the internal list
             {
-                MediaEnded(this, e);
+                Playlist targetPlaylist = (Playlist)target.Content;
+
+                //load internal list from dataBase (if not already loaded)
+                if (!targetPlaylist.ListLoaded)
+                {
+                    targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
+                    targetPlaylist.ListLoaded = true;
+                }
+            }
+            catch
+            {
+                //
+                return;
+            }
+            
+                
+        }
+        #endregion
+
+        #region volume functions
+        private double unmutedVolume;
+        internal void ToggleMute()
+        {
+            if (Volume > 0)
+            {
+                unmutedVolume = Volume;
+                Volume = 0;
+            }
+            else
+            {
+                Volume = unmutedVolume;
             }
         }
-
-
-        public bool IsPlaying
+        public double Volume
         {
-            get
-            {
-                return isPlaying;
-            }
+            get { return Player.Volume; }
             set
             {
-                isPlaying = value;
+                Player.Volume = value;
             }
         }
+        #endregion
+
+        #region playing functions
         public double LocationPercentage
         {
             get
@@ -60,18 +103,17 @@ namespace PerpetuumMusica.Model
                 location = value;
             }
         }
-        private double unmutedVolume;
-        public double Volume
+        public bool IsPlaying
         {
-            get { return Player.Volume; }
+            get
+            {
+                return isPlaying;
+            }
             set
             {
-                Player.Volume = value;
+                isPlaying = value;
             }
         }
-
-
-        //Playing functions
         public void TogglePlay()
         {
             if (IsPlaying)
@@ -105,7 +147,14 @@ namespace PerpetuumMusica.Model
 
             IsPlaying = true;
         }
-        public event EventHandler MediaEnded; 
+        public event EventHandler MediaEnded;
+        private void Player_MediaEnded(object sender, EventArgs e)
+        {
+            if (MediaEnded != null)
+            {
+                MediaEnded(this, e);
+            }
+        }
         public void TrackEnded()
         {
             //currentlyPlayingItem = currentlyPlayingItem.Next;
@@ -170,18 +219,40 @@ namespace PerpetuumMusica.Model
                 PlayItem(((Playlist)item.Content).List[0]);
             }
         }
+        #endregion
 
-        internal void ToggleMute()
+        #region Playlist editing functions
+        public void AddTrack(Track newTrack, Playlist target, int index = -1 /* -1 means add as last item */)
         {
-            if (Volume > 0)
+            MessageBox.Show("adding Track " + newTrack);
+            if (index == -1)
             {
-                unmutedVolume = Volume;
-                Volume = 0;
+                index = target.List.Count;
             }
-            else
-            {
-                Volume = unmutedVolume;
-            }
+            PlaylistItem newItem = new PlaylistItem(index + 1, newTrack);
+            if (newItem.Content.Composer == null) newItem.Content.Composer = target.Composer;
+            target.List.Insert(index, newItem);
+
         }
+        internal void DeleteItems(List<PlaylistItem> targetItems, Playlist targetParent)
+        {
+            var ParentList = targetParent.List;
+
+            //deleting target items from the list
+            foreach(var item in targetItems)
+            {
+                ParentList.Remove(item);
+            }
+
+            //re - arrange indexing after deleting
+            for (int i = 0; i < ParentList.Count; i++)
+            {
+                ParentList[i].Index = i + 1;
+            }
+
+
+
+        }
+        #endregion
     }
 }

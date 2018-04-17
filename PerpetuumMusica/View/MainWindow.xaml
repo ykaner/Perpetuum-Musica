@@ -12,19 +12,13 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="Perpetuum Musica - Music Management Software" Height="734" Width="1050"
         x:Name="Window"
-        Background="{StaticResource background_color}">
+        Background="{StaticResource background_color}"
+        WindowStartupLocation="CenterScreen">
     <!---->
 
 
     <!--resources-->
     <Window.Resources>
-        <!--colors-->
-        <SolidColorBrush x:Key="header_color">#FF111111</SolidColorBrush>
-        <SolidColorBrush x:Key="toolbar_color">#FF1D1D1D</SolidColorBrush>
-        <SolidColorBrush x:Key="Player_color">#FF343434</SolidColorBrush>
-        <SolidColorBrush x:Key="Menu_color">#FF1D1D1D</SolidColorBrush>
-        <SolidColorBrush x:Key="view_color">black</SolidColorBrush>
-
         <Style TargetType="cc:Icon" BasedOn="{StaticResource IconStyle}"/>
         <!-- converters-->
         <con:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
@@ -36,6 +30,8 @@
                     Command="{Binding Path=TogglePlayCommand}"/>
         <KeyBinding Key="Backspace"
                     Command="{Binding Path=HistoryBackCommand}"/>
+        <KeyBinding Key="Delete"
+                    Command="{Binding Path=DeleteItemsCommand}"/>
     </Window.InputBindings>
 
     <DockPanel>
@@ -154,70 +150,65 @@
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="4" RenderingBias="Performance"/>
                     </Border.Effect>
-                    <Grid Margin="0, 5">
-                        <!--<Menu Background="Transparent" 
-                              BorderThickness="0"
-                              FontSize="{StaticResource large_font_size}"
-                              Foreground="{StaticResource foreground_color}">
-                            <MenuItem Header="Playlist">
-                                <MenuItem.Icon>
-                                    <cc:Icon ImageSource="{StaticResource playlistIcon}"
-                                             Size="22"/>
-                                </MenuItem.Icon>
-                                <MenuItem Header="New Playlist"/>
-                                <MenuItem Header="Import Playlist">
-                                    <MenuItem Header="From YouTube"/>
-                                </MenuItem>
-                                </MenuItem>
-                            <MenuItem Header="Track">
-                                <MenuItem.Icon>
-                                    <cc:Icon ImageSource="{StaticResource trackIcon}"
-                                             Size="22"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </Menu>-->
+                    <StackPanel Margin="0, 5">
                         <Menu Background="Transparent"
                               BorderThickness="0"
                               FontSize="{StaticResource large_font_size}"
                               Foreground="{StaticResource foreground_color}"
-                              ItemsSource="{Binding Path=AddMenu}">
-                            <!--<Menu.ItemTemplate>
-                                <DataTemplate>
+                              ItemsSource="{Binding Path=AddMenu}"
+                              ItemContainerStyle="{StaticResource MenuItemStyle}">
+                            <!--<Menu.ItemContainerStyle>
+                                <Style TargetType="MenuItem" BasedOn="{StaticResource MenuItemStyle}">
+                                    <Setter Property="Command" Value="{Binding Command}"/>
+                                    <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
+                                </Style>
+                            </Menu.ItemContainerStyle>-->
+                            <Menu.ItemTemplate>
+                                <HierarchicalDataTemplate DataType="{x:Type vm:MenuItem}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="25" />
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <cc:Icon Size="25" ImageSource="{StaticResource addIcon}"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
+                                        <cc:Icon ImageSource="{Binding Icon}" Width="20" Height="20"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Name}"/>
                                     </Grid>
-                                </DataTemplate>
-                            </Menu.ItemTemplate>-->
-                            <Menu.ItemContainerStyle>
-                                <Style TargetType="MenuItem">
-                                    <Setter Property="Header" Value="{Binding Path=Name}"/>
-                                    <Setter Property="ItemsSource" Value="{Binding Path=SubItems}"/>
-                                    <Setter Property="Icon">
-                                        <Setter.Value>
-                                            <cc:Icon Height="10" Width="10" ImageSource="{Binding Path=Icon}"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Menu.ItemContainerStyle>
+
+                                </HierarchicalDataTemplate>
+                            </Menu.ItemTemplate>
                         </Menu>
-                    </Grid>
+                    </StackPanel>
                 </Border>
             </Popup>
 
-                <!--tools buttons-->
+            <!--tools buttons-->
             <Border Grid.Column="1" Padding="10, 5">
                 <DockPanel>
                     <Menu
+                        Style="{StaticResource ToolbarMenu}"
+                        ItemContainerStyle="{StaticResource ToolbarItem}"
                         VerticalAlignment="Center"
                         Background="Transparent"
-                        
-                        
                         DockPanel.Dock="Right">
+                        <!--<Menu.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type vm:MenuItem}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <cc:Icon ImageSource="{Binding Icon}" Width="20" Height="20"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </Menu.ItemTemplate>-->
+                        <MenuItem Header="Delete" >
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="{StaticResource deleteIcon}" 
+                                               Command="{Binding DeleteItemsCommand}"
+                                               CommandParameter="{Binding SelectedItems}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem Header="More Options">
                             <MenuItem.Icon>
                                 <cc:IconButton ImageSource="{StaticResource menuIcon}" ToolTip="More Options"/>
@@ -235,7 +226,6 @@
                                 <cc:IconButton ImageSource="{StaticResource settingsIcon}" ToolTip="Settings"/>
                             </MenuItem.Icon>
                         </MenuItem>
-
                     </Menu>
                     <!--<cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/settings_icon.png" ToolTip="Settings"/>
                     <cc:IconButton DockPanel.Dock="Right" ImageSource="/View/Sources/info_icon.png" ToolTip="info" Margin="20, 0, 0, 0"/>
@@ -399,12 +389,15 @@
                             </StackPanel>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type m:Playlist}">
-                            <ListView Grid.Column="1"
+                            <ListView 
+                                x:Name="Playlist"
+                                Grid.Column="1"
                                 ItemsSource="{Binding Path=List}"
                                 Background="Transparent">
                                 <ListView.Resources>
                                     <Style x:Key="{x:Type ListViewItem}"
-                                   TargetType="ListViewItem">
+                                            TargetType="ListViewItem">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListViewItem">
@@ -572,7 +565,7 @@
                         </DataTemplate>
                     </StackPanel.Resources>
 
-                    <ContentControl Content="{Binding Path=ShowedItem}"/>
+                    <ContentControl x:Name="ShowedItem" Content="{Binding Path=ShowedItem}"/>
                     
                 </StackPanel>
             </ScrollViewer>

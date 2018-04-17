@@ -39,6 +39,11 @@ namespace ListBox_Test
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public override string ToString()
+        {
+            return _Name;
+        }
     }
 
 

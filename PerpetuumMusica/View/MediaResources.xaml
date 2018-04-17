@@ -8,6 +8,9 @@
     <BitmapImage x:Key="littleMermaid" UriSource="/View/Sources/SampleImages/The Little Mermaid image.jpg"/>
     <BitmapImage x:Key="aladdin" UriSource="/View/Sources/SampleImages/aladdin soundtrack.jpg"/>
 
+    <BitmapImage x:Key="defaultPlaylistImage" UriSource="/View/Sources/DefaultImages/defaultPlaylistImage.png"/>
+    <BitmapImage x:Key="defaultTrackImage" UriSource="/View/Sources/DefaultImages/defaultTrackImage.png"/>
+
 
     <BitmapImage x:Key="backIcon" UriSource="/View/Sources/back_icon.png"/>
     <BitmapImage x:Key="addIcon" UriSource="/View/Sources/add_icon.png"/>
@@ -27,7 +30,9 @@
     <BitmapImage x:Key="unbackIcon" UriSource="/View/Sources/unback_icon.png"/>
     <BitmapImage x:Key="viewIcon" UriSource="/View/Sources/view_icon.png"/>
     <BitmapImage x:Key="playingIcon" UriSource="/View/Sources/playing_icon.png"/>
-    
+    <BitmapImage x:Key="browseIcon" UriSource="/View/Sources/browse_icon.png"/>
+
+
     <!-- volume logos-->
     <BitmapImage x:Key="volumeIcon" UriSource="/View/Sources/Volume_Icons/volume_icon.png"/>
     <BitmapImage x:Key="volumeLowIcon" UriSource="/View/Sources/Volume_Icons/volume_low_icon.png"/>

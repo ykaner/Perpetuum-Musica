@@ -11,7 +11,8 @@ namespace PerpetuumMusica.ViewModel
     {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
-        private EventHandler _canExecuteChanged;
+        //private EventHandler _canExecuteChanged;
+
         public Command(Action<object> _execute, Func<object, bool> _canExecute)
         {
             execute = _execute;
@@ -22,23 +23,22 @@ namespace PerpetuumMusica.ViewModel
             execute = _execute;
             canExecute = null;
         }
+
         public bool CanExecute(object parameter)
         {
             if (canExecute == null)
                 return true;
-            else return canExecute(parameter);
-            //the selected item of the ListBox is passed as parameter
-            return parameter != null;
+            else
+                return canExecute(parameter);
         }
         public event EventHandler CanExecuteChanged
         {
-            add { _canExecuteChanged += value; }
-            remove { _canExecuteChanged -= value; }
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
         public void RaiseCanExecuteChanged()
         {
-            if (_canExecuteChanged != null)
-                _canExecuteChanged(this, EventArgs.Empty);
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Execute(object parameter)

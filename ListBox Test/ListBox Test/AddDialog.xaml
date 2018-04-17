@@ -22,7 +22,7 @@
         <TextBox x:Name="Box" Grid.Column="1" Grid.Row="1" MinWidth="250" Text="{Binding Answer}"/>
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
-            <Button IsDefault="True" Name="btnDialogOk" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+            <Button IsDefault="True" Name="btnDialogOk" MinWidth="60" Margin="0,0,10,0" Command="{Binding ApproveCommand}">_Ok</Button>
             <Button IsCancel="True" MinWidth="60">_Cancel</Button>
         </WrapPanel>
     </Grid>

@@ -21,10 +21,10 @@ namespace DB_connection
 
         public DB_conn()
         {
-            server = "localhost";
-            database = "pm_musics";
-            uid = "defuser";
-            password = "12qwaszx";
+            server = "sql11.freemysqlhosting.net";
+            database = "sql11230005";
+            uid = "sql11230005 ";
+            password = "LHi1bsmgfd";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" +
@@ -42,7 +42,7 @@ namespace DB_connection
                 connection.Open();
                 return true;
             }
-            catch (MySqlException ex )
+            catch (MySqlException ex)
             {
                 /*switch (ex.Number)
                 {
@@ -143,7 +143,7 @@ namespace DB_connection
                     }
                     int times_played = (int)dataReader["times_played"];
                     string composer = dataReader["composer"].ToString();
-                    Playlist t = new Playlist(id, name, null,duration, times_played, composer, null);
+                    Playlist t = new Playlist(id, name, null, duration, times_played, composer, null);
                     list.Add(new PlaylistItem((int)dataReader["idplaylistitem"], (int)dataReader["index"], t));
                 }
 
@@ -167,11 +167,11 @@ namespace DB_connection
             List<PlaylistItem> ret = new List<PlaylistItem>();
 
             int i, j;
-            for(i = j = 0;i < tracks.Count && j < playlists.Count;)
+            for (i = j = 0; i < tracks.Count && j < playlists.Count;)
             {
                 ret.Add(tracks[i].Index < playlists[j].Index ? tracks[i++] : playlists[j++]);
             }
-            for(; i < tracks.Count; i++)
+            for (; i < tracks.Count; i++)
             {
                 ret.Add(tracks[i]);
             }

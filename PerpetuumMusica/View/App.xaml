@@ -2,7 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:test"
-             StartupUri="MainWindow.xaml">
+             xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
+             StartupUri="MainWindow.xaml"
+             >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,12 +14,17 @@
                 <ResourceDictionary Source="/View/Styles/SlidersStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ButtonsStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/IconStyles.xaml"/>
-                <!--<ResourceDictionary Source="/View/Styles/MenusStyles.xaml"/>-->
+                <ResourceDictionary Source="/View/Styles/MenusStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ListViewStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/TreeViewStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ScrollViewerStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/BorderStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/DialogStyles.xaml"/>
+
+
                 <ResourceDictionary Source="/View/MediaResources.xaml"/>
+                <ResourceDictionary Source="/View/ConvertersResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

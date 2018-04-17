@@ -11,8 +11,32 @@ namespace PerpetuumMusica.Model
     public class PlaylistItem : INotifyPropertyChanged
     {
         public int ID { get; }
-        public int Index { get; set; }
-        public Playable Content { get; set; }
+        private int _index;
+        public int Index
+        {
+            get
+            {
+                return _index;
+            }
+            set
+            {
+                _index = value;
+                OnPropertyChanged("Index");
+            }
+        }
+        private Playable _content;
+        public Playable Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+                OnPropertyChanged("Content");
+            }
+        }
         //public ObservableCollection<PlaylistItem> List { get; set; }
         public List<int> Path_id { get; set; }
         public List<PlaylistItem> Path { get; set; }
@@ -85,21 +109,17 @@ namespace PerpetuumMusica.Model
                 OnPropertyChanged("IsOn");
             }
         }
+        private bool _IsSelected;
+        public bool IsSelected
+        {
+            get { return _IsSelected; }
+            set
+            {
+                _IsSelected = value;
+                OnPropertyChanged("IsSelected");
+            }
+        }
 
-        //private int CurrentItemIndex { get; set; } //Index of item that is currently on/playing
-        //public PlaylistItem Current
-        //{
-        //    get
-        //    {
-        //        return Content.List[CurrentItemIndex];
-        //    }
-        //    set
-        //    {
-        //        if (value.Parent != this) throw new Exception("Cannot asign item that is not in the same list");
-
-        //        CurrentItemIndex = value.Index - 1;
-        //    }
-        //}
 
         //Next after me, in playlist "Parent"
         public PlaylistItem Next
@@ -109,21 +129,6 @@ namespace PerpetuumMusica.Model
                 return ((Playlist)Parent.Content).Next;
             }
         }
-        //public PlaylistItem Previous
-        //{
-        //    get
-        //    {
-        //        try
-        //        {
-        //            return Parent.Content.List[CurrentItemIndex - 1];
-        //        }
-        //        catch
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
 
         public PlaylistItem(int id, int index, Playable content/*, ObservableCollection<PlaylistItem> list = null*/)
         {
@@ -132,12 +137,17 @@ namespace PerpetuumMusica.Model
             Content = content;
             //List = list;
             Path = new List<PlaylistItem>();
+            Path_id = new List<int>();
         }
+        public PlaylistItem(int index, Playable content) : this(0, index, content) { }
 
         public void SetParent(PlaylistItem parent)
         {
+            //set id of parent
             Path_id = new List<int>(parent.Path_id);
             Path_id.Add(parent.ID);
+
+            //set parent
             Path = new List<PlaylistItem>(parent.Path);
             Path.Add(parent);
         }

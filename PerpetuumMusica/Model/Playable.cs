@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PerpetuumMusica.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace PerpetuumMusica.Model
 {
@@ -15,13 +15,18 @@ namespace PerpetuumMusica.Model
     {
         public int ID { get; }
         public string Title { get; set; }
-        public ImageSource Image { get; set; }
+        private String _image;
+        public String Image
+        {
+            get { return _image ?? (DefaultImage); }
+            set { _image = value; }
+        }
         public TimeSpan Time { get; set; }
         public int TimesHeard { get; set; }
         public string Composer { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
 
-
+         
         public Playable(int id, string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
         {
             //ListIndex = listIndex;
@@ -31,7 +36,7 @@ namespace PerpetuumMusica.Model
             TimesHeard = timesHeard;
             Composer = composer;
             //List = list;
-            Image = image;
+            //Image = image;
         }
         public Playable(string title)
         {
@@ -42,6 +47,7 @@ namespace PerpetuumMusica.Model
         }
 
         public abstract PlayableType GetType();
+        public abstract String DefaultImage { get; }
 
     }
 }

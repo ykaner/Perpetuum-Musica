@@ -41,41 +41,39 @@ namespace PerpetuumMusica.View.CustomControls
     /// Step 2)
     /// Go ahead and use your control in the XAML file.
     ///
-    ///     <MyNamespace:IconButton/>
+    ///     <MyNamespace:LabeledTextBox/>
     ///
     /// </summary>
-    public class IconButton : pmButton
+    public class LabeledTextBox : TextBox
     {
-        static IconButton()
+        static LabeledTextBox()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
-        }
-        
-
-        public ImageSource ImageSource
-        {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(LabeledTextBox), new FrameworkPropertyMetadata(typeof(LabeledTextBox)));
         }
 
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(IconButton));
 
-        public Brush Color
+
+        public string Label
         {
-            get { return (Brush)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get { return (string)GetValue(LabelProperty); }
+            set { SetValue(LabelProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Brush), typeof(IconButton), new UIPropertyMetadata(new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))));
+        // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LabelProperty =
+            DependencyProperty.Register("Label", typeof(string), typeof(LabeledTextBox));
 
 
 
+        public Brush LabelColor
+        {
+            get { return (Brush)GetValue(LabelColorProperty); }
+            set { SetValue(LabelColorProperty, value); }
+        }
 
-    
+        // Using a DependencyProperty as the backing store for LabelColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LabelColorProperty =
+            DependencyProperty.Register("LabelColor", typeof(Brush), typeof(LabeledTextBox));
 
 
 

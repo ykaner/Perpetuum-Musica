@@ -16,6 +16,9 @@ namespace ListBox_Test
         public string Name { get; set; }
         public ObservableCollection<Item> Items { get; set; }
 
+        AddDialogViewModel dialog = new AddDialogViewModel();
+
+
         private ICommand _showCommand;
         private ICommand _deleteCommand;
         private ICommand _showOneCommand;
@@ -23,7 +26,25 @@ namespace ListBox_Test
         private ICommand _addCommand;
         public ICommand ShowCommand => _showCommand ?? (_showCommand = new Command(Show, CanShow));
         public ICommand ShowOneCommand => _showOneCommand ?? (_showOneCommand = new Command(ShowOne));
-        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new Command(Delete, CanShow));
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if ( _deleteCommand == null )
+                {
+                    _deleteCommand = new Command(Delete, CanShow);
+                    _deleteCommand.CanExecuteChanged += _deleteCommand_CanExecuteChanged;
+                }
+                return _deleteCommand; 
+            }
+        }
+
+        private void _deleteCommand_CanExecuteChanged(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+
+        }
+
         public ICommand AddCommand => _addCommand ?? (_addCommand = new Command(Insert));
         private ICommand _EditCommand;
         public ICommand EditCommand => _EditCommand ?? (_EditCommand = new Command(Edit, IsOneSelected));
@@ -95,18 +116,18 @@ namespace ListBox_Test
         }
         public void Insert(object param)
         {
-            AddDialogViewModel dialog = new AddDialogViewModel();
-            dialog.ShowDialog();
+            string name = dialog.ShowDialog();
+            if (name == "") name = "untitled";
 
             int i = (int)param;
             if (i == -1)
             {
-                Items.Add(new Item("untitled"));
+                Items.Add(new Item(name));
                 SelectedIndex = Items.Count - 1;
             }
             else
             {
-                Items.Insert(i + 1, new Item("untitled"));
+                Items.Insert(i + 1, new Item(name));
                 SelectedIndex = i + 1;
             }
             OnPropertyChanged("SelectedIndex");

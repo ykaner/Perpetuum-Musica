@@ -78,13 +78,24 @@
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
     <Compile Include="Model\Track.cs" />
+    <Compile Include="ViewModel\AddTrackDialogViewModel.cs" />
     <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="ViewModel\ConfirmDialogViewModel.cs" />
+    <Compile Include="ViewModel\GetResource.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="View\AddTrackDialog.xaml.cs">
+      <DependentUpon>AddTrackDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConfirmDialog.xaml.cs">
+      <DependentUpon>ConfirmDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="View\CustomControls\Attached.cs" />
+    <Compile Include="View\CustomControls\ChangeableImage.cs" />
     <Compile Include="View\CustomControls\Icon.cs" />
     <Compile Include="View\CustomControls\IconButton.cs" />
+    <Compile Include="View\CustomControls\LabeledTextBox.cs" />
     <Compile Include="View\CustomControls\pmButton.cs" />
     <Compile Include="View\CustomControls\pmListViewItem.cs" />
     <Compile Include="View\CustomControls\pmSlider.cs" />
@@ -93,6 +104,18 @@
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddTrackDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConfirmDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConvertersResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MediaResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -109,7 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Styles\DialogStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Styles\IconStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\ImageStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,6 +180,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Styles\TextBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Styles\TreeViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +256,9 @@
     <Resource Include="docs\MySqlConnection.xml" />
     <Resource Include="docs\MySqlCommandBuilder.xml" />
     <Resource Include="docs\MySqlCommand.xml" />
+    <Resource Include="View\Sources\DefaultImages\defaultPlaylistImage.png" />
+    <Resource Include="View\Sources\DefaultImages\defaultTrackImage.png" />
+    <Resource Include="View\Sources\browse_icon.png" />
     <Content Include="View\Sources\logo.png" />
     <Resource Include="View\Sources\settings_icon.png" />
     <Resource Include="View\Sources\play_icon.png" />

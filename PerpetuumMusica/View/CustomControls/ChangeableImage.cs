@@ -41,44 +41,14 @@ namespace PerpetuumMusica.View.CustomControls
     /// Step 2)
     /// Go ahead and use your control in the XAML file.
     ///
-    ///     <MyNamespace:IconButton/>
+    ///     <MyNamespace:ChangeAbleImage/>
     ///
     /// </summary>
-    public class IconButton : pmButton
+    public class ChangeableImage : Image
     {
-        static IconButton()
+        static ChangeableImage()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ChangeableImage), new FrameworkPropertyMetadata(typeof(ChangeableImage)));
         }
-        
-
-        public ImageSource ImageSource
-        {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(IconButton));
-
-        public Brush Color
-        {
-            get { return (Brush)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Brush), typeof(IconButton), new UIPropertyMetadata(new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))));
-
-
-
-
-    
-
-
-
-
     }
 }

@@ -4,6 +4,13 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls">
     <!--colors-->
+    <!--colors-->
+    <SolidColorBrush x:Key="header_color">#FF111111</SolidColorBrush>
+    <SolidColorBrush x:Key="toolbar_color">#FF1D1D1D</SolidColorBrush>
+    <SolidColorBrush x:Key="Player_color">#FF343434</SolidColorBrush>
+    <SolidColorBrush x:Key="Menu_color">#FF1D1D1D</SolidColorBrush>
+    <SolidColorBrush x:Key="view_color">black</SolidColorBrush>
+    
     <SolidColorBrush x:Key="main_color">#F65A25</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_brighter">#f76a3b</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_darker">#F65A25</SolidColorBrush>
@@ -12,8 +19,13 @@
     <SolidColorBrush x:Key="popup_menu_color">#565656</SolidColorBrush>
     <SolidColorBrush x:Key="lines_color">#222326</SolidColorBrush>
     <SolidColorBrush x:Key="background_color">#131313</SolidColorBrush>
+    <SolidColorBrush x:Key="dialog_background_color">#3d3d3d</SolidColorBrush>
+    <SolidColorBrush x:Key="transparent_black">#050505</SolidColorBrush>
     <SolidColorBrush x:Key="Highlight_color">#404040</SolidColorBrush>
     <SolidColorBrush x:Key="Highlight_color2">#606060</SolidColorBrush>
+    <SolidColorBrush x:Key="DialogBackground">#3f3f3f</SolidColorBrush>
+
+    
 
 
     <!-- fonts-->

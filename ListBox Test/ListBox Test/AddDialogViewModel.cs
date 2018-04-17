@@ -12,6 +12,8 @@ namespace ListBox_Test
     {
         public string Answer { get; set; }
 
+        private AddDialog dialog;
+
         private ICommand _approveCommand;
         public ICommand ApproveCommand => _approveCommand ?? (_approveCommand = new Command(Approve));
 
@@ -20,15 +22,16 @@ namespace ListBox_Test
             
         }
 
-        public void ShowDialog()
+        public string ShowDialog()
         {
-            AddDialog dialog = new AddDialog(this);
+            dialog = new AddDialog(this);
             dialog.ShowDialog();
+            return Answer;
         }
 
         public void Approve(object p)
         {
-
+            dialog.Close();
         }
 
 

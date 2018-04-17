@@ -6,8 +6,25 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/MediaResources.xaml"/>
         <ResourceDictionary Source="/View/Styles/Colors.xaml"/>
+        <ResourceDictionary Source="/View/Styles/IconStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <ControlTemplate TargetType="Button" x:Key="Empty">
+        <ContentPresenter/>
+    </ControlTemplate>
+
+    <Style TargetType="Button" x:Key="XButton">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock FontSize="12" Foreground="#a9a9a9">✕</TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!--tooltip-->
     <Style TargetType="ToolTip">
         <Setter Property="Background" Value="Black"/>
@@ -91,12 +108,17 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Ellipse x:Name="fillColor" Fill="{StaticResource foreground_color}" Width="40" Height="40" Opacity="0"/>
-                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" />
+                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Margin="12, 0" Style="{StaticResource IconStyle}"/>
                     </Grid>
                     
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
     <Style TargetType="{x:Type cc:IconButton}" x:Key="NormalIconButtonStyle">
@@ -122,6 +144,30 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="cc:IconButton" x:Key="ColorIconButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="cc:IconButton">
+                    <Grid>
+                        <cc:Icon x:Name="Icon" Foreground="White" ImageSource="{TemplateBinding ImageSource}" />
+                        <!--<VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Icon" 
+                                                        Storyboard.TargetProperty="Foreground" 
+                                                        To="Orange"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!--the "pause/play" button style-->
     <Style TargetType="cc:IconButton" x:Key="playButton" BasedOn="{StaticResource pmButton}">
@@ -132,7 +178,7 @@
                 <ControlTemplate TargetType="cc:IconButton">
                     <Grid Margin="5">
                         <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" Fill="{TemplateBinding Background}"/>
-                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Height="60" Width="60"/>
+                        <cc:Icon ImageSource="{TemplateBinding ImageSource}" Height="60" Width="60" Style="{StaticResource IconStyle}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
