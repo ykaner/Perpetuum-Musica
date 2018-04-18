@@ -145,24 +145,25 @@
         </Setter>
     </Style>
 
-    <Style TargetType="cc:IconButton" x:Key="ColorIconButton">
+    <Style TargetType="cc:IconButton" x:Key="ColorIconButton" BasedOn="{StaticResource MouseOverCursorChangeStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="cc:IconButton">
                     <Grid>
-                        <cc:Icon x:Name="Icon" Foreground="White" ImageSource="{TemplateBinding ImageSource}" />
-                        <!--<VisualStateManager.VisualStateGroups>
+                        <cc:Icon x:Name="Icon" Foreground="White" ImageSource="{TemplateBinding ImageSource}" Style="{StaticResource IconStyle}" />
+                        <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="Icon" 
-                                                        Storyboard.TargetProperty="Foreground" 
-                                                        To="Orange"/>
+                                                        Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" 
+                                                        Duration="0"
+                                                        To="{StaticResource main_color1}"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>-->
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

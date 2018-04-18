@@ -21,7 +21,10 @@
             <TextBlock HorizontalAlignment="Center"
                        FontSize="25">Add Track</TextBlock>
             <DockPanel Margin="0, 10">
-                <cc:IconButton ImageSource="{StaticResource browseIcon}" DockPanel.Dock="Right" Style="{StaticResource ColorIconButton}"/>
+                <cc:IconButton ImageSource="{StaticResource browseIcon}" DockPanel.Dock="Right" Style="{StaticResource ColorIconButton}"
+                               Margin="5, 0, 0, 0"
+                               ToolTip="Browse file localy"
+                               Command="{Binding ChooseFileCommand}"/>
                 <cc:LabeledTextBox x:Name="UrlTextBox"  Label="Paste track's adress here" Text="{Binding Address}"/>
             </DockPanel>
             <Grid>

@@ -12,6 +12,7 @@
     <SolidColorBrush x:Key="view_color">black</SolidColorBrush>
     
     <SolidColorBrush x:Key="main_color">#F65A25</SolidColorBrush>
+    <Color x:Key="main_color1">#F65A25</Color>
     <SolidColorBrush x:Key="main_color_brighter">#f76a3b</SolidColorBrush>
     <SolidColorBrush x:Key="main_color_darker">#F65A25</SolidColorBrush>
     <SolidColorBrush x:Key="foreground_color">#f7f7f7</SolidColorBrush>

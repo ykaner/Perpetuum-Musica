@@ -53,6 +53,7 @@ namespace PerpetuumMusica.ViewModel
             Composer = ""; OnPropertyChanged("Composer");
             ImagePath = GetResource.TrackImage(); OnPropertyChanged("ImagePath");
             defaultImage = true; //we reseted to the default image. 
+            IsOk = false;
         }
 
         private Command _CancelCommand;
@@ -60,6 +61,8 @@ namespace PerpetuumMusica.ViewModel
         private Command _OKCommand;
         private Command _ChangeImageCommand;
         public Command ChangeImageCommand => _ChangeImageCommand ?? (_ChangeImageCommand = new Command(ChangeImage));
+        private Command _ChooseFileCommand;
+        public Command ChooseFileCommand => _ChooseFileCommand ?? (_ChooseFileCommand = new Command(ChooseFile));
 
         private void ChangeImage(object obj)
         {
@@ -75,6 +78,18 @@ namespace PerpetuumMusica.ViewModel
             {
                 return;
             }
+        }
+        private void ChooseFile(object obj)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Audio Files (*.mp3)|*.mp3|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Address = openFileDialog.FileName;
+                OnPropertyChanged("Address");
+            }
+            else
+                return;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
