@@ -19,14 +19,10 @@ namespace PerpetuumMusica.View
     /// <summary>
     /// Interaction logic for AddTrackDialogBox.xaml
     /// </summary>
-    public partial class AddTrackDialog : Window
-    {
-        public AddTrackDialog(AddTrackDialogViewModel vm)
-        {
-            InitializeComponent();
-            DataContext = vm;
-        }
+    /// 
 
+    public class GrabableWindow : Window
+    {
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -34,10 +30,21 @@ namespace PerpetuumMusica.View
             // Begin dragging the window
             this.DragMove();
         }
+   
+    }
 
-        private void Close(object sender, RoutedEventArgs e)
+    public partial class AddTrackDialog : GrabableWindow
+    {
+        public AddTrackDialog(AddTrackDialogViewModel vm)
         {
-            this.Close();
+            InitializeComponent();
+            DataContext = vm;
+        }
+              
+
+        public void Close(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

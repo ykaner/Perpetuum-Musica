@@ -222,7 +222,12 @@ namespace PerpetuumMusica.Model
         #endregion
 
         #region Playlist editing functions
-        public void AddTrack(Track newTrack, Playlist target, int index = -1 /* -1 means add as last item */)
+        public void IsTrackValid(Track newTrack)
+        {
+            if (newTrack.Title == "" || newTrack.Title == null) throw new Exception("Please type the new Track's title");
+            if (newTrack.FileUri == "" || newTrack.FileUri == null) throw new Exception("Please paste the file address or browse a file from your computer.");
+        }
+        public void AddItem(Playable newTrack, Playlist target, int index = -1 /* -1 means add as last item */)
         {
             if (index == -1)
             {

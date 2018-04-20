@@ -1,0 +1,34 @@
+﻿<local:GrabableWindow x:Class="PerpetuumMusica.View.AddTrackDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
+        xmlns:local="clr-namespace:PerpetuumMusica.View"
+        xmlns:uc="clr-namespace:PerpetuumMusica.View.UserControls"
+        mc:Ignorable="d"
+        Style="{StaticResource DialogWin}"
+        WindowStartupLocation="CenterScreen"
+        >
+    <ContentControl Style="{StaticResource Dialog}">
+        <DockPanel>
+            <StackPanel FocusManager.FocusedElement="{Binding ElementName=UrlTextBox}">
+                <Button Style="{StaticResource XButton}" Command="{Binding CancelCommand}"/>
+
+                <TextBlock HorizontalAlignment="Center"
+                       FontSize="25">Add Track</TextBlock>
+                <DockPanel Margin="0, 10">
+                    <cc:IconButton ImageSource="{StaticResource browseIcon}" DockPanel.Dock="Right" Style="{StaticResource ColorIconButton}"
+                               Margin="5, 0, 0, 0"
+                               ToolTip="Browse file localy"
+                               Command="{Binding ChooseFileCommand}"/>
+                    <cc:LabeledTextBox x:Name="UrlTextBox"  Label="Paste track's adress here" Text="{Binding Path=Playable.FileUri, UpdateSourceTrigger=PropertyChanged}"/>
+                </DockPanel>
+                <uc:PlayableForm/>
+                <uc:OkCancelButtons/>
+            </StackPanel>
+            
+        </DockPanel>
+
+    </ContentControl>
+</local:GrabableWindow>
