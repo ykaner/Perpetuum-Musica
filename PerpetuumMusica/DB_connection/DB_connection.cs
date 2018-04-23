@@ -21,10 +21,21 @@ namespace DB_connection
 
         public DB_conn()
         {
-            server = "sql11.freemysqlhosting.net";
-            database = "sql11230005";
-            uid = "sql11230005 ";
-            password = "LHi1bsmgfd";
+            bool connectLocalhost = true;
+            if (connectLocalhost)
+            {
+                server = "localhost";
+                database = "pm_musics";
+                uid = "defuser";
+                password = "12qwaszx";
+            }
+            else
+            {
+                server = "sql11.freemysqlhosting.net";
+                database = "sql11230005";
+                uid = "sql11230005";
+                password = "LHi1bsmgfd";
+            }
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" +

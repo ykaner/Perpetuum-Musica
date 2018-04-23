@@ -3,127 +3,102 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Player
 {
-    public class AudioPlayer : MediaPlayer
+
+    public enum LinkType { local, youtube}
+
+    public class AudioPlayer
     {
-
         private Uri file;
-
-        public AudioPlayer() : base()
-        {
-            
-        }
-
-        public bool SetUri(String file)
-        {
-            try
-            {
-                this.file = new Uri(file);
-                base.Open(this.file);
-            }
-            catch (Exception e){
-                return false;
-            }
-            return true;
-        }
-
-        public new void Play()
-        {
-            base.Play();
-        }
-
-        public new void Pause()
-        {
-            base.Pause();
-        }
-
-        public new void Stop()
-        {
-            base.Stop();
-            base.Close();
-        }
-
-        public double LocationPercentage
+        public Uri File
         {
             get
             {
-                return GetProgressPercent();
+                return file;
             }
             set
             {
-                SetTime(value);
+                this.file = value;
+                this.uriType = getLinkType(file.OriginalString);
+                if (uriType == LinkType.local)
+                {
+                    localPlayer.File = file;
+                    System.Threading.SpinWait.SpinUntil(() => localPlayer.NaturalDuration.HasTimeSpan, 1 * 1000);
+                    this.TotalSeconds = localPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                }
+                else if (uriType == LinkType.youtube)
+                {
+                    var video = LinkResolver.ResolveLink(file.OriginalString);
+                    this.TotalSeconds = video.Seconds;
+                    youtubePlayer.current = video;
+                    string tmpFile = youtubePlayer.StartStreaming();
+                    localPlayer.SetUri(tmpFile);
+                }
             }
         }
+        private LinkType uriType;
+        private double TotalSeconds { get; set; }
 
-        //public new double Volume
-        //{
-        //    get
-        //    {
-        //        return Volume * 100;
-        //    }
-        //    set
-        //    {
-        //        this.Volume = value / 100;
-        //    }
-        //}
+        private LocalPlayer localPlayer;
+        private YTPlayer youtubePlayer;
 
-        public String GetProgressTime()
-
+        public void SetUri(string file)
         {
-            String res = this.Position.ToString(@"mm\:ss") + " / ";
-            if (!this.NaturalDuration.HasTimeSpan)
-            {
-                return "";
-            }
-            if (this.NaturalDuration.TimeSpan.Hours != 0)
-            {
-                res += this.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss");
-            }
-            else if(this.NaturalDuration.TimeSpan.Minutes != 0){
-                res += this.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-            }
+            this.File = new Uri(file);
+        }
+
+        public AudioPlayer()
+        {
+            localPlayer = new LocalPlayer();
+            youtubePlayer = new YTPlayer();
+        }
+
+        public LinkType getLinkType(string uri)
+        {
+            Regex YoutubeLinkRegex = new Regex("(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+");
+            
+            if (YoutubeLinkRegex.Match(uri).Success)
+                return LinkType.youtube;
             else
-            {
-                res += this.NaturalDuration.TimeSpan.ToString(@"ss");
-            }
-            return res;
+                return LinkType.local;
+        }
+        public void Play()
+        {
+            localPlayer.Play();
+        }
+
+        public void Pause()
+        {
+            localPlayer.Pause();
+        }
+
+        public void Stop()
+        {
+            localPlayer.Stop();
+        }
+
+        public string GetProgressTime()
+        {
+            return localPlayer.GetProgressTime();
         }
 
         public double GetProgressPercent()
         {
-            if (!this.NaturalDuration.HasTimeSpan)
-            {
-                return 0;
-            }
-            return this.Position.TotalMilliseconds / this.NaturalDuration.TimeSpan.TotalMilliseconds * 100;
+            return localPlayer.Position.Seconds / TotalSeconds;
         }
 
         public bool SetTime(TimeSpan time)
         {
-            if (this.NaturalDuration.TimeSpan < time)
-                return false;
-            else
-            {
-                this.Position = time;
-                return true;
-            }
+            return localPlayer.SetTime(time);
         }
 
-        public bool SetTime(double percents)
+        public bool SetTime(double percent)
         {
-            percents /= 100;
-            if(percents > 1 || percents < 0)
-            {
-                return false;
-            }
-            else
-            {
-                this.Position = new TimeSpan((long)(this.NaturalDuration.TimeSpan.Ticks * percents));
-                return true;
-            }
+            return localPlayer.SetTime(percent);
         }
 
     }
