@@ -63,9 +63,12 @@ namespace PerpetuumMusica.ViewModel
             };
             Toolbar = new List<MenuItem>()
             {
-                new MenuItem("More Options", Image("menu_icon.png"), null, null),
-                new MenuItem("Info", Image("info_icon.png"), null, null),
-                new MenuItem("Settings", Image("settings_icon.png"), null, null)
+                new MenuItem("Move Down", Image("sortDownIcon")),
+                new MenuItem("Move Up", Image("sortUpIcon")),
+                new MenuItem("Delete", Image("deleteIcon"), new Command(DeleteItems, DeleteItems_CanExecute)),
+                new MenuItem("More Options", Image("menuIcon"), null, null),
+                new MenuItem("Info", Image("infoIcon"), null, null),
+                new MenuItem("Settings", Image("settingsIcon"), null, null)
             };
 
             //Init volume
@@ -87,9 +90,7 @@ namespace PerpetuumMusica.ViewModel
         static public ImageSource Image(string name) { return GetResource.Image(name); }
 
 
-        ////////////////////////
-        /// private fields
-        ////////////////////////
+        #region images
         //Images
         private ImageSource pauseIcon = Image("pauseIcon");
         private ImageSource playIcon = Image("playIcon");
@@ -98,8 +99,8 @@ namespace PerpetuumMusica.ViewModel
         private ImageSource volumeLowIcon = Image("volumeLowIcon");
         private ImageSource trackIcon = Image("trackIcon");
         private ImageSource playlist = Image("playlistIcon");
-
         //private ImageSource disney = Image("disney");
+        #endregion
 
         #region INotifyPropertyChanged Memberse
 
@@ -147,6 +148,8 @@ namespace PerpetuumMusica.ViewModel
         public Command OpenAddMenuCommand => _OpenAddMenu ?? (_OpenAddMenu = new Command(OpenAddMenu));
         private Command _DeleteItemsCommand;
         public Command DeleteItemsCommand => _DeleteItemsCommand ?? (_DeleteItemsCommand = new Command(DeleteItems, DeleteItems_CanExecute));
+        private Command _TestCommand;
+        public Command TestCommand => _TestCommand ?? (_TestCommand = new Command(Test));
         //private Command _AddTrackCommand;
         //public Command AddTrackCommand => _AddTrackCommand ?? (_AddTrackCommand = new Command(AddTrack));
 
@@ -206,22 +209,23 @@ namespace PerpetuumMusica.ViewModel
                 Model.ShowedItem = value;
             }
         }
-        public List<PlaylistItem> SelectedItems
-        {
-            get
-            {
-                try
-                {
-                    return ((Playlist)(ShowedItem.Content)).List.Where(item => item.IsSelected).ToList();
-                }
-                catch (Exception e)
-                {
-                    //if casting failed, this means we are in "Track" view, so there is no list. 
-                    return new List<PlaylistItem>();
-                }
+        public List<PlaylistItem> SelectedItems { get; set; }
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            return ((Playlist)(ShowedItem.Content)).List.Where(item => item.IsSelected).ToList();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            //if casting failed, this means we are in "Track" view, so there is no list. 
+        //            return new List<PlaylistItem>();
+        //        }
                 
-            }
-        }
+        //    }
+        //}
+        public int SelectedIndex { get { return 2; } set { } }
 
         private Stack<PlaylistItem> ShowedItemHistory = new Stack<PlaylistItem>();
         private Stack<PlaylistItem> ShowedItemFuture = new Stack<PlaylistItem>(); 
@@ -375,49 +379,33 @@ namespace PerpetuumMusica.ViewModel
             {
                 message += item + "\n";
             }
-
             if (ConfirmDialog.ShowDialog(message))
                 Model.DeleteItems(targetItems, (Playlist)(ShowedItem.Content));
             OnPropertyChanged("ShowedItem");
-
-            //if (param == null)
-            //{
-            //    MessageBox.Show("Parameter is null");
-            //}
-            //var items = SelectedItems;
-
-            //string output = "Selected: \n";
-
-            //if (items == null || items.Count == 0) output = "no item is selected";
-            //else
-            //{
-            //    foreach (PlaylistItem item in items)
-            //    {
-            //        output += item.ToString() + "\n";
-            //    }
-            //}
-            //MessageBox.Show(output);
         }
         public bool DeleteItems_CanExecute(object param)
         {
+            if (SelectedItems == null) return false;
             return SelectedItems.Count > 0;
+        }
+        public void Test(object param)
+        {
+            MessageBox.Show(SelectedIndex.ToString());
         }
         public void AddTrack(object param)
         {
+            MessageBox.Show(SelectedIndex.ToString());
             Track newTrack = AddTrackDialog.ShowDialog();
             if (newTrack == null) return;
-
-            //MessageBox.Show("Adding new Track: \n " +
-            //    "Title: " + newTrack.Title + "\n");
-
-            Model.AddItem(newTrack, (Playlist)ShowedItem.Content);
+            
+            Model.AddItem(newTrack, (Playlist)ShowedItem.Content, SelectedIndex);
         }
         public void AddEmptyPlaylist(object param)
         {
             Playlist newPlaylist = AddEmptyPlaylistDialog.ShowDialog();
             if (newPlaylist == null) return;
 
-            Model.AddItem(newPlaylist, (Playlist)ShowedItem.Content);
+            Model.AddItem(newPlaylist, (Playlist)ShowedItem.Content, SelectedIndex);
         }
         #endregion
 
