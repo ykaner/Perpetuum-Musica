@@ -154,12 +154,10 @@
 
     <ControlTemplate TargetType="MenuItem" x:Key="TopLevelToolbarItem">
         <Grid>
-            <!--<ContentPresenter 
+            <ContentPresenter 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        ContentSource="Icon"/>-->
-            <cc:IconButton ImageSource="{Binding Icon}" ToolTip="{Binding Name}" Command="{Binding Command}"/>
-            
+                        ContentSource="Icon"/>
             <Popup x:Name="Popup"
                     Placement="Left"
                     IsOpen="{TemplateBinding IsSubmenuOpen}"
@@ -175,9 +173,8 @@
                         <DropShadowEffect BlurRadius="10" Opacity="1" ShadowDepth="0" RenderingBias="Performance"/>
                     </Border.Effect>
                     <Grid Margin="0, 5">
-                        <!--<StackPanel IsItemsHost="True"
-                                    KeyboardNavigation.DirectionalNavigation="Cycle" />-->
-                        <TextBlock>Hello</TextBlock>
+                        <StackPanel IsItemsHost="True"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
                     </Grid>
                 </Border>
             </Popup>
@@ -185,45 +182,40 @@
         
     </ControlTemplate>
 
- 
+    <Style TargetType="Menu" x:Key="ToolbarMenu"/>
+
     <Style TargetType="MenuItem" x:Key="ToolbarItem">
-        <!--<Setter Property="Icon">
+        <Setter Property="Icon">
             <Setter.Value>
                 <cc:IconButton ImageSource="{Binding Icon}" ToolTip="{Binding Name}"/>
             </Setter.Value>
-        </Setter>-->
-        <Setter Property="ItemsSource" Value="{Binding Path=SubItems}"/>
+        </Setter>
         <Setter Property="Background" Value="Transparent"/>
 
         <Setter Property="Template" Value="{StaticResource TopLevelToolbarItem}"/>
-        <!--<Style.Triggers>
-             --><!--Top item if exists things inside--><!--
+        <Style.Triggers>
+             <!--Top item if exists things inside-->
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Template"
                                 Value="{StaticResource TopLevelToolbarItem}" />
                 <Setter Property="Grid.IsSharedSizeScope"
                                 Value="true" />
             </Trigger>
-             --><!--top item if things do not exist inside--><!--
+             <!--top item if things do not exist inside-->
             <Trigger Property="Role" Value="TopLevelItem">
                 <Setter Property="Template"
                                 Value="{StaticResource TopLevelToolbarItem}" />
             </Trigger>
-             --><!--submenu if something is inside--><!--
+             <!--submenu if something is inside-->
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="Template"
                                 Value="{StaticResource MenuItem}" />
             </Trigger>
-             --><!--submenu if things aren't inside--><!--
+             <!--submenu if things aren't inside-->
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template"
                                 Value="{StaticResource MenuItem}" />
             </Trigger>
-        </Style.Triggers>-->
+        </Style.Triggers>
     </Style>
-
-    <Style TargetType="Menu" x:Key="ToolbarMenu">
-        <Setter Property="ItemContainerStyle" Value="{StaticResource ToolbarItem}"/>
-    </Style>
-
 </ResourceDictionary>
