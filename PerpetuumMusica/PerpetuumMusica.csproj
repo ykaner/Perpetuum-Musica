@@ -78,22 +78,16 @@
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
     <Compile Include="Model\Track.cs" />
-    <Compile Include="ViewModel\AddEmptyPlaylistDialogViewModel.cs" />
     <Compile Include="ViewModel\AddTrackDialogViewModel.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\ConfirmDialogViewModel.cs" />
-    <Compile Include="ViewModel\DialogViewModel.cs" />
     <Compile Include="ViewModel\GetResource.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
-    <Compile Include="ViewModel\PlayableDialogViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
-    <Compile Include="View\Dialogs\AddEmptyPlaylist.xaml.cs">
-      <DependentUpon>AddEmptyPlaylist.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\AddTrackDialog.xaml.cs">
+    <Compile Include="View\AddTrackDialog.xaml.cs">
       <DependentUpon>AddTrackDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialogs\ConfirmDialog.xaml.cs">
+    <Compile Include="View\ConfirmDialog.xaml.cs">
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converters\StringToVisibilityConverter.cs" />
@@ -110,21 +104,11 @@
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\OkCancelButtons.xaml.cs">
-      <DependentUpon>OkCancelButtons.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\UserControls\PlayableForm.xaml.cs">
-      <DependentUpon>PlayableForm.xaml</DependentUpon>
-    </Compile>
-    <Page Include="View\Dialogs\AddEmptyPlaylist.xaml">
+    <Page Include="View\AddTrackDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialogs\AddTrackDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Dialogs\ConfirmDialog.xaml">
+    <Page Include="View\ConfirmDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,14 +189,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Test.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControls\OkCancelButtons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControls\PlayableForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

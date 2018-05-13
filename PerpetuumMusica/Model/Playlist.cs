@@ -55,10 +55,6 @@ namespace PerpetuumMusica.Model
 
         public Playlist(string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) : this(0, title, image, time, timesHeard, composer, list) { }
 
-        public Playlist()
-        {
-        }
-
         private int CurrentItemIndex { get; set; } //Index of item that is currently on/playing
         //return the current playing item of _this_ playlist
         public PlaylistItem Current

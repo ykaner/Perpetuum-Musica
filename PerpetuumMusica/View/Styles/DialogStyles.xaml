@@ -3,16 +3,6 @@
                     xmlns:local="clr-namespace:PerpetuumMusica.View.Styles"
                     xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls">
 
-    <Style TargetType="Window" x:Key="DialogWin">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="WindowStyle" Value="None"/>
-        <Setter Property="Width" Value="500"/>
-        <Setter Property="MinWidth" Value="215"/>
-        <Setter Property="AllowsTransparency" Value="True"/>
-        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
-        <Setter Property="SizeToContent" Value="Height"/>
-    </Style>
-    
     <Style TargetType="ContentControl" x:Key="Dialog">
         <Setter Property="Template">
             <Setter.Value>
@@ -25,6 +15,7 @@
                         </Border.Effect>
                         <Border Padding="5">
                             <StackPanel Margin="10, 5" >
+
                                 <ContentPresenter/>
                             </StackPanel>
 

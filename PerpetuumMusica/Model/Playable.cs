@@ -26,8 +26,7 @@ namespace PerpetuumMusica.Model
         public string Composer { get; set; }
         //public ObservableCollection<PlaylistItem> List { get; set; }
 
-
-        public Playable() { }
+         
         public Playable(int id, string title, ImageSource image, TimeSpan time, int timesHeard, string composer)
         {
             //ListIndex = listIndex;
