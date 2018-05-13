@@ -23,6 +23,7 @@ namespace PerpetuumMusica.ViewModel
         private AddTrackDialogViewModel AddTrackDialog { get; set; }
         private AddEmptyPlaylistDialogViewModel AddEmptyPlaylistDialog { get; set; }
         private ConfirmDialogViewModel ConfirmDialog { get; set; }
+        //private View.Information InfoWindow;
 
         public ViewModel()
         {
@@ -61,11 +62,11 @@ namespace PerpetuumMusica.ViewModel
                     new MenuItem("Empty", Image("playlistIcon"), new Command(AddEmptyPlaylist))
                 })
             };
-            Toolbar = new List<MenuItem>()
-            {
-                new MenuItem("Info", Image("info_icon.png"), null, null),
-                new MenuItem("Settings", Image("settings_icon.png"), null, null)
-            };
+            //Toolbar = new List<MenuItem>()
+            //{
+            //    new MenuItem("Info", Image("info_icon.png"), new Command(OpenInfoWindow), null),
+            //    new MenuItem("Settings", Image("settings_icon.png"), null, null)
+            //};
 
             //Init volume
             Volume = 80;
@@ -146,6 +147,8 @@ namespace PerpetuumMusica.ViewModel
         public Command OpenAddMenuCommand => _OpenAddMenu ?? (_OpenAddMenu = new Command(OpenAddMenu));
         private Command _DeleteItemsCommand;
         public Command DeleteItemsCommand => _DeleteItemsCommand ?? (_DeleteItemsCommand = new Command(DeleteItems, DeleteItems_CanExecute));
+        private Command _ShowInfoCommand;
+        public Command ShowInfoCommand => _ShowInfoCommand ?? (_ShowInfoCommand = new Command(OpenInfoWindow));
         //private Command _AddTrackCommand;
         //public Command AddTrackCommand => _AddTrackCommand ?? (_AddTrackCommand = new Command(AddTrack));
 
@@ -254,7 +257,7 @@ namespace PerpetuumMusica.ViewModel
         //Menues
         public List<MenuItem> MainMenu { get; set; }
         public List<MenuItem> AddMenu { get; set; }
-        public List<MenuItem> Toolbar { get; set; }
+        //public List<MenuItem> Toolbar { get; set; }
 
         //Events 
         void UpdateTrackSliderLocationTimer_tick(object sender, EventArgs e)
@@ -417,6 +420,12 @@ namespace PerpetuumMusica.ViewModel
             if (newPlaylist == null) return;
 
             Model.AddItem(newPlaylist, (Playlist)ShowedItem.Content);
+        }
+
+        public void OpenInfoWindow(object param)
+        {
+            View.Information InfoWindow = new View.Information();
+            InfoWindow.ShowDialog();
         }
         #endregion
 

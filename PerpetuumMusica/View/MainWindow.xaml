@@ -187,21 +187,10 @@
                     <Menu
                         Style="{StaticResource ToolbarMenu}"
                         ItemContainerStyle="{StaticResource ToolbarItem}"
+                        ItemsSource="{Binding Toolbar}"
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DockPanel.Dock="Right">
-                        <!--<Menu.ItemTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type vm:MenuItem}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <cc:Icon ImageSource="{Binding Icon}" Width="20" Height="20"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Name}"/>
-                                </Grid>
-                            </HierarchicalDataTemplate>
-                        </Menu.ItemTemplate>-->
                         <MenuItem Header="Delete" >
                             <MenuItem.Icon>
                                 <cc:IconButton ImageSource="{StaticResource deleteIcon}" 
@@ -209,16 +198,19 @@
                                                CommandParameter="{Binding SelectedItems}"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="More Options">
+                        <!--<MenuItem Header="More Options">
                             <MenuItem.Icon>
                                 <cc:IconButton ImageSource="{StaticResource menuIcon}" ToolTip="More Options"/>
                             </MenuItem.Icon>
                             <MenuItem Header="Option1"/>
                             <MenuItem Header="Option2"/>
-                        </MenuItem>
+                        </MenuItem>-->
                         <MenuItem Header="info">
                             <MenuItem.Icon>
-                                <cc:IconButton ImageSource="{StaticResource infoIcon}" ToolTip="info" Margin="20, 0, 0, 0"/>
+                                <cc:IconButton ImageSource="{StaticResource infoIcon}" 
+                                               ToolTip="info" 
+                                               Margin="20, 0, 0, 0"
+                                               Command="{Binding ShowInfoCommand}"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="Settings">

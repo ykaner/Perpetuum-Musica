@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpetuumMusica.View"
+        xmlns:cc="clr-namespace:PerpetuumMusica.View.CustomControls"
         mc:Ignorable="d"
         Style="{StaticResource DialogWin}"
-        Title="Information" Width="500">
+        Title="Information" Width="500"
+        WindowStartupLocation="CenterScreen">
     <ContentControl Style="{StaticResource Dialog}" >
         <StackPanel>
             <Button Style="{StaticResource XButton}"/>
-            <TextBlock FontSize="30" FontWeight="Bold" >Perpetuum Musica</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{StaticResource logo}" Height="30" Margin="5 0"/>
+                <TextBlock FontSize="30" FontWeight="Bold" >Perpetuum Musica</TextBlock>
+            </StackPanel>
             <TextBlock Margin="0 10">A professional music management software. </TextBlock>
             <TextBlock Margin="0 10">Created by Shachar Har-Shuv and Joseph Kaner</TextBlock>
-            <DockPanel>
-                <Button DockPanel.Dock="Right" >Close</Button>
-            </DockPanel>
+            <cc:pmButton DockPanel.Dock="Right" Style="{StaticResource DialogButtonMinor}" 
+                         HorizontalAlignment="Right" 
+                         IsCancel="True">Close</cc:pmButton>
 
         </StackPanel>
         

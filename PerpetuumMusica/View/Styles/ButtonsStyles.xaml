@@ -16,6 +16,7 @@
     <Style TargetType="Button" x:Key="XButton">
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="IsCancel" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
