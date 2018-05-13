@@ -50,5 +50,10 @@ namespace PerpetuumMusica.Model
         public abstract PlayableType GetType();
         public abstract ImageSource DefaultImage { get; }
 
+        public override string ToString()
+        {
+            return Title;
+        }
+
     }
 }

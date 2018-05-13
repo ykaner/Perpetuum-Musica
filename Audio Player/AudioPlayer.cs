@@ -11,7 +11,7 @@ namespace Player
 
     public enum LinkType { local, youtube}
 
-    public class AudioPlayer
+    public class AudioPlayer : LocalPlayer
     {
         private Uri file;
         public Uri File

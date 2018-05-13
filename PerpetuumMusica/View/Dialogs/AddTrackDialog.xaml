@@ -25,6 +25,13 @@
                     <cc:LabeledTextBox x:Name="UrlTextBox"  Label="Paste track's adress here" Text="{Binding Path=Playable.FileUri, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
                 <uc:PlayableForm/>
+                <!--Select parent playlist-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock >Add to:</TextBlock>
+                    <TextBlock Margin="20 0"
+                               FontStyle="Italic" Text="{Binding ParentPlaylist}"/>
+                    <Button>Change</Button>
+                </StackPanel>
                 <uc:OkCancelButtons/>
             </StackPanel>
             

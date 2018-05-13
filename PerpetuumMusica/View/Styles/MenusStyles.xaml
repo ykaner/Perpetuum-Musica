@@ -154,10 +154,11 @@
 
     <ControlTemplate TargetType="MenuItem" x:Key="TopLevelToolbarItem">
         <Grid>
-            <ContentPresenter 
+            <!--<ContentPresenter 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        ContentSource="Icon"/>
+                        ContentSource="Icon"/>-->
+            <cc:IconButton ImageSource="{Binding Icon}" Command="{Binding Command}" ToolTip="{Binding }"/>
             <Popup x:Name="Popup"
                     Placement="Left"
                     IsOpen="{TemplateBinding IsSubmenuOpen}"
@@ -181,9 +182,8 @@
         </Grid>
         
     </ControlTemplate>
-
-    <Style TargetType="Menu" x:Key="ToolbarMenu"/>
-
+    
+    
     <Style TargetType="MenuItem" x:Key="ToolbarItem">
         <Setter Property="Icon">
             <Setter.Value>
@@ -194,28 +194,33 @@
 
         <Setter Property="Template" Value="{StaticResource TopLevelToolbarItem}"/>
         <Style.Triggers>
-             <!--Top item if exists things inside-->
+            <!--Top item if exists things inside-->
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Template"
                                 Value="{StaticResource TopLevelToolbarItem}" />
                 <Setter Property="Grid.IsSharedSizeScope"
                                 Value="true" />
             </Trigger>
-             <!--top item if things do not exist inside-->
+            <!--top item if things do not exist inside-->
             <Trigger Property="Role" Value="TopLevelItem">
                 <Setter Property="Template"
                                 Value="{StaticResource TopLevelToolbarItem}" />
             </Trigger>
-             <!--submenu if something is inside-->
+            <!--submenu if something is inside-->
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="Template"
                                 Value="{StaticResource MenuItem}" />
             </Trigger>
-             <!--submenu if things aren't inside-->
+            <!--submenu if things aren't inside-->
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template"
                                 Value="{StaticResource MenuItem}" />
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="Menu" x:Key="ToolbarMenu">
+        
+    </Style>
+
 </ResourceDictionary>

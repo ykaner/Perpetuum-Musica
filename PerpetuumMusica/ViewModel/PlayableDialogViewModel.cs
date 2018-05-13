@@ -14,12 +14,13 @@ namespace PerpetuumMusica.ViewModel
         public string ImagePath { get; set; }
 
         public Playable Playable { get; set; } //will contain the new Track to be created
-
+        public Playlist ParentPlaylist { get; set; }
         protected bool defaultImage = true;
 
 
         private Command _ChangeImageCommand;
         public Command ChangeImageCommand => _ChangeImageCommand ?? (_ChangeImageCommand = new Command(ChangeImage));
+        
 
         protected virtual void ResetFields()
         {

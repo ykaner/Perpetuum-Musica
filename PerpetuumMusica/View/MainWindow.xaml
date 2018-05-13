@@ -15,8 +15,7 @@
         Background="{StaticResource background_color}"
         WindowStartupLocation="CenterScreen">
     <!---->
-
-
+    
     <!--resources-->
     <Window.Resources>
         <Style TargetType="cc:Icon" BasedOn="{StaticResource IconStyle}"/>
@@ -187,6 +186,7 @@
                     <Menu
                         Style="{StaticResource ToolbarMenu}"
                         ItemsSource="{Binding Path=Toolbar}"
+                        ItemContainerStyle="{StaticResource ToolbarItem}"
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DockPanel.Dock="Right">

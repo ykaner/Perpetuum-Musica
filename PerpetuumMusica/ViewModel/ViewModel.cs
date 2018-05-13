@@ -72,8 +72,8 @@ namespace PerpetuumMusica.ViewModel
             Volume = 80;
 
             //for testing:
-            //ShowedItem = DemoData.Disney;
-            //DemoData.SetParents(DemoData.musicals);
+            ShowedItem = DemoData.Disney;
+            DemoData.SetParents(DemoData.musicals);
 
             //DB_connection.DB_conn mycon = new DB_connection.DB_conn();
             //ShowedItem = mycon.RetrievePlaylist(0)[0];
@@ -404,7 +404,7 @@ namespace PerpetuumMusica.ViewModel
         }
         public void AddTrack(object param)
         {
-            Track newTrack = AddTrackDialog.ShowDialog();
+            Track newTrack = AddTrackDialog.ShowDialog((Playlist)ShowedItem.Content);
             if (newTrack == null) return;
 
             //MessageBox.Show("Adding new Track: \n " +

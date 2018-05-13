@@ -20,8 +20,10 @@ namespace PerpetuumMusica.ViewModel
             Model = model;
         }
 
-        public Track ShowDialog()
+        public Track ShowDialog(Playlist _ParentPlaylist = null)
         {
+            ParentPlaylist = _ParentPlaylist;
+
             ResetFields();
             dialog = new AddTrackDialog(this);
 

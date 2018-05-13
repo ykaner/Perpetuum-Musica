@@ -14,7 +14,7 @@ namespace PerpetuumMusica.Model
         {
             Volume = 70;
             IsPlaying = false;
-            Player.MediaEnded += Player_MediaEnded;
+            //Player.MediaEnded += Player_MediaEnded;
             //set the showed Item
             //ShowedItem = DataBase.RetrievePlaylist(0)[0];
 
@@ -48,14 +48,14 @@ namespace PerpetuumMusica.Model
             ShowedItem = target;
             try //if it's a playlist, load the internal list
             {
-                Playlist targetPlaylist = (Playlist)target.Content;
+                //Playlist targetPlaylist = (Playlist)target.Content;
 
-                //load internal list from dataBase (if not already loaded)
-                if (!targetPlaylist.ListLoaded)
-                {
-                    targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
-                    targetPlaylist.ListLoaded = true;
-                }
+                ////load internal list from dataBase (if not already loaded)
+                //if (!targetPlaylist.ListLoaded)
+                //{
+                //    targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
+                //    targetPlaylist.ListLoaded = true;
+                //}
             }
             catch
             {
@@ -81,12 +81,13 @@ namespace PerpetuumMusica.Model
                 Volume = unmutedVolume;
             }
         }
+        private double _volume;
         public double Volume
         {
-            get { return Player.Volume; }
+            get { return _volume; }
             set
             {
-                Player.Volume = value;
+                _volume = value;
             }
         }
         #endregion
