@@ -275,4 +275,17 @@
         </Setter>
     </Style>
 
+    <!--Dialog Buttons-->
+    <Style TargetType="cc:pmButton" x:Key="DialogButton" BasedOn="{StaticResource roundCornerButton}">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="5, 0"/>
+        <Setter Property="Width" Value="60"/>
+    </Style>
+    <Style TargetType="cc:pmButton" x:Key="DialogButtonMajor" BasedOn="{StaticResource DialogButton}">
+        <Setter Property="Background" Value="{StaticResource main_color}"/>
+    </Style>
+    <Style TargetType="cc:pmButton" x:Key="DialogButtonMinor" BasedOn="{StaticResource DialogButton}">
+        <Setter Property="Background" Value="Gray"/>
+    </Style>
+
 </ResourceDictionary>

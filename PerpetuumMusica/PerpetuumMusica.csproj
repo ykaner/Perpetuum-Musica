@@ -107,6 +107,9 @@
     <Compile Include="View\CustomControls\pmSlider.cs" />
     <Compile Include="View\CustomControls\SelectableBorder.cs" />
     <Compile Include="View\CustomControls\SelectableTextBlock.cs" />
+    <Compile Include="View\Information.xaml.cs">
+      <DependentUpon>Information.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ConvertersResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Information.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
