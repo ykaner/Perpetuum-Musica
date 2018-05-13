@@ -63,7 +63,6 @@ namespace PerpetuumMusica.ViewModel
             };
             Toolbar = new List<MenuItem>()
             {
-                new MenuItem("More Options", Image("menu_icon.png"), null, null),
                 new MenuItem("Info", Image("info_icon.png"), null, null),
                 new MenuItem("Settings", Image("settings_icon.png"), null, null)
             };
