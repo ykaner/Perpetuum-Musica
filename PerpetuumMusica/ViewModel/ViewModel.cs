@@ -144,11 +144,10 @@ namespace PerpetuumMusica.ViewModel
         private Command _ShowInfoCommand;
         public Command ShowInfoCommand => _ShowInfoCommand ?? (_ShowInfoCommand = new Command(OpenInfoWindow));
         private Command _MoveUpCommand;
-        public Command MoveUpCommand => _MoveUpCommand ?? (_MoveUpCommand = new Command(MoveItemsUp));
+        public Command MoveUpCommand => _MoveUpCommand ?? (_MoveUpCommand = new Command(MoveItemsUp, MoveItemsUp_CanExecute));
         private Command _MoveDownCommand;
-        public Command MoveDownCommand => _MoveDownCommand ?? (_MoveDownCommand = new Command(MoveItemsDown));
-        //private Command _AddTrackCommand;
-        //public Command AddTrackCommand => _AddTrackCommand ?? (_AddTrackCommand = new Command(AddTrack));
+        public Command MoveDownCommand => _MoveDownCommand ?? (_MoveDownCommand = new Command(MoveItemsDown, MoveItemsDown_CanExecute));
+        
 
         #endregion Commands
 
@@ -400,6 +399,10 @@ namespace PerpetuumMusica.ViewModel
         }
         public bool DeleteItems_CanExecute(object param)
         {
+            return AreItemsSelected();
+        }
+        public bool AreItemsSelected()
+        {
             return SelectedItems.Count > 0;
         }
         public void AddTrack(object param)
@@ -426,7 +429,6 @@ namespace PerpetuumMusica.ViewModel
                 int targetLocation = Item.Index - 1 - 1;
                 Model.MoveItem(Item, (Playlist)(ShowedItem.Content), targetLocation);
             }
-
         }
         public void MoveItemsDown(object param)
         {
@@ -438,6 +440,25 @@ namespace PerpetuumMusica.ViewModel
                 int targetLocation = Item.Index - 1 + 1;
                 Model.MoveItem(Item, (Playlist)(ShowedItem.Content), targetLocation);
             }
+        }
+        public bool MoveItemsUp_CanExecute(object param)
+        {
+            if (!AreItemsSelected())
+                return false;
+            else if (SelectedItems[0].Index == 1)
+                return false;
+            else
+                return true;
+        }
+        public bool MoveItemsDown_CanExecute(object param)
+        {
+            if (!AreItemsSelected())
+                return false;
+            //if last item is selected:
+            else if (SelectedItems[SelectedItems.Count - 1].Index == ((Playlist)ShowedItem.Content).List.Count)
+                return false;
+            else
+                return true;
         }
 
         public void OpenInfoWindow(object param)
