@@ -14,8 +14,6 @@
         x:Name="Window"
         Background="{StaticResource background_color}"
         WindowStartupLocation="CenterScreen">
-    <!---->
-
 
     <!--resources-->
     <Window.Resources>
@@ -191,6 +189,20 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         DockPanel.Dock="Right">
+                        <MenuItem Header="Move item down the list" >
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="{StaticResource sortDownIcon}" 
+                                               Command="{Binding MoveDownCommand}"
+                                               CommandParameter="{Binding SelectedItems}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Move item up the list" >
+                            <MenuItem.Icon>
+                                <cc:IconButton ImageSource="{StaticResource sortUpIcon}" 
+                                               Command="{Binding MoveUpCommand}"
+                                               CommandParameter="{Binding SelectedItems}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem Header="Delete" >
                             <MenuItem.Icon>
                                 <cc:IconButton ImageSource="{StaticResource deleteIcon}" 
