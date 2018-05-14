@@ -62,21 +62,15 @@ namespace PerpetuumMusica.ViewModel
                     new MenuItem("Empty", Image("playlistIcon"), new Command(AddEmptyPlaylist))
                 })
             };
-            //Toolbar = new List<MenuItem>()
-            //{
-            //    new MenuItem("Info", Image("info_icon.png"), new Command(OpenInfoWindow), null),
-            //    new MenuItem("Settings", Image("settings_icon.png"), null, null)
-            //};
-
             //Init volume
             Volume = 80;
 
             //for testing:
-            //ShowedItem = DemoData.Disney;
-            //DemoData.SetParents(DemoData.musicals);
-
-            //DB_connection.DB_conn mycon = new DB_connection.DB_conn();
-            //ShowedItem = mycon.RetrievePlaylist(0)[0];
+            var list = ((Playlist)ShowedItem.Content).List;
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Index = i + 1;
+            }
             
 
 
@@ -427,15 +421,23 @@ namespace PerpetuumMusica.ViewModel
         }
         public void MoveItemsUp(object param)
         {
-            MessageBox.Show("MoveItemsUp");
-            foreach (PlaylistItem item in SelectedItems)
+            foreach (var Item in SelectedItems)
             {
-                
+                int targetLocation = Item.Index - 1 - 1;
+                Model.MoveItem(Item, (Playlist)(ShowedItem.Content), targetLocation);
             }
+
         }
         public void MoveItemsDown(object param)
         {
-            MessageBox.Show("MoveItemsDown");
+            //to make neighbors move down together I have to move down the lowwer parts first.
+
+            for (int i = SelectedItems.Count - 1; i>=0; i--)
+            {
+                var Item = SelectedItems[i];
+                int targetLocation = Item.Index - 1 + 1;
+                Model.MoveItem(Item, (Playlist)(ShowedItem.Content), targetLocation);
+            }
         }
 
         public void OpenInfoWindow(object param)

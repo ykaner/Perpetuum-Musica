@@ -238,7 +238,7 @@ namespace PerpetuumMusica.Model
             target.List.Insert(index, newItem);
 
         }
-        internal void DeleteItems(List<PlaylistItem> targetItems, Playlist targetParent)
+        public void DeleteItems(List<PlaylistItem> targetItems, Playlist targetParent)
         {
             var ParentList = targetParent.List;
 
@@ -256,6 +256,28 @@ namespace PerpetuumMusica.Model
 
 
 
+        }
+        public void MoveItem(PlaylistItem targetItem, Playlist targetParent, int targetLocation)
+        {
+            targetParent.List.RemoveAt(targetItem.Index - 1);
+            targetParent.List.Insert(targetLocation, targetItem);
+
+            //Update Indexes: 
+            int minIndex, maxIndex;
+            if (targetItem.Index - 1 < targetLocation)
+            {
+                minIndex = targetItem.Index - 1;
+                maxIndex = targetLocation;
+            }
+            else
+            {
+                minIndex = targetLocation;
+                maxIndex = targetItem.Index - 1;
+            }
+            for (int i = minIndex; i<=maxIndex; i++)
+            {
+                targetParent.List[i].Index = i + 1;
+            }
         }
         #endregion
     }
