@@ -149,6 +149,10 @@ namespace PerpetuumMusica.ViewModel
         public Command DeleteItemsCommand => _DeleteItemsCommand ?? (_DeleteItemsCommand = new Command(DeleteItems, DeleteItems_CanExecute));
         private Command _ShowInfoCommand;
         public Command ShowInfoCommand => _ShowInfoCommand ?? (_ShowInfoCommand = new Command(OpenInfoWindow));
+        private Command _MoveUpCommand;
+        public Command MoveUpCommand => _MoveUpCommand ?? (_MoveUpCommand = new Command(MoveItemsUp));
+        private Command _MoveDownCommand;
+        public Command MoveDownCommand => _MoveDownCommand ?? (_MoveDownCommand = new Command(MoveItemsDown));
         //private Command _AddTrackCommand;
         //public Command AddTrackCommand => _AddTrackCommand ?? (_AddTrackCommand = new Command(AddTrack));
 
@@ -420,6 +424,18 @@ namespace PerpetuumMusica.ViewModel
             if (newPlaylist == null) return;
 
             Model.AddItem(newPlaylist, (Playlist)ShowedItem.Content);
+        }
+        public void MoveItemsUp(object param)
+        {
+            MessageBox.Show("MoveItemsUp");
+            foreach (PlaylistItem item in SelectedItems)
+            {
+                
+            }
+        }
+        public void MoveItemsDown(object param)
+        {
+            MessageBox.Show("MoveItemsDown");
         }
 
         public void OpenInfoWindow(object param)
