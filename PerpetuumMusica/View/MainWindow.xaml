@@ -331,11 +331,11 @@
 
             </StackPanel>
 
-            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="Transparent"/>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"  Background="Transparent" />
             <!--view area-->
 
-            <ScrollViewer Grid.Column="2" >
-                <!-- Main View Area-->
+            <ScrollViewer Grid.Column="2">
+                <!--Main View Area-->
                 <StackPanel Margin="15" Grid.Column="2" Background="Transparent">
                     <StackPanel.Resources>
                         <DataTemplate DataType="{x:Type m:PlaylistItem}">
@@ -397,7 +397,17 @@
                                 x:Name="Playlist"
                                 Grid.Column="1"
                                 ItemsSource="{Binding Path=List}"
-                                Background="Transparent">
+                                Background="Transparent"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <!--<ListView.Template>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <DataGridRowHeader/>
+                                            <ItemsPresenter/>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </ListView.Template>-->
+                                
                                 <ListView.Resources>
                                     <Style x:Key="{x:Type ListViewItem}"
                                             TargetType="ListViewItem">
