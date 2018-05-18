@@ -14,16 +14,20 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.IO;
 using System.Windows.Controls;
+using PerpetuumMusica.View.Pages;
 
 namespace PerpetuumMusica.ViewModel
 {
     public class ViewModel : INotifyPropertyChanged
     {
         private Model.Model model { get; set; }
+        //Dialogs
         private AddTrackDialogViewModel AddTrackDialog { get; set; }
         private AddEmptyPlaylistDialogViewModel AddEmptyPlaylistDialog { get; set; }
         private ConfirmDialogViewModel ConfirmDialog { get; set; }
-        //private View.Information InfoWindow;
+
+        //Pages
+        private Page HomePage = new HomePage();
 
         public ViewModel()
         {
@@ -32,7 +36,7 @@ namespace PerpetuumMusica.ViewModel
             AddTrackDialog = new AddTrackDialogViewModel(model);
             AddEmptyPlaylistDialog = new AddEmptyPlaylistDialogViewModel(model);
             ConfirmDialog = new ConfirmDialogViewModel();
-
+            
             model.MediaEnded += MediaEnded;
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();
@@ -64,6 +68,9 @@ namespace PerpetuumMusica.ViewModel
             };
             //Init volume
             Volume = 80;
+
+            //Init Page
+            ShowedPage = HomePage;
 
             //for testing:
             var list = ((Playlist)ShowedItem.Content).List;
@@ -147,7 +154,6 @@ namespace PerpetuumMusica.ViewModel
         public Command MoveUpCommand => _MoveUpCommand ?? (_MoveUpCommand = new Command(MoveItemsUp, MoveItemsUp_CanExecute));
         private Command _MoveDownCommand;
         public Command MoveDownCommand => _MoveDownCommand ?? (_MoveDownCommand = new Command(MoveItemsDown, MoveItemsDown_CanExecute));
-        
 
         #endregion Commands
 
@@ -225,6 +231,8 @@ namespace PerpetuumMusica.ViewModel
         private Stack<PlaylistItem> ShowedItemHistory = new Stack<PlaylistItem>();
         private Stack<PlaylistItem> ShowedItemFuture = new Stack<PlaylistItem>(); 
         
+        public Page ShowedPage { get; set; }
+
         public double TrackSliderLocation {
             get
             {

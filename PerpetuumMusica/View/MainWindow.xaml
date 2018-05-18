@@ -589,9 +589,9 @@
                     </StackPanel>
 
                     <!--Main View Area: -->
-                    <StackPanel Visibility="{Binding PageVisibiliy}">
-                        <TextBlock Text="Hello"/>    
-                    </StackPanel>
+                    <Grid Visibility="{Binding PageVisibiliy}">
+                        <Frame Content="{Binding ShowedPage}"/>
+                    </Grid>
                     
                 </Grid>
  
