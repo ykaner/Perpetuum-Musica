@@ -45,7 +45,7 @@ namespace PerpetuumMusica.ViewModel
             {
                 new MenuItem("Home ", null, null, null),
                 new MenuItem("Currently Playing", null, null, null),
-                new MenuItem("My Playlist", null, null, null)
+                new MenuItem("My Playlists", null, null, null)
             };
 
             //--
@@ -261,8 +261,44 @@ namespace PerpetuumMusica.ViewModel
         {
             UpdateLocation();
         }
+
+        //nevigation bar
+        int _currentPageIndex = 0;
+        public int CurrentPageIndex
+        {
+            get { return _currentPageIndex; } 
+            set {
+                _currentPageIndex = value;
+                OnPropertyChanged("CurrentPageIndex");
+                OnPropertyChanged("PlaylistViewVisibility");
+                OnPropertyChanged("PageVisibiliy");
+                setShowedItemFromNevigationMenu();
+            }
+        }
+        public Visibility PlaylistViewVisibility
+        {
+            get
+            {
+                string name = MainMenu[CurrentPageIndex].Name;
+                if (name == "My Playlists" || name == "Currently Playing")
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+        public Visibility PageVisibiliy
+        {
+            get
+            {
+                if (PlaylistViewVisibility == Visibility.Visible)
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+
         #endregion
-        
+
         #region methods
         //Playing Methods
         public void TogglePlay(object param = null)
@@ -353,6 +389,23 @@ namespace PerpetuumMusica.ViewModel
         {
             AddMenuIsOpen = true;
             OnPropertyChanged("AddMenuIsOpen");
+        }
+        private void setShowedItemFromNevigationMenu()
+        {
+            switch (MainMenu[CurrentPageIndex].Name)
+            {
+                case "My Playlists":
+                    OpenItem(Model.RootItem);
+                    break;
+                case "Currently Playing":
+                    if (Model.CurrentlyPlayingItem == null)
+                    {
+                        MessageBox.Show("No item is playing", "Alert");
+                        break;
+                    }
+                    OpenItem(Model.CurrentlyPlayingItem); 
+                    break;
+            }
         }
         //edit methods
         private List<PlaylistItem> objectToList(object param)

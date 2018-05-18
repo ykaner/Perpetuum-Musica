@@ -27,8 +27,9 @@ namespace PerpetuumMusica.Model
         public AudioPlayer Player = new AudioPlayer();
 
         //public int currentlyPlayingIndex = -1; //-1 note nothing is played;
-        private PlaylistItem currentlyPlayingItem { get; set; }
+        public PlaylistItem CurrentlyPlayingItem { get; set; }
         public PlaylistItem ShowedItem { get; internal set; }
+        public PlaylistItem RootItem { get; set; }
 
         //playing information
         private bool isPlaying = true;
@@ -40,30 +41,46 @@ namespace PerpetuumMusica.Model
         private void Load()
         {
             ShowedItem = new PlaylistItem(new Playlist("All Playlists", null, new TimeSpan(), 0, "Various Artists", null));
+            RootItem = ShowedItem;
             ((Playlist)ShowedItem.Content).List = new ObservableCollection<PlaylistItem>( DataBase.RetrievePlaylist(0));
 
+            //var list = ((Playlist)ShowedItem.Content).List;
+            //foreach(var item in list)
+            //{
+            //    LoadItem(item);
+            //}
+
+
+
+
         }
-        public void Open(PlaylistItem target)
+        private void LoadItem(PlaylistItem target)
         {
-            ShowedItem = target;
             try //if it's a playlist, load the internal list
             {
                 Playlist targetPlaylist = (Playlist)target.Content;
-
-                //load internal list from dataBase (if not already loaded)
-                if (!targetPlaylist.ListLoaded)
+                if (targetPlaylist.List == null)
                 {
-                    targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
-                    targetPlaylist.ListLoaded = true;
+                    //load internal list from dataBase (if not already loaded)
+                    if (!targetPlaylist.ListLoaded)
+                    {
+                        targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
+                        targetPlaylist.ListLoaded = true;
+                    }
                 }
             }
             catch
             {
-                //
+                // if it's not a playlist 
                 return;
             }
+
             
-                
+        }
+        public void Open(PlaylistItem target)
+        {
+            ShowedItem = target;
+            LoadItem(target);
         }
         #endregion
 
@@ -130,18 +147,18 @@ namespace PerpetuumMusica.Model
         public void Pause()
         {
             Player.Pause();
-            currentlyPlayingItem.IsPlaying = false;
+            CurrentlyPlayingItem.IsPlaying = false;
             IsPlaying = false;
         }
         public void Play()
         {
-            if (currentlyPlayingItem == null)
+            if (CurrentlyPlayingItem == null)
             {
                 MessageBox.Show("Play \"showed\" Item (not implemented)");
                 return;
             }
             else
-                currentlyPlayingItem.IsPlaying = true;
+                CurrentlyPlayingItem.IsPlaying = true;
 
             Player.Play();
 
@@ -159,9 +176,9 @@ namespace PerpetuumMusica.Model
         {
             //currentlyPlayingItem = currentlyPlayingItem.Next;
             //Option 1 - play next in current list
-            if (currentlyPlayingItem.Next != null)
+            if (CurrentlyPlayingItem.Next != null)
             {
-                PlayItem(currentlyPlayingItem.Next);
+                PlayItem(CurrentlyPlayingItem.Next);
             }
             //no item to play - pause
             else
@@ -191,12 +208,12 @@ namespace PerpetuumMusica.Model
         private void PlayItem(PlaylistItem item)
         {
             //if we have another item that is currently "on" (colored), we need to shut if off
-            if (currentlyPlayingItem != null)
+            if (CurrentlyPlayingItem != null)
             {
-                currentlyPlayingItem.IsOn = false;
-                if (currentlyPlayingItem.IsPlaying)
+                CurrentlyPlayingItem.IsOn = false;
+                if (CurrentlyPlayingItem.IsPlaying)
                 {
-                    currentlyPlayingItem.IsPlaying = false;
+                    CurrentlyPlayingItem.IsPlaying = false;
                     Pause();
                 }
 
@@ -204,7 +221,7 @@ namespace PerpetuumMusica.Model
             //Play current Item
             item.IsPlaying = true;
             item.IsOn = true;
-            currentlyPlayingItem = item;
+            CurrentlyPlayingItem = item;
 
             //Actuall playing of the item
             //NOTE - it would make much more sense if we could use polymorphism here. The problem is that we cannot access the Player from Playable.

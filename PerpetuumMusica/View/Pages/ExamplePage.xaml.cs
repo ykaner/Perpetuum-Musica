@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PerpetuumMusica.ViewModel;
-using PerpetuumMusica.View.Pages;
 
-namespace PerpetuumMusica
+namespace PerpetuumMusica.View.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ExamplePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ExamplePage : Page
     {
-        public MainWindow()
+        public ExamplePage()
         {
             InitializeComponent();
-            ViewModel.ViewModel vm = new ViewModel.ViewModel();
-            DataContext = vm;
         }
     }
 }
