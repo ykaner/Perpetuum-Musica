@@ -19,9 +19,11 @@ namespace PerpetuumMusica.ViewModel
         private Command _GoToPlaylistCommand;
         public Command GoToPlaylistCommand => _GoToPlaylistCommand ?? (_GoToPlaylistCommand = new Command(OpenMainPlaylist));
 
+        private int MainPlaylistPageIndex = 2;
+
         private void OpenMainPlaylist(object obj)
         {
-            MessageBox.Show("Open Main Playlist");
+            ViewModel.CurrentPageIndex = MainPlaylistPageIndex;
         }
 
 
