@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PerpetuumMusica.ViewModel;
+
 
 namespace PerpetuumMusica.View.Pages
 {
@@ -20,9 +22,12 @@ namespace PerpetuumMusica.View.Pages
     /// </summary>
     public partial class HomePage : Page
     {
-        public HomePage()
+        public HomePage(ViewModel.ViewModel vm)
         {
             InitializeComponent();
+            DataContext = new HomePageViewModel(vm);
         }
+
+
     }
 }

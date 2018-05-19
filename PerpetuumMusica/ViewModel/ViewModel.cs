@@ -27,7 +27,7 @@ namespace PerpetuumMusica.ViewModel
         private ConfirmDialogViewModel ConfirmDialog { get; set; }
 
         //Pages
-        private Page HomePage = new HomePage();
+        private Page HomePage;
 
         public ViewModel()
         {
@@ -36,7 +36,9 @@ namespace PerpetuumMusica.ViewModel
             AddTrackDialog = new AddTrackDialogViewModel(model);
             AddEmptyPlaylistDialog = new AddEmptyPlaylistDialogViewModel(model);
             ConfirmDialog = new ConfirmDialogViewModel();
-            
+            HomePage = new HomePage(this);
+
+
             model.MediaEnded += MediaEnded;
             //Set Timers
             UpdateTrackSliderLocationTimer = new DispatcherTimer();

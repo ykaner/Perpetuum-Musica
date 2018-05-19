@@ -14,13 +14,10 @@
         <TextBlock TextWrapping="Wrap" Margin="0 5">Perpetuum Musica is a Musica Management software that enables you to organize your music so you don't forget it and come back to what you love.</TextBlock>
         <TextBlock FontSize="20" FontWeight="Bold" Margin="0 50 0 5">Get Started with Perpetuum Musica:</TextBlock>
         <Grid Height="50">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <cc:pmButton Margin="5"
-                         FontSize="18">Add New Items</cc:pmButton>
+            <!--<cc:pmButton Margin="5"
+                         FontSize="18">Add New Items</cc:pmButton>-->
             <cc:pmButton Grid.Column="1"
+                         Command="{Binding GoToPlaylistCommand}"
                          Margin="5"
                          FontSize="18">Go To Main Playlist</cc:pmButton>
         </Grid>

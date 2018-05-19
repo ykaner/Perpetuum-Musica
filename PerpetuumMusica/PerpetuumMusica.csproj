@@ -84,6 +84,7 @@
     <Compile Include="ViewModel\ConfirmDialogViewModel.cs" />
     <Compile Include="ViewModel\DialogViewModel.cs" />
     <Compile Include="ViewModel\GetResource.cs" />
+    <Compile Include="ViewModel\HomePageViewModel.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\PlayableDialogViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
