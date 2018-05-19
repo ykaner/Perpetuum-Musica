@@ -319,7 +319,7 @@
                          ItemsSource="{Binding Path=MainMenu}"
                          SelectedIndex="{Binding CurrentPageIndex}"/>
 
-                <TreeView Background="Transparent" BorderThickness="0">
+                <!--<TreeView Background="Transparent" BorderThickness="0">
                     <TreeViewItem Header="My Playlists" IsExpanded="True">
                         <TreeViewItem Header="Opera"/>
                         <TreeViewItem Header="Musical">
@@ -328,7 +328,7 @@
                         <TreeViewItem Header="Rock"/>
                         <TreeViewItem Header="Jazz"/>
                     </TreeViewItem>
-                </TreeView>
+                </TreeView>-->
 
 
             </StackPanel>
