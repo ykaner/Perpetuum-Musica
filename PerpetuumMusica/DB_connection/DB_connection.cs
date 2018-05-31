@@ -67,7 +67,6 @@ namespace DB_connection
             }
             catch (MySqlException ex)
             {
-                //MessageBox.Show(ex.Message);
                 return false;
             }
         }
@@ -189,7 +188,8 @@ namespace DB_connection
         public void InsertPlaylistItem(PlaylistItem item)
         {
             string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, @parent_id, @index);";
+                   (@id, @parent_id, @index);
+                    update playlistitem set index = index + 1 where index > @index;";
 
             MySqlCommand cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@parent_id", item.Path_id.Last());
@@ -201,16 +201,18 @@ namespace DB_connection
         }
 
 
-        public void InsertPlaylist(Playlist playlist, PlaylistItem pl_item)
+        public int InsertPlaylist(Playlist playlist, PlaylistItem pl_item)
         {
             string query =
                 String.Format(
                     @"insert into playable(name, image, duration, composer) values
                    ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
                     set @id := last_insert_id();
-                    insert into playlist(playable_list_id) values
+                    insert into playlist(idplaylist) values
                    (@id);",
                    playlist.Title, string.Empty /*image_uri*/, playlist.Time, playlist.Composer);
+
+            int id = -1;
 
             if (this.OpenConnection() == true)
             {
@@ -219,31 +221,33 @@ namespace DB_connection
                 {
                     cmd.ExecuteNonQuery();
 
-                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
                     playlist.ID = id;
 
                     InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
-                    int a = 1 + 1;
                 }
 
                 this.CloseConnection();
             }
+
+            return id;
         }
 
-        //additional functions:
-        public void InsertTrack(Track track, PlaylistItem pl_item)
+        public int InsertTrack(Track track, PlaylistItem pl_item)
         {
             string query =
             String.Format(
                 @"insert into playable(name, image, duration, composer) values
                        ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
                         set @id := last_insert_id();
-                        insert into playlist(playable_list_id) values
-                       (@id);",
-                track.Title, string.Empty /*image_uri*/, track.Time, track.Composer);
+                        insert into track(id_track, uri) values
+                       (@id, {4});",
+                track.Title, string.Empty /*image_uri*/, track.Time, track.Composer, track.FileUri);
+
+            int id = -1;
 
             if (this.OpenConnection() == true)
             {
@@ -252,18 +256,75 @@ namespace DB_connection
                 {
                     cmd.ExecuteNonQuery();
 
-                    int id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
                     track.ID = id;
 
                     InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
-                    int a = 1 + 1;
+                }
+
+                this.CloseConnection();
+            }
+
+            return id;
+        }
+
+        public void RemoveItem(PlaylistItem item)
+        {
+            string query =
+            String.Format(
+                @"delete from track where idtrack = {0};
+                delete from playable where idplayable = {0};
+                delete from playlistitem where content_playable = {0}
+                update playlistitem set index = index - 1 where index > {1}",
+                item.ID, item.Index);
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
                 }
 
                 this.CloseConnection();
             }
         }
+
+
+        public void Move(PlaylistItem plItem, int toPosition)
+        {
+            string shiftOthersUp = @"update playlistitem set index = {0} where content_playable = {1}
+                update playlistitem set index = index + 1 where index between {2} and {3}";
+            string shiftOthersDown = @"update playlistitem set index = {0} where content_playable = {1}
+                update playlistitem set index = index - 1 where index between {2} and {3}";
+
+
+            if (this.OpenConnection() == true)
+            {
+                try
+                {
+                    if (plItem.Index > toPosition)
+                    {
+                        new MySqlCommand(String.Format(shiftOthersUp, toPosition, plItem.ID, toPosition, plItem.Index)).ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        new MySqlCommand(String.Format(shiftOthersDown, toPosition, plItem.ID, plItem.Index, toPosition)).ExecuteNonQuery();
+                    }
+                }
+                catch (Exception e)
+                {
+                }
+
+                this.CloseConnection();
+            }
+        }
+
     }
 }

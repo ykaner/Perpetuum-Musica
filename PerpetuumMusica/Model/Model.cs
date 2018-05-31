@@ -254,6 +254,17 @@ namespace PerpetuumMusica.Model
             if (newItem.Content.Composer == null) newItem.Content.Composer = target.Composer;
             target.List.Insert(index, newItem);
 
+            int newId = -1;
+            if (newTrack is Track)
+            {
+                newId = DataBase.InsertTrack((Track)newTrack, newItem);
+            }
+            else if (newTrack is Playlist)
+            {
+                newId = DataBase.InsertPlaylist((Playlist)newTrack, newItem);
+            }
+
+            newTrack.ID = newId;
         }
         public void DeleteItems(List<PlaylistItem> targetItems, Playlist targetParent)
         {
@@ -263,6 +274,8 @@ namespace PerpetuumMusica.Model
             foreach(var item in targetItems)
             {
                 ParentList.Remove(item);
+
+                DataBase.RemoveItem(item);
             }
 
             //re - arrange indexing after deleting
@@ -272,12 +285,13 @@ namespace PerpetuumMusica.Model
             }
 
 
-
         }
         public void MoveItem(PlaylistItem targetItem, Playlist targetParent, int targetLocation)
         {
             targetParent.List.RemoveAt(targetItem.Index - 1);
             targetParent.List.Insert(targetLocation, targetItem);
+
+            DataBase.Move(targetItem, targetLocation);
 
             //Update Indexes: 
             int minIndex, maxIndex;
@@ -297,5 +311,6 @@ namespace PerpetuumMusica.Model
             }
         }
         #endregion
+
     }
 }
