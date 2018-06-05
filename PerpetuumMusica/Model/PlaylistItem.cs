@@ -48,6 +48,20 @@ namespace PerpetuumMusica.Model
                     return Path[Path.Count - 1];
             }
         }
+        public int ParentID
+        {
+            get
+            {
+                if (this.Parent != null)
+                {
+                    return this.Parent.ID;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
         public Playlist ParentPlaylist
         {
             get

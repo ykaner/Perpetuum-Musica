@@ -188,12 +188,14 @@ namespace DB_connection
         public void InsertPlaylistItem(PlaylistItem item)
         {
             string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   (@id, @parent_id, @index);
-                    update playlistitem set index = index + 1 where index > @index;";
+                   ({0}, {1}, {2});
+                    
+                    set @res_set := (
+                        select idplaylistItem from playlistitem where parent_playlistItem = {1} and `index` > {2}
+                    );
+                    update playlistitem set `index` = `index` + 1 where idplaylistItem in (select @res_set);";
 
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@parent_id", item.Path_id.Last());
-            cmd.Parameters.AddWithValue("@index", item.Index);
+            MySqlCommand cmd = new MySqlCommand(String.Format(query, item.Content.ID, item.ParentID, item.Index), connection);
 
             cmd.ExecuteNonQuery();
 
@@ -206,11 +208,10 @@ namespace DB_connection
             string query =
                 String.Format(
                     @"insert into playable(name, image, duration, composer) values
-                   ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
-                    set @id := last_insert_id();
-                    insert into playlist(idplaylist) values
-                   (@id);",
+                   ('{0}', '{1}', Time('{2:hh\:mm\:ss}'), '{3}');",
                    playlist.Title, string.Empty /*image_uri*/, playlist.Time, playlist.Composer);
+
+            string insertPlaylist = "insert into playlist(idplaylist) values({0});";
 
             int id = -1;
 
@@ -221,13 +222,17 @@ namespace DB_connection
                 {
                     cmd.ExecuteNonQuery();
 
-                    id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    id = (int)cmd.LastInsertedId;
+
+                    new MySqlCommand(String.Format(insertPlaylist, id), connection).ExecuteNonQuery();
+
                     playlist.ID = id;
 
                     InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
+                    Console.Error.WriteLine(e.Message);
                 }
 
                 this.CloseConnection();
@@ -239,13 +244,12 @@ namespace DB_connection
         public int InsertTrack(Track track, PlaylistItem pl_item)
         {
             string query =
-            String.Format(
-                @"insert into playable(name, image, duration, composer) values
-                       ('{0}', '{1}', Time('{2:hh:mm:ss}'), '{3}');
-                        set @id := last_insert_id();
-                        insert into track(id_track, uri) values
-                       (@id, {4});",
-                track.Title, string.Empty /*image_uri*/, track.Time, track.Composer, track.FileUri);
+                String.Format(
+                    @"insert into playable(name, image, duration, composer) values
+                   ('{0}', '{1}', Time('{2:hh\:mm\:ss}'), '{3}');",
+                   track.Title, string.Empty /*image_uri*/, track.Time, track.Composer);
+
+            string insertTrack = "insert into track(idtrack) values({0});";
 
             int id = -1;
 
@@ -254,15 +258,20 @@ namespace DB_connection
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 try
                 {
+
                     cmd.ExecuteNonQuery();
 
-                    id = (int)(new MySqlCommand("select @id;", connection)).ExecuteScalar();
+                    id = (int)cmd.LastInsertedId;
+
+                    new MySqlCommand(String.Format(insertTrack, id), connection).ExecuteNonQuery();
+
                     track.ID = id;
 
                     InsertPlaylistItem(pl_item);
                 }
                 catch (Exception e)
                 {
+                    Console.Error.WriteLine(e.Message);
                 }
 
                 this.CloseConnection();
@@ -277,8 +286,11 @@ namespace DB_connection
             String.Format(
                 @"delete from track where idtrack = {0};
                 delete from playable where idplayable = {0};
-                delete from playlistitem where content_playable = {0}
-                update playlistitem set index = index - 1 where index > {1}",
+                delete from playlistitem where content_playable = {0};
+                set @res_set := (
+                    select idplaylistitem from playlistitem where `index` > {1}
+                );
+                update playlistitem set `index` = `index` - 1 where idplaylistitem in (select @res_set);",
                 item.ID, item.Index);
 
             if (this.OpenConnection() == true)
@@ -299,10 +311,13 @@ namespace DB_connection
 
         public void Move(PlaylistItem plItem, int toPosition)
         {
-            string shiftOthersUp = @"update playlistitem set index = {0} where content_playable = {1}
-                update playlistitem set index = index + 1 where index between {2} and {3}";
-            string shiftOthersDown = @"update playlistitem set index = {0} where content_playable = {1}
-                update playlistitem set index = index - 1 where index between {2} and {3}";
+            string q_base = @"set @res_set := (
+                        select idplaylistItem from playlistitem
+                        where parent_playlistItem = {2} and `index` between {3} and {4});";
+            string shiftOthersUp = q_base + @"update playlistitem set `index` = {0} where content_playable = {1}
+                update playlistitem set `index` = `index` + 1 where `index` in (select @res_set);";
+            string shiftOthersDown = q_base + @"update playlistitem set `index` = {0} where content_playable = {1}
+                update playlistitem set `index` = `index` - 1 where `index` in (select @res_set);";
 
 
             if (this.OpenConnection() == true)
@@ -311,11 +326,13 @@ namespace DB_connection
                 {
                     if (plItem.Index > toPosition)
                     {
-                        new MySqlCommand(String.Format(shiftOthersUp, toPosition, plItem.ID, toPosition, plItem.Index)).ExecuteNonQuery();
+                        new MySqlCommand(String.Format(
+                            shiftOthersUp, toPosition, plItem.Content.ID, plItem.ParentID, toPosition, plItem.Index), connection).ExecuteNonQuery();
                     }
                     else
                     {
-                        new MySqlCommand(String.Format(shiftOthersDown, toPosition, plItem.ID, plItem.Index, toPosition)).ExecuteNonQuery();
+                        new MySqlCommand(String.Format(
+                            shiftOthersDown, toPosition, plItem.Content.ID, plItem.ParentID, plItem.Index, toPosition), connection).ExecuteNonQuery();
                     }
                 }
                 catch (Exception e)
