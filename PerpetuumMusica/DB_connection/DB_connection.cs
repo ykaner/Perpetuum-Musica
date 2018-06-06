@@ -285,13 +285,14 @@ namespace DB_connection
             string query =
             String.Format(
                 @"delete from track where idtrack = {0};
+                delete from playlist where idplaylist = {0};
                 delete from playable where idplayable = {0};
-                delete from playlistitem where content_playable = {0};
+                delete from playlistitem where idplaylistItem = {2};
                 set @res_set := (
                     select idplaylistitem from playlistitem where `index` > {1}
                 );
                 update playlistitem set `index` = `index` - 1 where idplaylistitem in (select @res_set);",
-                item.ID, item.Index);
+                item.Content.ID, item.Index, item.ID);
 
             if (this.OpenConnection() == true)
             {
