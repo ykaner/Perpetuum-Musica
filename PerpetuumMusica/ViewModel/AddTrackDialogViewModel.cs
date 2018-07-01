@@ -51,7 +51,9 @@ namespace PerpetuumMusica.ViewModel
             openFileDialog.Filter = "Audio Files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ((Track)Playable).FileUri = openFileDialog.FileName;
+                string fileName = openFileDialog.FileName;
+                ((Track)Playable).FileUri = fileName;
+
                 OnPropertyChanged("Playable");
             }
             else

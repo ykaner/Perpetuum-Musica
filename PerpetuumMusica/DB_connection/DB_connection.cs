@@ -28,7 +28,8 @@ namespace DB_connection
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" +
-            "Allow User Variables=True";
+            "Allow User Variables=True;" +
+            "SslMode=none;";
 
             connection = new MySqlConnection(connectionString);
 
@@ -335,6 +336,31 @@ namespace DB_connection
                         new MySqlCommand(String.Format(
                             shiftOthersDown, toPosition, plItem.Content.ID, plItem.ParentID, plItem.Index, toPosition), connection).ExecuteNonQuery();
                     }
+                }
+                catch (Exception e)
+                {
+                }
+
+                this.CloseConnection();
+            }
+        }
+
+
+        public void IncreaseTimesPlayed(Playable item)
+        {
+            string query = @"update playable
+                            set times_played = times_played + 1
+                            where `idplayable` = @id";
+
+
+            if (this.OpenConnection() == true)
+            {
+                try
+                {
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@id", item.ID);
+                    cmd.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {

@@ -174,6 +174,8 @@ namespace PerpetuumMusica.Model
         }
         public void TrackEnded()
         {
+            DataBase.IncreaseTimesPlayed(CurrentlyPlayingItem.Content);
+
             //currentlyPlayingItem = currentlyPlayingItem.Next;
             //Option 1 - play next in current list
             if (CurrentlyPlayingItem.Next != null)
@@ -233,7 +235,12 @@ namespace PerpetuumMusica.Model
             }
             else if (item.Content.GetType() == PlayableType.Playlist)
             {
-                PlayItem(((Playlist)item.Content).List[0]);
+                Playlist list = (Playlist)(item.Content);
+                LoadItem(item);
+                if (list.List.Count > 0)
+                {
+                    PlayItem((list).List[0]);
+                }
             }
         }
         #endregion
