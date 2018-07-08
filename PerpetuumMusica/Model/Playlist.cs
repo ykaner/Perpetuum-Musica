@@ -22,8 +22,7 @@ namespace PerpetuumMusica.Model
             {
                 list = new ObservableCollection<PlaylistItem>();
             }
-            else
-                List = list;
+            List = list;
 
             ListLoaded = false;
             //List.CollectionChanged += List_CollectionChanged;
@@ -59,7 +58,8 @@ namespace PerpetuumMusica.Model
         }
         */
 
-        public Playlist(string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) : this(0, title, image, time, timesHeard, composer, list) { }
+        public Playlist(string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) :
+            this(0, title, image, time, timesHeard, composer, list) { }
 
         public Playlist()
         {

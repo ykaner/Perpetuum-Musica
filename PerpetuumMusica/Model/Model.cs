@@ -65,6 +65,10 @@ namespace PerpetuumMusica.Model
                     if (!targetPlaylist.ListLoaded)
                     {
                         targetPlaylist.List = new ObservableCollection<PlaylistItem>(DataBase.RetrievePlaylist(target.ID));
+                        foreach (var item in targetPlaylist.List)
+                        {
+                            item.SetParent(target);
+                        }
                         targetPlaylist.ListLoaded = true;
                     }
                 }

@@ -154,6 +154,8 @@ namespace PerpetuumMusica.Model
         }
         public PlaylistItem(int index, Playable content) : this(0, index, content) { }
 
+        public PlaylistItem(Playable content) : this(0, content) { }
+
         public void SetParent(PlaylistItem parent)
         {
             //set id of parent
@@ -163,12 +165,6 @@ namespace PerpetuumMusica.Model
             //set parent
             Path = new List<PlaylistItem>(parent.Path);
             Path.Add(parent);
-        }
-
-        public PlaylistItem(Playable content)
-        {
-            Content = content;
-            Index = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
