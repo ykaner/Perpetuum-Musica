@@ -15,10 +15,16 @@ namespace PerpetuumMusica.Model
 
         public bool ListLoaded { get; set; } //true iff the list is loaded from the database
 
-        public Playlist(int id, string title, ImageSource image, TimeSpan time, int timesHeard, string composer, ObservableCollection<PlaylistItem> list) :
+        public Playlist(int id, string title, ImageSource image = null, TimeSpan time = new TimeSpan(), int timesHeard = 0, string composer = "unknown", ObservableCollection<PlaylistItem> list = null) :
             base(id, title, image, time, timesHeard, composer)
         {
-            List = list;
+            if (list == null)
+            {
+                list = new ObservableCollection<PlaylistItem>();
+            }
+            else
+                List = list;
+
             ListLoaded = false;
             //List.CollectionChanged += List_CollectionChanged;
             //registerOnSelectionChanged();

@@ -317,6 +317,19 @@ namespace PerpetuumMusica.Model
                 targetParent.List[i].Index = i + 1;
             }
         }
+        public void ImportFolder(string url, Playlist target, int index = -1)
+        {
+            Playlist newPlaylist = CreatePlaylistFromFolder(url);
+            AddItem(newPlaylist, target, index);
+        }
+        private Playlist CreatePlaylistFromFolder(string url)
+        {
+            ObservableCollection<PlaylistItem> list = new ObservableCollection<PlaylistItem>();
+
+            //TODO - fill the list recurssively
+
+            return new Playlist(1, "New Playlist", null, new TimeSpan(), 0, "unknown", list);
+        }
         #endregion
 
     }

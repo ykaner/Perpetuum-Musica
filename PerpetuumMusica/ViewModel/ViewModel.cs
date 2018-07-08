@@ -63,7 +63,7 @@ namespace PerpetuumMusica.ViewModel
                     new MenuItem("Import", null, null, new List<MenuItem>()
                     {
                         new MenuItem("Youtube"),
-                        new MenuItem("Local files")
+                        new MenuItem("Local files", null, new Command(ImportFolder), null)
                     }),
                     new MenuItem("Empty", Image("playlistIcon"), new Command(AddEmptyPlaylist))
                 })
@@ -477,6 +477,10 @@ namespace PerpetuumMusica.ViewModel
             //    "Title: " + newTrack.Title + "\n");
 
             Model.AddItem(newTrack, (Playlist)ShowedItem.Content);
+        }
+        public void ImportFolder(object param)
+        {
+            Model.ImportFolder(@"C:\Users\ranha\Music\My Playlists", (Playlist)ShowedItem.Content);
         }
         public void AddEmptyPlaylist(object param)
         {
