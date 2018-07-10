@@ -29,8 +29,9 @@ namespace PerpetuumMusica.ViewModel
             if (IsOk)
             {
                 GetImageFromPath();
-                               
-                return (Track)Playable; 
+                Track track = (Track)Playable;
+                track.FileUri = track.FileUri.Replace("\\", "/");
+                return track;
             }
             else
                 return null;
