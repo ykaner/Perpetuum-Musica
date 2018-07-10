@@ -352,10 +352,11 @@
                                         </Grid.ColumnDefinitions>
                                         <Image Source="{Binding Path=Content.Image}" RenderOptions.BitmapScalingMode="HighQuality"/>
                                         <StackPanel Margin="12" Grid.Column="1">
+                                            <!--path-->
                                             <ListBox ItemsSource="{Binding Path=Path}" 
-                                            Background="Transparent" 
-                                            BorderThickness="0"
-                                            Height="24">
+                                                    Background="Transparent" 
+                                                    BorderThickness="0"
+                                                    Height="24">
                                                 <ListBox.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel IsItemsHost="True"/>
@@ -399,11 +400,11 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type m:Playlist}">
                                 <ListView 
-                            x:Name="Playlist"
-                            Grid.Column="1"
-                            ItemsSource="{Binding Path=List}"
-                            Background="Transparent"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    x:Name="Playlist"
+                                    Grid.Column="1"
+                                    ItemsSource="{Binding Path=List}"
+                                    Background="Transparent"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                     <!--<ListView.Template>
                                 <ControlTemplate>
                                     <StackPanel>

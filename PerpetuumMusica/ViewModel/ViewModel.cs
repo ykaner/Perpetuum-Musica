@@ -80,7 +80,8 @@ namespace PerpetuumMusica.ViewModel
             {
                 list[i].Index = i + 1;
             }
-            
+
+           
 
 
 
@@ -342,8 +343,7 @@ namespace PerpetuumMusica.ViewModel
             //--
             OnPropertyChanged("ShowedItem");
             OnPropertyChanged("ToggleButtonText");
-            HistoryBackCommand.RaiseCanExecuteChanged(); 
-
+            HistoryBackCommand.RaiseCanExecuteChanged();
         }
         //History Methods
         public bool CanGoBack(object param)
@@ -470,24 +470,26 @@ namespace PerpetuumMusica.ViewModel
         }
         public void AddTrack(object param)
         {
+            if (ShowedItem.Content.GetType() == PlayableType.Track) return;
+            
             Track newTrack = AddTrackDialog.ShowDialog();
             if (newTrack == null) return;
 
             //MessageBox.Show("Adding new Track: \n " +
             //    "Title: " + newTrack.Title + "\n");
 
-            Model.AddItem(newTrack, (Playlist)ShowedItem.Content);
+            Model.AddItem(newTrack, ShowedItem);
         }
         public void ImportFolder(object param)
         {
-            Model.ImportFolder(@"C:\Users\ranha\Music\My Playlists", (Playlist)ShowedItem.Content);
+            Model.ImportFolder(@"C:\Users\ranha\Music\My Playlists", ShowedItem);
         }
         public void AddEmptyPlaylist(object param)
         {
             Playlist newPlaylist = AddEmptyPlaylistDialog.ShowDialog();
             if (newPlaylist == null) return;
 
-            Model.AddItem(newPlaylist, (Playlist)ShowedItem.Content);
+            Model.AddItem(newPlaylist, ShowedItem);
         }
         public void MoveItemsUp(object param)
         {

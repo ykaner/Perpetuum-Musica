@@ -255,13 +255,19 @@ namespace PerpetuumMusica.Model
             if (newTrack.Title == "" || newTrack.Title == null) throw new Exception("Please type the new Track's title");
             if (newTrack.FileUri == "" || newTrack.FileUri == null) throw new Exception("Please paste the file address or browse a file from your computer.");
         }
-        public void AddItem(Playable newTrack, Playlist target, int index = -1 /* -1 means add as last item */)
+        public void AddItem(Playable newTrack, PlaylistItem targeti, int index = -1 /* -1 means add as last item */)
         {
+            Playlist target = (Playlist)targeti.Content;
+            List<PlaylistItem> path = new List<PlaylistItem>(targeti.Path);
+            path.Add(targeti);
+
             if (index == -1)
             {
                 index = target.List.Count;
             }
             PlaylistItem newItem = new PlaylistItem(index + 1, newTrack);
+            newItem.Path = path;
+
             if (newItem.Content.Composer == null) newItem.Content.Composer = target.Composer;
             target.List.Insert(index, newItem);
 
@@ -321,10 +327,10 @@ namespace PerpetuumMusica.Model
                 targetParent.List[i].Index = i + 1;
             }
         }
-        public void ImportFolder(string url, Playlist target, int index = -1)
+        public void ImportFolder(string url, PlaylistItem targeti, int index = -1)
         {
             Playlist newPlaylist = CreatePlaylistFromFolder(url);
-            AddItem(newPlaylist, target, index);
+            AddItem(newPlaylist, targeti, index);
         }
         private Playlist CreatePlaylistFromFolder(string url)
         {
