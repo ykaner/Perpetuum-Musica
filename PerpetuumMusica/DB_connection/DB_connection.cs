@@ -188,15 +188,17 @@ namespace DB_connection
 
         public void InsertPlaylistItem(PlaylistItem item)
         {
+            string tblName = ("res_set" +
+                    (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).Replace(".", "_");
             string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
                    ({0}, {1}, {2});
                     
-                    set @res_set := (
-                        select idplaylistItem from playlistitem where parent_playlistItem = {1} and `index` > {2}
-                    );
-                    update playlistitem set `index` = `index` + 1 where idplaylistItem in (select @res_set);";
+                    create table {3} (select idplaylistItem from playlistitem
+                    where parent_playlistItem = {1} and `index` > {2});
+                    update playlistitem set `index` = `index` + 1 where idplaylistItem in (select * from {3});
+                    drop table if exists {3};";
 
-            MySqlCommand cmd = new MySqlCommand(String.Format(query, item.Content.ID, item.ParentID, item.Index), connection);
+            MySqlCommand cmd = new MySqlCommand(String.Format(query, item.Content.ID, item.ParentID, item.Index, tblName), connection);
 
             cmd.ExecuteNonQuery();
 
@@ -250,7 +252,8 @@ namespace DB_connection
                    ('{0}', '{1}', Time('{2:hh\:mm\:ss}'), '{3}');",
                    track.Title, string.Empty /*image_uri*/, track.Time, track.Composer);
 
-            string insertTrack = "insert into track(idtrack) values({0});";
+            string insertTrack = "insert into track(idtrack, uri) values" +
+                "({0}, '{1}');";
 
             int id = -1;
 
@@ -263,8 +266,8 @@ namespace DB_connection
                     cmd.ExecuteNonQuery();
 
                     id = (int)cmd.LastInsertedId;
-
-                    new MySqlCommand(String.Format(insertTrack, id), connection).ExecuteNonQuery();
+                    
+                    new MySqlCommand(String.Format(insertTrack, id, track.FileUri), connection).ExecuteNonQuery();
 
                     track.ID = id;
 
