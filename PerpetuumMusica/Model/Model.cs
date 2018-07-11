@@ -59,7 +59,7 @@ namespace PerpetuumMusica.Model
             try //if it's a playlist, load the internal list
             {
                 Playlist targetPlaylist = (Playlist)target.Content;
-                if (targetPlaylist.List == null)
+                if (targetPlaylist.List == null || targetPlaylist.List.Count == 0)
                 {
                     //load internal list from dataBase (if not already loaded)
                     if (!targetPlaylist.ListLoaded)
@@ -259,7 +259,7 @@ namespace PerpetuumMusica.Model
         {
             Playlist target = (Playlist)targeti.Content;
             List<PlaylistItem> path = new List<PlaylistItem>(targeti.Path);
-            path.Add(targeti);
+            List<int> path_id = new List<int>(targeti.Path_id);
 
             if (index == -1)
             {
@@ -267,6 +267,8 @@ namespace PerpetuumMusica.Model
             }
             PlaylistItem newItem = new PlaylistItem(index + 1, newTrack);
             newItem.Path = path;
+            newItem.Path_id = path_id;
+            newItem.SetParent(targeti);
 
             if (newItem.Content.Composer == null) newItem.Content.Composer = target.Composer;
             target.List.Insert(index, newItem);

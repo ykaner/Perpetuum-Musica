@@ -190,19 +190,20 @@ namespace DB_connection
         {
             string tblName = ("res_set" +
                     (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).Replace(".", "_");
-            string query = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
-                   ({0}, {1}, {2});
-                    
-                    create table {3} (select idplaylistItem from playlistitem
-                    where parent_playlistItem = {1} and `index` > {2});
-                    update playlistitem set `index` = `index` + 1 where idplaylistItem in (select * from {3});
-                    drop table if exists {3};";
+            string qinsert = @"insert into playlistitem(content_playable, parent_playlistItem, `index`) values
+                   ({0}, {1}, {2});";
+            string qMove = @"create table {2} (select idplaylistItem from playlistitem where parent_playlistItem = {0} and `index` > {1});
+                    update playlistitem set `index` = `index` + 1 where idplaylistItem in (select * from {2});
+                    drop table if exists {2};";
 
-            MySqlCommand cmd = new MySqlCommand(String.Format(query, item.Content.ID, item.ParentID, item.Index, tblName), connection);
+            MySqlCommand cmdInsert = new MySqlCommand(String.Format(qinsert, item.Content.ID, item.ParentID, item.Index), connection);
+            MySqlCommand cmd = new MySqlCommand(String.Format(qMove, item.ParentID, item.Index, tblName), connection);
+
+            cmdInsert.ExecuteNonQuery();
+
+            item.ID = (int)cmdInsert.LastInsertedId;
 
             cmd.ExecuteNonQuery();
-
-            item.ID = (int)cmd.LastInsertedId;
         }
 
 
