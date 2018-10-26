@@ -2,6 +2,8 @@
 
 Perpetuum Musica is a proffessional Musica Management Software. 
 
+![alt Perpetuum Musica Design](http://harshuv.com/devresume/img/PerpetuumMusica.jpg)
+
 ## How to run
 
 Just run the PepetuumMusica.exe in the main repository folder.
